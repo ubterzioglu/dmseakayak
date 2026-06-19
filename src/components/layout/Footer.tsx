@@ -12,30 +12,36 @@ export function Footer() {
     <footer className="bg-teal-deep text-white/85">
       <div className="container grid gap-10 py-12 md:grid-cols-3">
         <div>
-          <img src="/logo.png" alt="Dragoman SeaKayak" className="mb-4 h-12 w-auto brightness-0 invert" />
+          <span className="mb-4 inline-block rounded-xl bg-white/95 px-3 py-2">
+            <img src="/logo.png" alt="Dragoman SeaKayak" className="h-10 w-auto" />
+          </span>
           <p className="max-w-xs text-sm opacity-80">{t("footer.tagline")}</p>
-          <div className="mt-4 flex gap-3">
-            <a href={SITE.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/25 p-2 transition-colors hover:bg-orange hover:border-orange">
-              <Instagram className="h-5 w-5" />
+          <div className="mt-4 flex gap-4">
+            <a href={SITE.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
+              <Instagram className="h-7 w-7" />
             </a>
-            <a href={SITE.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/25 p-2 transition-colors hover:bg-orange hover:border-orange">
-              <Facebook className="h-5 w-5" />
+            <a href={SITE.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
+              <Facebook className="h-7 w-7" />
             </a>
-            <a href={`mailto:${SITE.email}`} aria-label="Email" className="rounded-full border border-white/25 p-2 transition-colors hover:bg-orange hover:border-orange">
-              <Mail className="h-5 w-5" />
+            <a href={`mailto:${SITE.email}`} aria-label="Email" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
+              <Mail className="h-7 w-7" />
             </a>
           </div>
         </div>
 
         <div>
           <h3 className="mb-3 font-semibold text-white">{t("footer.quickLinks")}</h3>
-          <ul className="space-y-2 text-sm">
-            <li><Link to={localePath(SEG.tours)} className="hover:text-orange-soft">{t("nav.tours")}</Link></li>
-            <li><Link to={localePath(SEG.customTours)} className="hover:text-orange-soft">{t("nav.customTours")}</Link></li>
-            <li><Link to={localePath(SEG.about)} className="hover:text-orange-soft">{t("nav.about")}</Link></li>
-            <li><Link to={localePath(SEG.faq)} className="hover:text-orange-soft">{t("nav.faq")}</Link></li>
-            <li><Link to={localePath(SEG.contact)} className="hover:text-orange-soft">{t("nav.contact")}</Link></li>
-          </ul>
+          <nav className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
+            <Link to={localePath(SEG.tours)} className="hover:text-orange-soft">{t("nav.tours")}</Link>
+            <span className="text-white/25">|</span>
+            <Link to={localePath(SEG.customTours)} className="hover:text-orange-soft">{t("nav.customTours")}</Link>
+            <span className="text-white/25">|</span>
+            <Link to={localePath(SEG.about)} className="hover:text-orange-soft">{t("nav.about")}</Link>
+            <span className="text-white/25">|</span>
+            <Link to={localePath(SEG.faq)} className="hover:text-orange-soft">{t("nav.faq")}</Link>
+            <span className="text-white/25">|</span>
+            <Link to={localePath(SEG.contact)} className="hover:text-orange-soft">{t("nav.contact")}</Link>
+          </nav>
         </div>
 
         <div>

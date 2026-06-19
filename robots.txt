@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /$
-Allow: /blog
-Disallow: /mvp
-Disallow: /admin
-Disallow: /config.js
-
-Sitemap: https://dragomanseakayak.com/sitemap.xml
