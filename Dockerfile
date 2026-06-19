@@ -5,6 +5,8 @@ FROM nginx:1.27-alpine
 COPY index.html /usr/share/nginx/html/index.html
 COPY mvp.html /usr/share/nginx/html/mvp.html
 COPY admin.html /usr/share/nginx/html/admin.html
+COPY blog.html /usr/share/nginx/html/blog.html
+COPY config.js /usr/share/nginx/html/config.js
 COPY logo.png /usr/share/nginx/html/logo.png
 COPY seakayakog.jpg /usr/share/nginx/html/seakayakog.jpg
 COPY robots.txt /usr/share/nginx/html/robots.txt

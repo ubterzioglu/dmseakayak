@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dragoman SeaKayak blog — deniz kayağı rehberleri, rota notları ve maceralar." />
+  <meta name="theme-color" content="#016352" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://dragomanseakayak.com/blog" id="canonical" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dragoman SeaKayak" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:title" content="Dragoman SeaKayak — Blog" id="ogTitle" />
+  <meta property="og:description" content="Deniz kayağı rehberleri, rota notları ve maceralar." id="ogDesc" />
+  <meta property="og:image" content="https://dragomanseakayak.com/seakayakog.jpg" id="ogImage" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://dragomanseakayak.com/seakayakog.jpg" id="twImage" />
+  <title>Dragoman SeaKayak — Blog</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+  <script src="config.js"></script>
+  <style>
+    :root {
+      --orange: #f16e0b; --orange-soft: #ff8a33;
+      --teal: #016352; --teal-deep: #014439; --teal-light: #0a8a74;
+      --foam: #eaf6f3; --ink: #042b25; --sand: #f7f1e7; --gray: #6b7c79;
+      --line: rgba(1,99,82,0.12); --max: 1080px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: var(--ink); background: #fff; line-height: 1.7; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), 92%); margin-inline: auto; }
+
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 0; }
+    .nav img { height: 46px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 1.6rem; font-weight: 500; font-size: 0.95rem; }
+    .nav-links a { color: var(--teal); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--orange); }
+
+    .page-hero { background: linear-gradient(160deg, #014439, #0a8a74); color: #fff; text-align: center; padding: 3.5rem 1rem; }
+    .page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; }
+    .page-hero p { opacity: 0.92; margin-top: 0.6rem; }
+
+    main { padding: 3rem 0 4rem; min-height: 50vh; }
+
+    /* List grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.6rem; }
+    .post-card {
+      background: #fff; border-radius: 18px; overflow: hidden; border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(1,68,57,0.07); transition: transform 0.15s, box-shadow 0.15s; display: flex; flex-direction: column;
+    }
+    .post-card:hover { transform: translateY(-5px); box-shadow: 0 18px 42px rgba(1,68,57,0.14); }
+    .post-card .cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--foam); }
+    .post-card .pc-body { padding: 1.3rem; display: flex; flex-direction: column; flex: 1; }
+    .post-card h2 { font-size: 1.2rem; color: var(--teal-deep); margin-bottom: 0.4rem; }
+    .post-card .date { color: var(--gray); font-size: 0.8rem; margin-bottom: 0.6rem; }
+    .post-card p { color: var(--ink); font-size: 0.92rem; opacity: 0.85; flex: 1; }
+    .post-card .read { margin-top: 1rem; color: var(--orange); font-weight: 700; font-size: 0.9rem; }
+
+    .empty, .loading { text-align: center; color: var(--gray); padding: 3rem 1rem; }
+
+    /* Article detail */
+    .article { max-width: 760px; margin-inline: auto; }
+    .article .back { display: inline-block; color: var(--teal); font-weight: 600; margin-bottom: 1.5rem; }
+    .article .back:hover { color: var(--orange); }
+    .article h1 { font-size: clamp(1.8rem, 4.5vw, 2.6rem); color: var(--teal-deep); line-height: 1.2; }
+    .article .date { color: var(--gray); font-size: 0.9rem; margin: 0.6rem 0 1.8rem; }
+    .article .cover { width: 100%; border-radius: 18px; margin-bottom: 2rem; }
+    .content { font-size: 1.05rem; }
+    .content h2, .content h3 { color: var(--teal-deep); margin: 1.6rem 0 0.6rem; }
+    .content p { margin-bottom: 1.1rem; }
+    .content img { max-width: 100%; border-radius: 12px; margin: 1rem 0; }
+    .content a { color: var(--orange); text-decoration: underline; }
+    .content blockquote { border-left: 4px solid var(--orange); padding-left: 1rem; color: var(--gray); margin: 1.2rem 0; }
+    .content ul, .content ol { margin: 0 0 1.1rem 1.4rem; }
+
+    footer { background: var(--teal-deep); color: rgba(255,255,255,0.85); text-align: center; padding: 2.6rem 1rem; font-size: 0.9rem; }
+    footer img { height: 40px; margin-bottom: 1rem; filter: brightness(0) invert(1); opacity: 0.9; }
+
+    @media (max-width: 680px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a href="/" aria-label="Dragoman SeaKayak"><img src="logo.png" alt="Dragoman SeaKayak" /></a>
+      <nav class="nav-links">
+        <a href="/">Ana Sayfa</a>
+        <a href="/blog">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div id="view"></div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <img src="logo.png" alt="Dragoman SeaKayak" />
+      <div>© <span id="year"></span> Dragoman SeaKayak — Tüm hakları saklıdır.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const CFG = window.DRAGOMAN_CONFIG || {};
+    const sb = (CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY)
+      ? supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY) : null;
+    const view = document.getElementById("view");
+
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+    }
+    function fmtDate(iso) {
+      return new Date(iso).toLocaleDateString("tr-TR", { day: "2-digit", month: "long", year: "numeric" });
+    }
+
+    function getSlug() {
+      const u = new URL(location.href);
+      return u.searchParams.get("slug");
+    }
+
+    async function renderList() {
+      view.innerHTML = `
+        <div class="page-hero"><div class="wrap"><h1>Blog</h1><p>Deniz kayağı rehberleri, rota notları ve maceralar.</p></div></div>
+        <div class="wrap" style="margin-top:2.5rem;"><div id="grid" class="loading">Yükleniyor…</div></div>`;
+      if (!sb) { document.getElementById("grid").outerHTML = '<div class="empty">Bağlantı yapılandırılmadı.</div>'; return; }
+      const { data, error } = await sb.from("blog_posts")
+        .select("slug,title,excerpt,cover_image_url,created_at")
+        .eq("published", true).order("created_at", { ascending: false });
+      const grid = document.getElementById("grid");
+      if (error) { grid.outerHTML = '<div class="empty">Yazılar yüklenemedi.</div>'; return; }
+      if (!data.length) { grid.outerHTML = '<div class="empty">Henüz yazı yayınlanmadı. Çok yakında! 🛶</div>'; return; }
+      grid.className = "grid";
+      grid.innerHTML = data.map(p => `
+        <a class="post-card" href="?slug=${encodeURIComponent(p.slug)}">
+          ${p.cover_image_url ? `<img class="cover" src="${esc(p.cover_image_url)}" alt="${esc(p.title)}" loading="lazy" />` : `<div class="cover"></div>`}
+          <div class="pc-body">
+            <h2>${esc(p.title)}</h2>
+            <div class="date">${fmtDate(p.created_at)}</div>
+            <p>${esc(p.excerpt || "")}</p>
+            <div class="read">Devamını oku →</div>
+          </div>
+        </a>`).join("");
+    }
+
+    function setMeta(post) {
+      document.title = post.title + " — Dragoman SeaKayak";
+      const url = "https://dragomanseakayak.com/blog?slug=" + encodeURIComponent(post.slug);
+      document.getElementById("canonical").href = url;
+      document.getElementById("ogTitle").content = post.title;
+      document.getElementById("ogDesc").content = post.excerpt || "Dragoman SeaKayak blog yazısı.";
+      if (post.cover_image_url) {
+        document.getElementById("ogImage").content = post.cover_image_url;
+        document.getElementById("twImage").content = post.cover_image_url;
+      }
+    }
+
+    async function renderArticle(slug) {
+      view.innerHTML = '<div class="wrap"><div class="loading">Yükleniyor…</div></div>';
+      if (!sb) { view.innerHTML = '<div class="wrap"><div class="empty">Bağlantı yapılandırılmadı.</div></div>'; return; }
+      const { data, error } = await sb.from("blog_posts")
+        .select("*").eq("slug", slug).eq("published", true).maybeSingle();
+      if (error || !data) {
+        view.innerHTML = '<div class="wrap"><div class="empty">Yazı bulunamadı.<br><a class="read" href="/blog">← Bloga dön</a></div></div>';
+        return;
+      }
+      setMeta(data);
+      const safe = DOMPurify.sanitize(data.content_html || "");
+      view.innerHTML = `
+        <div class="wrap" style="padding-top:2.5rem;">
+          <article class="article">
+            <a class="back" href="/blog">← Tüm yazılar</a>
+            <h1>${esc(data.title)}</h1>
+            <div class="date">${fmtDate(data.created_at)}</div>
+            ${data.cover_image_url ? `<img class="cover" src="${esc(data.cover_image_url)}" alt="${esc(data.title)}" />` : ""}
+            <div class="content">${safe}</div>
+          </article>
+        </div>`;
+    }
+
+    const slug = getSlug();
+    if (slug) renderArticle(slug); else renderList();
+  </script>
+</body>
+</html>

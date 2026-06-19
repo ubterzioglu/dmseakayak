@@ -5,3 +5,9 @@ README.md
 *.md
 Dockerfile
 .dockerignore
+
+# Secrets — imaja girmez
+.env
+.env.local
+.env.*.local
+scripts/
