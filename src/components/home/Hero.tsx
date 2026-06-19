@@ -26,17 +26,17 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 flex min-h-[90vh] flex-col items-center justify-center px-4 text-center">
-        {/* Floating logo card */}
+        {/* Floating transparent logo */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="animate-bob mb-8 rounded-2xl bg-white/95 px-6 py-4 shadow-xl"
+          className="animate-bob mb-8"
         >
           <img
             src="/logo.png"
             alt="Dragoman SeaKayak"
-            className="h-14 w-auto"
+            className="h-20 w-auto md:h-24 drop-shadow-[0_4px_16px_rgba(0,0,0,0.45)]"
             onError={(e) => (e.currentTarget.style.display = "none")}
           />
         </motion.div>
