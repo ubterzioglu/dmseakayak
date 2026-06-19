@@ -65,6 +65,21 @@
     .nav .book:hover { background: var(--orange-soft); transform: translateY(-1px); }
 
     /* Hero */
+    .hero-logo {
+      display: inline-block;
+      background: #fff;
+      padding: 1.3rem 1.7rem;
+      border-radius: 22px;
+      box-shadow: 0 24px 60px rgba(1,40,33,0.45);
+      margin-bottom: 2.2rem;
+      animation: bob 5s ease-in-out infinite;
+    }
+    .hero-logo img { display: block; width: min(280px, 64vw); height: auto; }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
     .hero {
       position: relative; color: #fff; text-align: center;
       padding: 5.5rem 1rem 6.5rem;
@@ -161,6 +176,7 @@
   <main>
     <section class="hero">
       <div class="wrap">
+        <div class="hero-logo"><img src="logo.png" alt="Dragoman SeaKayak" /></div>
         <h1>Denizle <span class="accent">buluşmaya</span> hazır mısın?</h1>
         <p>Rehberli deniz kayağı turları, dersler ve unutulmaz kıyı maceraları. Her seviyeye uygun rotalar.</p>
         <div class="actions">
