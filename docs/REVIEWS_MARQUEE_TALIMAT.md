@@ -1,3 +1,11 @@
+> ✅ **DONE (2026-06-19):** Uygulandı. Marquee `src/components/home/ReviewsMarquee.tsx`
+> (Home'da, `WhyChooseUs`'tan sonra). Bulk + tekli yönetim mevcut `ReviewsPanel.tsx`
+> "Yorumlar" sekmesine eklendi (ayrı `ReviewsAdmin`/`useReviews` AÇILMADI; veri katmanı
+> `useAdminContent.ts` — `insertReviews`/`fetchPublishedReviews`). Bulk parse
+> `src/lib/parseReviews.ts`. Tailwind `marquee` animasyonu eklendi. i18n `reviewsMarquee`
+> tr/en/fr. 5 örnek yorum seed edildi. Google linki hâlâ placeholder (gerçek link bekleniyor).
+> Build + test yeşil.
+
 # Google Yorumları — Marquee + Admin Yönetimi (React/Vite) — Uygulama Talimatı
 
 > **Bu dosya başka bir Claude Code session'ına yapıştırılmak üzere hazırlandı.**

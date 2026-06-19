@@ -128,6 +128,12 @@
     "featuredBadge": "En vedette",
     "filterByLang": "Filtrer par langue"
   },
+  "reviewsMarquee": {
+    "eyebrow": "TÉMOIGNAGES",
+    "title": "Ce que disent nos clients",
+    "subtitle": "Avis authentiques de clients qui nous ont évalués sur Google.",
+    "cta": "Évaluez-nous sur Google"
+  },
   "notFound": {
     "title": "Page introuvable",
     "subtitle": "La page que vous recherchez n'existe pas ou a été déplacée.",

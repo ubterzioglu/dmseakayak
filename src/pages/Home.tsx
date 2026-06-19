@@ -2,6 +2,7 @@ import { Seo } from "@/components/seo/Seo";
 import { Hero } from "@/components/home/Hero";
 import { TourHighlights } from "@/components/home/TourHighlights";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
+import { ReviewsMarquee } from "@/components/home/ReviewsMarquee";
 import { useLang } from "@/hooks/useLang";
 import { SITE } from "@/lib/site";
 
@@ -34,6 +35,7 @@ export default function Home() {
       <Hero />
       <TourHighlights />
       <WhyChooseUs />
+      <ReviewsMarquee />
     </>
   );
 }

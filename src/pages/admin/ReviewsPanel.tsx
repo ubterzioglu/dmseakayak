@@ -3,9 +3,11 @@ import {
   fetchReviews,
   saveReview,
   deleteReview,
+  insertReviews,
   type ReviewRow,
   type ReviewStatus,
 } from "@/hooks/useAdminContent";
+import { parseBulkReviews } from "@/lib/parseReviews";
 
 interface FormState {
   id?: string;
@@ -33,6 +35,9 @@ export default function ReviewsPanel() {
   const [form, setForm] = useState<FormState>(EMPTY);
   const [submitting, setSubmitting] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [bulk, setBulk] = useState("");
+  const [bulkMsg, setBulkMsg] = useState("");
+  const [bulkBusy, setBulkBusy] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -102,8 +107,58 @@ export default function ReviewsPanel() {
     }
   };
 
+  const handleBulkAdd = async () => {
+    setBulkMsg("");
+    const { rows, errors } = parseBulkReviews(bulk);
+    if (!rows.length) {
+      setBulkMsg("Eklenecek geçerli yorum yok. " + errors.join(" "));
+      return;
+    }
+    setBulkBusy(true);
+    try {
+      await insertReviews(rows);
+      setBulkMsg(
+        `${rows.length} yorum eklendi.` + (errors.length ? ` (${errors.length} atlandı)` : ""),
+      );
+      setBulk("");
+      await load();
+    } catch (e) {
+      setBulkMsg("Kaydedilemedi: " + (e instanceof Error ? e.message : String(e)));
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
+      {/* Toplu ekle */}
+      <div className="rounded-2xl border border-teal/10 bg-white p-6 shadow-sm">
+        <h3 className="mb-2 font-bold text-teal-deep">Toplu Ekle</h3>
+        <p className="mb-2 text-xs text-teal/60">
+          JSON dizi <code>{`[{ "author": "Ad", "rating": 5, "body": "..." }]`}</code> ya da satır
+          biçimi: ilk satır <code>Ad | 5</code>, sonraki satır(lar) yorum metni, yorumlar arası{" "}
+          <code>---</code>.
+        </p>
+        <textarea
+          value={bulk}
+          onChange={(e) => setBulk(e.target.value)}
+          rows={6}
+          placeholder={`Sophie M. | 5\nHarika bir deneyimdi, kesinlikle tavsiye ederim.\n---\nJames R. | 4\nÇok keyifliydi, rehberler profesyoneldi.`}
+          className="w-full rounded-xl border border-teal/15 p-3 font-mono text-sm outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
+        />
+        <div className="mt-3 flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => void handleBulkAdd()}
+            disabled={bulkBusy}
+            className="rounded-full bg-orange px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
+          >
+            {bulkBusy ? "Ekleniyor..." : "Yorumları Ekle"}
+          </button>
+          {bulkMsg && <span className="text-sm text-teal/70">{bulkMsg}</span>}
+        </div>
+      </div>
+
       {/* Form */}
       <div className="rounded-2xl border border-teal/10 bg-white p-6 shadow-sm">
         <h3 className="mb-4 font-bold text-teal-deep">{form.id ? "Yorumu Düzenle" : "Yeni Yorum"}</h3>

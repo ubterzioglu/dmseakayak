@@ -1,3 +1,7 @@
+> ✅ **DONE (2026-06-19):** Tur kartı "basınca genişleme" + "Detaya git" işi kod olarak
+> tamamlanmış ve build temiz (`TourCard.tsx`). Tarayıcı/etkileşim doğrulaması kullanıcıya
+> bırakıldı (aşağıdaki kontrol listesi). React/Vite migrasyonu commit edildi.
+
 # Handoff — Tur Kartları "Basınca Genişleme" + Tur Detay
 
 **Tarih:** 2026-06-19

@@ -56,10 +56,15 @@ export default {
           from: { opacity: "0", transform: "translateY(20px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         bob: "bob 5s ease-in-out infinite",
         fadeUp: "fadeUp 0.8s ease both",
+        marquee: "marquee 40s linear infinite",
       },
     },
   },

@@ -128,6 +128,12 @@
     "featuredBadge": "Featured",
     "filterByLang": "Filter by language"
   },
+  "reviewsMarquee": {
+    "eyebrow": "TESTIMONIALS",
+    "title": "What our guests say",
+    "subtitle": "Real reviews from guests who rated us on Google.",
+    "cta": "Rate us on Google"
+  },
   "notFound": {
     "title": "Page Not Found",
     "subtitle": "The page you are looking for does not exist or has been moved.",

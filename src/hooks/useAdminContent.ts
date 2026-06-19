@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import type { ParsedReview } from "@/lib/parseReviews";
 
 /**
  * Admin content data layer for /admin: revision requests, blog posts, reviews,
@@ -150,6 +151,38 @@ export async function deleteReview(id: string): Promise<void> {
   if (!supabase) throw new Error("Supabase yapılandırılmamış");
   const { error } = await supabase.from("reviews").delete().eq("id", id);
   if (error) throw new Error(error.message);
+}
+
+/** Bulk-inserts parsed reviews (admin "Toplu Ekle"). Published by default; sort_order filled by index. */
+export async function insertReviews(rows: ParsedReview[]): Promise<void> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  if (!rows.length) return;
+  const payload = rows.map((r, i) => ({
+    author: r.author,
+    rating: r.rating,
+    body: r.body,
+    source_label: r.source_label || "Google",
+    status: "published" as ReviewStatus,
+    sort_order: i,
+  }));
+  const { error } = await supabase.from("reviews").insert(payload);
+  if (error) throw new Error(error.message);
+}
+
+/** Public-facing: only published reviews, ordered for the homepage marquee. */
+export async function fetchPublishedReviews(): Promise<ReviewRow[]> {
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("status", "published")
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("fetchPublishedReviews:", error.message);
+    return [];
+  }
+  return (data ?? []) as ReviewRow[];
 }
 
 // ─── Image upload (blog-images bucket) ──────────────────────────────────────────
