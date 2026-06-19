@@ -6,6 +6,9 @@ COPY index.html /usr/share/nginx/html/index.html
 COPY mvp.html /usr/share/nginx/html/mvp.html
 COPY admin.html /usr/share/nginx/html/admin.html
 COPY logo.png /usr/share/nginx/html/logo.png
+COPY seakayakog.jpg /usr/share/nginx/html/seakayakog.jpg
+COPY robots.txt /usr/share/nginx/html/robots.txt
+COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Coolify health checks and proxies expect the app on port 80
