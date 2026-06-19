@@ -31,12 +31,17 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="animate-bob mb-8 inline-flex items-center justify-center rounded-3xl border border-white/60 bg-white/95 px-8 py-6 shadow-[0_12px_40px_rgba(0,0,0,0.35)] ring-1 ring-black/5 backdrop-blur-sm"
+          className="animate-bob group relative mb-8 inline-flex items-center justify-center overflow-hidden rounded-[2rem] border border-white/50 bg-white/65 px-10 py-8 shadow-[0_20px_60px_rgba(1,68,57,0.35),inset_0_1px_0_rgba(255,255,255,0.7)] ring-1 ring-white/30 backdrop-blur-xl"
         >
+          {/* Glass sheen highlight */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"
+          />
           <img
             src="/logo.png"
             alt="Dragoman SeaKayak"
-            className="h-28 w-auto md:h-36 lg:h-40"
+            className="relative h-28 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] md:h-36 lg:h-44"
             onError={(e) => (e.currentTarget.style.display = "none")}
           />
         </motion.div>
