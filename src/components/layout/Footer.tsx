@@ -56,6 +56,12 @@ export function Footer() {
 
       <div className="border-t border-white/10 py-5 text-center text-sm opacity-70">
         © {year} {SITE.name} — {t("footer.rights")}
+        <div className="mt-2 text-xs opacity-70">
+          <a href="https://chatio.com.tr/" rel="dofollow" target="_blank" className="hover:text-orange-soft">Canlı Destek Yazılımı</a>
+          <span className="mx-2 text-white/25">·</span>
+          <a href="https://www.spindorai.com/seo/en-iyi-seo-ajansi" rel="dofollow" target="_blank" className="hover:text-orange-soft">Seo Ajansı</a>
+          {" "}Spindora Tarafından Seosu Yapılmıştır.
+        </div>
       </div>
     </footer>
   );
