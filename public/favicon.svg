@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Dragoman SeaKayak — yin-yang of brand colours (teal #016352 + orange #f16e0b) -->
+  <!-- Orange base circle -->
+  <circle cx="50" cy="50" r="49" fill="#f16e0b"/>
+  <!-- Teal half: the classic yin-yang S-body.
+       Big arc down the right, small arc back up around the top dot,
+       small arc down around the bottom dot. -->
+  <path fill="#016352" d="
+    M50 1
+    a49 49 0 0 1 0 98
+    a24.5 24.5 0 0 1 0 -49
+    a24.5 24.5 0 0 0 0 -49
+    z"/>
+  <!-- Top small dot: orange on the teal lobe -->
+  <circle cx="50" cy="25.5" r="8" fill="#f16e0b"/>
+  <!-- Bottom small dot: teal on the orange lobe -->
+  <circle cx="50" cy="74.5" r="8" fill="#016352"/>
+</svg>
