@@ -31,12 +31,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="animate-bob mb-8"
+          className="animate-bob mb-8 inline-flex items-center justify-center rounded-3xl border border-white/60 bg-white/95 px-8 py-6 shadow-[0_12px_40px_rgba(0,0,0,0.35)] ring-1 ring-black/5 backdrop-blur-sm"
         >
           <img
             src="/logo.png"
             alt="Dragoman SeaKayak"
-            className="h-20 w-auto md:h-24 drop-shadow-[0_4px_16px_rgba(0,0,0,0.45)]"
+            className="h-28 w-auto md:h-36 lg:h-40"
             onError={(e) => (e.currentTarget.style.display = "none")}
           />
         </motion.div>

@@ -185,6 +185,77 @@ export async function fetchPublishedReviews(): Promise<ReviewRow[]> {
   return (data ?? []) as ReviewRow[];
 }
 
+// ─── Gallery images ─────────────────────────────────────────────────────────────
+
+export interface GalleryRow {
+  id: string;
+  image_url: string;
+  caption: string | null;
+  alt: string | null;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface GalleryInput {
+  image_url: string;
+  caption: string | null;
+  alt: string | null;
+  published: boolean;
+  sort_order: number;
+}
+
+export async function fetchGalleryImages(): Promise<GalleryRow[]> {
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("gallery_images")
+    .select("*")
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: false });
+  if (error) throw new Error(error.message);
+  return (data ?? []) as GalleryRow[];
+}
+
+export async function saveGalleryImage(input: GalleryInput, id?: string): Promise<void> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  const { error } = id
+    ? await supabase.from("gallery_images").update(input).eq("id", id)
+    : await supabase.from("gallery_images").insert(input);
+  if (error) throw new Error(error.message);
+}
+
+export async function deleteGalleryImage(id: string): Promise<void> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  const { error } = await supabase.from("gallery_images").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
+/** Uploads an image to the gallery-images bucket and returns its public URL. */
+export async function uploadGalleryImage(file: File): Promise<string> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+  const path = `gallery/${crypto.randomUUID()}.${ext}`;
+  const { error } = await supabase.storage.from("gallery-images").upload(path, file, { upsert: false });
+  if (error) throw new Error(error.message);
+  return supabase.storage.from("gallery-images").getPublicUrl(path).data.publicUrl;
+}
+
+/** Public-facing: only published gallery images, ordered for the /galeri page. */
+export async function fetchPublishedGallery(): Promise<GalleryRow[]> {
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("gallery_images")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("fetchPublishedGallery:", error.message);
+    return [];
+  }
+  return (data ?? []) as GalleryRow[];
+}
+
 // ─── Image upload (blog-images bucket) ──────────────────────────────────────────
 
 /** Uploads an image to the blog-images bucket and returns its public URL. */

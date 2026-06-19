@@ -1,9 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { Seo } from "@/components/seo/Seo";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { useLang } from "@/hooks/useLang";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { fetchPublishedGallery } from "@/hooks/useAdminContent";
 
 interface GalleryImage {
   src: string;
@@ -11,7 +12,8 @@ interface GalleryImage {
   caption: string;
 }
 
-const IMAGES: GalleryImage[] = [
+// Shown when the admin gallery (Supabase) is empty, so the page is never blank.
+const FALLBACK_IMAGES: GalleryImage[] = [
   { src: "/seakayakog.jpg", alt: "Kekova sea kayaking", caption: "Kekova Batık Şehir" },
   { src: "/seakayakog.jpg", alt: "Lycian coast kayak", caption: "Likya kıyısı" },
   { src: "/seakayakog.jpg", alt: "Simena castle view", caption: "Simena Kalesi" },
@@ -83,6 +85,26 @@ function Lightbox({ images, index, onClose, onPrev, onNext }: LightboxProps) {
 export default function Gallery() {
   const { t } = useLang();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [images, setImages] = useState<GalleryImage[]>(FALLBACK_IMAGES);
+
+  useEffect(() => {
+    let active = true;
+    void fetchPublishedGallery().then((rows) => {
+      if (!active || rows.length === 0) return;
+      setImages(
+        rows.map((r) => ({
+          src: r.image_url,
+          alt: r.alt ?? r.caption ?? "",
+          caption: r.caption ?? "",
+        })),
+      );
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const IMAGES = images;
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
 

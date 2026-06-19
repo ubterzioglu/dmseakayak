@@ -1,0 +1,243 @@
+import { useState, useEffect, useCallback } from "react";
+import {
+  fetchGalleryImages,
+  saveGalleryImage,
+  deleteGalleryImage,
+  uploadGalleryImage,
+  type GalleryRow,
+} from "@/hooks/useAdminContent";
+
+export default function GalleryPanel() {
+  const [items, setItems] = useState<GalleryRow[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [busyId, setBusyId] = useState<string | null>(null);
+
+  // Form state
+  const [editId, setEditId] = useState<string | undefined>(undefined);
+  const [file, setFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [caption, setCaption] = useState("");
+  const [alt, setAlt] = useState("");
+  const [published, setPublished] = useState(true);
+  const [sortOrder, setSortOrder] = useState(0);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      setItems(await fetchGalleryImages());
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Yüklenemedi");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const resetForm = () => {
+    setEditId(undefined);
+    setFile(null);
+    setImageUrl(null);
+    setCaption("");
+    setAlt("");
+    setPublished(true);
+    setSortOrder(0);
+  };
+
+  const handleEdit = (g: GalleryRow) => {
+    setEditId(g.id);
+    setFile(null);
+    setImageUrl(g.image_url);
+    setCaption(g.caption ?? "");
+    setAlt(g.alt ?? "");
+    setPublished(g.published);
+    setSortOrder(g.sort_order);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    if (!file && !imageUrl) return setError("Bir fotoğraf seçin.");
+
+    setSubmitting(true);
+    try {
+      let finalUrl = imageUrl;
+      if (file) finalUrl = await uploadGalleryImage(file);
+      if (!finalUrl) throw new Error("Görsel yüklenemedi.");
+      await saveGalleryImage(
+        {
+          image_url: finalUrl,
+          caption: caption.trim() || null,
+          alt: alt.trim() || caption.trim() || null,
+          published,
+          sort_order: Number.isFinite(sortOrder) ? sortOrder : 0,
+        },
+        editId,
+      );
+      resetForm();
+      await load();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Kaydedilemedi");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Bu fotoğrafı sil?")) return;
+    setBusyId(id);
+    try {
+      await deleteGalleryImage(id);
+      setItems((prev) => prev.filter((g) => g.id !== id));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Silinemedi");
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const preview = file ? URL.createObjectURL(file) : imageUrl;
+
+  return (
+    <div className="space-y-6">
+      {/* Form */}
+      <div className="rounded-2xl border border-teal/10 bg-white p-6 shadow-sm">
+        <h3 className="mb-4 font-bold text-teal-deep">
+          {editId ? "Fotoğrafı Düzenle" : "Yeni Fotoğraf"}
+        </h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="mb-1 block text-sm font-semibold text-teal-deep">Fotoğraf</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+              className="text-sm"
+            />
+            {preview && (
+              <img src={preview} alt="önizleme" className="mt-2 max-w-56 rounded-xl" />
+            )}
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-semibold text-teal-deep">
+              Başlık / Açıklama (foto üzerinde görünür)
+            </label>
+            <input
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+              placeholder="örn. Kekova Batık Şehir"
+              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-semibold text-teal-deep">
+              Alt metin (SEO/erişilebilirlik) — boşsa başlık kullanılır
+            </label>
+            <input
+              value={alt}
+              onChange={(e) => setAlt(e.target.value)}
+              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-semibold text-teal-deep">
+              Sıra (küçük = önce)
+            </label>
+            <input
+              type="number"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(parseInt(e.target.value, 10) || 0)}
+              className="w-32 rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
+            />
+          </div>
+          <label className="flex items-center gap-2 text-sm text-teal-deep">
+            <input
+              type="checkbox"
+              checked={published}
+              onChange={(e) => setPublished(e.target.checked)}
+            />
+            Yayınla (işaretsiz = gizli)
+          </label>
+          {error && <p className="text-sm text-red-600">{error}</p>}
+          <div className="flex gap-3">
+            <button
+              type="submit"
+              disabled={submitting}
+              className="rounded-full bg-orange px-6 py-2.5 font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
+            >
+              {submitting ? "Kaydediliyor..." : "Kaydet"}
+            </button>
+            <button
+              type="button"
+              onClick={resetForm}
+              className="rounded-full border border-teal/20 px-6 py-2.5 font-semibold text-teal hover:bg-foam"
+            >
+              Temizle / Yeni
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* List */}
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold text-teal-deep">{items.length} fotoğraf</h3>
+        <button
+          onClick={() => void load()}
+          disabled={loading}
+          className="rounded-full border border-teal/20 px-4 py-1.5 text-sm font-semibold text-teal hover:bg-foam disabled:opacity-50"
+        >
+          {loading ? "Yükleniyor..." : "Yenile"}
+        </button>
+      </div>
+
+      {!loading && items.length === 0 && (
+        <p className="py-12 text-center text-teal/50">Henüz fotoğraf yok.</p>
+      )}
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {items.map((g) => (
+          <div
+            key={g.id}
+            className="overflow-hidden rounded-2xl border border-teal/10 bg-white shadow-sm"
+          >
+            <div className="relative">
+              <img src={g.image_url} alt={g.alt ?? ""} className="h-36 w-full object-cover" />
+              {!g.published && (
+                <span className="absolute right-2 top-2 rounded-full bg-orange/90 px-2 py-0.5 text-[10px] font-bold text-white">
+                  Gizli
+                </span>
+              )}
+            </div>
+            <div className="p-3">
+              <div className="truncate text-sm font-semibold text-teal-deep">
+                {g.caption || <span className="text-teal/40">— başlıksız —</span>}
+              </div>
+              <div className="text-[11px] text-teal/50">Sıra: {g.sort_order}</div>
+              <div className="mt-2 flex gap-2">
+                <button
+                  onClick={() => handleEdit(g)}
+                  className="rounded-full border border-teal/20 px-3 py-1 text-xs font-semibold text-teal hover:bg-foam"
+                >
+                  Düzenle
+                </button>
+                <button
+                  disabled={busyId === g.id}
+                  onClick={() => void handleDelete(g.id)}
+                  className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-40"
+                >
+                  Sil
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

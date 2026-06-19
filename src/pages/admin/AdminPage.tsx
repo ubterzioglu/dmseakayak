@@ -6,6 +6,19 @@ import RevisionsPanel from "./RevisionsPanel";
 import BlogPanel from "./BlogPanel";
 import ReviewsPanel from "./ReviewsPanel";
 import UpdatesPanel from "./UpdatesPanel";
+import GalleryPanel from "./GalleryPanel";
+
+// ─── Admin allowlist ─────────────────────────────────────────────────────────
+// Sadece bu e-postalar admin paneline girebilir. Supabase'de kayıtlı olsalar
+// bile listede olmayan kullanıcılar otomatik olarak çıkış yaptırılır.
+const ADMIN_EMAILS = [
+  "kelifterzioglu@gmail.com",
+  "ubterzioglu@gmail.com",
+];
+
+function isAdminEmail(email: string | null | undefined): boolean {
+  return !!email && ADMIN_EMAILS.includes(email.trim().toLowerCase());
+}
 
 // ─── Login form ──────────────────────────────────────────────────────────────
 
@@ -77,12 +90,13 @@ function AdminLogin({ onLogin, error, loading }: LoginFormProps) {
 
 // ─── Tabs ──────────────────────────────────────────────────────────────────────
 
-type TabKey = "reservations" | "revisions" | "blog" | "reviews" | "updates";
+type TabKey = "reservations" | "revisions" | "blog" | "gallery" | "reviews" | "updates";
 
 const TABS: { key: TabKey; label: string }[] = [
   { key: "reservations", label: "Rezervasyonlar" },
   { key: "revisions", label: "Revizyonlar" },
   { key: "blog", label: "Blog" },
+  { key: "gallery", label: "Galeri" },
   { key: "reviews", label: "Yorumlar" },
   { key: "updates", label: "Güncellemeler" },
 ];
@@ -99,12 +113,24 @@ export default function AdminPage() {
   useEffect(() => {
     if (!supabase) return;
     supabase.auth.getSession().then(({ data }) => {
+      const sessUser = data.session?.user ?? null;
+      if (data.session && !isAdminEmail(sessUser?.email)) {
+        void supabase!.auth.signOut();
+        return;
+      }
       setSession(data.session);
-      setUser(data.session?.user ?? null);
+      setUser(sessUser);
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_event, sess) => {
+      const sessUser = sess?.user ?? null;
+      if (sess && !isAdminEmail(sessUser?.email)) {
+        void supabase!.auth.signOut();
+        setSession(null);
+        setUser(null);
+        return;
+      }
       setSession(sess);
-      setUser(sess?.user ?? null);
+      setUser(sessUser);
     });
     return () => sub.subscription.unsubscribe();
   }, []);
@@ -126,8 +152,18 @@ export default function AdminPage() {
     if (!supabase) return;
     setLoginLoading(true);
     setLoginError("");
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) setLoginError(error.message);
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      setLoginError(error.message);
+      setLoginLoading(false);
+      return;
+    }
+    if (!isAdminEmail(data.user?.email)) {
+      await supabase.auth.signOut();
+      setLoginError("Bu hesabın admin paneline erişim yetkisi yok.");
+      setLoginLoading(false);
+      return;
+    }
     setLoginLoading(false);
   };
 
@@ -202,6 +238,7 @@ export default function AdminPage() {
         {tab === "reservations" && <ReservationsPanel />}
         {tab === "revisions" && <RevisionsPanel />}
         {tab === "blog" && <BlogPanel />}
+        {tab === "gallery" && <GalleryPanel />}
         {tab === "reviews" && <ReviewsPanel />}
         {tab === "updates" && <UpdatesPanel />}
       </div>
