@@ -3,6 +3,7 @@ FROM nginx:1.27-alpine
 
 # Serve our static files
 COPY index.html /usr/share/nginx/html/index.html
+COPY mvp.html /usr/share/nginx/html/mvp.html
 COPY logo.png /usr/share/nginx/html/logo.png
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
