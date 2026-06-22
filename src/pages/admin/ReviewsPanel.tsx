@@ -494,7 +494,7 @@ export default function ReviewsPanel() {
                     </span>
                     <span
                       className={`rounded-full px-2 py-0.5 font-bold ${
-                        r.status === "published" ? "bg-teal/15 text-teal" : "bg-gray-200 text-gray-500"
+                        r.status === "published" ? "bg-teal/15 text-teal" : "bg-teal/5 text-teal/45"
                       }`}
                     >
                       {r.status === "published" ? "Yayında" : "Arşiv"}

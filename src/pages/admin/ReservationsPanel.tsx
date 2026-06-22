@@ -28,10 +28,10 @@ const STATUS_LABELS: Record<ReservationStatus, string> = {
 };
 
 const STATUS_COLORS: Record<ReservationStatus, string> = {
-  new: "bg-blue-100 text-blue-700",
-  contacted: "bg-yellow-100 text-yellow-700",
-  confirmed: "bg-green-100 text-green-700",
-  done: "bg-teal/10 text-teal",
+  new: "bg-teal/12 text-teal-deep",
+  contacted: "bg-orange/12 text-orange",
+  confirmed: "bg-teal-light/15 text-teal",
+  done: "bg-teal-deep text-white",
   cancelled: "bg-red-100 text-red-600",
 };
 
@@ -76,7 +76,7 @@ function ReservationCard({ reservation: r, onStatusChange, updating }: Reservati
                 href={`https://wa.me/${waDigits(r.phone)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100"
+                className="inline-flex items-center gap-1 rounded-full bg-teal/10 px-2.5 py-0.5 text-xs font-semibold text-teal transition hover:bg-teal/15"
               >
                 <MessageCircle className="h-3.5 w-3.5" />
                 WhatsApp

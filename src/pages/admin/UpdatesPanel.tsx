@@ -13,6 +13,23 @@ interface UpdateGroup {
 
 const ENTRIES: UpdateGroup[] = [
   {
+    date: "22 Haziran 2026",
+    title: "Yönetim paneli kullanım kolaylığı iyileştirmeleri",
+    items: [
+      "Giriş ekranına 'Şifremi unuttum' eklendi — yetkili e-postaya sıfırlama bağlantısı gönderilir.",
+      "Şifre alanlarına göster/gizle (göz) düğmesi geldi; yazarken kontrol edebilirsiniz.",
+      "Hata mesajları artık anlaşılır Türkçe (örn. 'E-posta veya şifre hatalı') — teknik İngilizce yazılar kaldırıldı.",
+      "Panel açılırken bir an görünen giriş ekranı 'yanıp sönmesi' giderildi; yükleniyor göstergesi eklendi.",
+      "Tablet ve küçük dizüstü ekranlarda 'Bölümler' menüsünün açılmadığı sorun düzeltildi.",
+      "Silme işlemlerinde tarayıcının kaba uyarısı yerine panele uygun şık bir onay kutusu çıkıyor.",
+      "Kaydetme, silme ve durum değiştirme sonrası ekranda anlık bilgi balonu (bildirim) gösteriliyor.",
+      "Blogda yazı yazarken kaydetmeden başka yere geçilirse uyarı verilir — yazı kazara kaybolmaz.",
+      "Rezervasyonlarda üstteki sayaç kartlarına tıklayarak duruma göre filtreleme (örn. sadece 'Yeni').",
+      "Rezervasyon kartındaki telefon artık tıklanabilir: doğrudan arama veya WhatsApp ile yazma.",
+      "Panel genelinde dil tutarlı hale getirildi (kalan İngilizce etiketler Türkçeleştirildi).",
+    ],
+  },
+  {
     date: "20 Haziran 2026",
     title: "TRAK Experience + kur çevirici + galeri yönetimi",
     items: [

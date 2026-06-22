@@ -123,14 +123,14 @@ const QUICK_LINKS = [
     description: "Ziyaretçi oturumları, ısı haritaları ve analitik görünümü.",
     href: "https://clarity.microsoft.com/projects/view/x9l7k2sbw2/dashboard?date=Last%203%20days",
     icon: GalleryVerticalEnd,
-    accentClassName: "bg-sky-50 text-sky-700 border-sky-100",
+    accentClassName: "bg-teal/10 text-teal border-teal/15",
   },
   {
     title: "WhatsApp Grubu",
     description: "Proje iletişimini hızlıca aynı yerden sürdürün.",
     href: "https://chat.whatsapp.com/JYC5ORJnbLnAFALiEEwX3G",
     icon: Phone,
-    accentClassName: "bg-emerald-50 text-emerald-700 border-emerald-100",
+    accentClassName: "bg-teal/10 text-teal border-teal/15",
   },
 ] as const;
 
@@ -456,9 +456,9 @@ export default function AdminPage() {
     <div className="min-h-screen bg-[#f6f3ee]">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(241,110,11,0.11),transparent_22%),radial-gradient(circle_at_80%_0%,rgba(1,99,82,0.08),transparent_26%),linear-gradient(180deg,#f6f3ee_0%,#fbfaf7_100%)]" />
       <div className="relative mx-auto max-w-[1500px] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
-        <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
+        <div className="grid gap-6 xl:grid-cols-[288px_minmax(0,1fr)]">
           <div className="hidden xl:block">
-            <div className="sticky top-6 h-[calc(100vh-3rem)]">
+            <div className="sticky top-6 max-h-[calc(100vh-3rem)]">
               <AdminSidebar
                 items={TABS}
                 active={tab}
@@ -504,17 +504,17 @@ export default function AdminPage() {
                   <button
                     type="button"
                     onClick={() => setShowChangePassword(true)}
-                    className="inline-flex items-center gap-2 rounded-full border border-teal/12 bg-white px-4 py-2.5 text-sm font-semibold text-teal-deep transition hover:bg-foam"
+                    className="inline-flex items-center gap-2 rounded-full border border-teal/12 bg-white px-3.5 py-2 text-[13px] font-semibold text-teal-deep transition hover:bg-foam"
                   >
-                    <KeyRound className="h-4 w-4" />
+                    <KeyRound className="h-3.5 w-3.5" />
                     Şifre Değiştir
                   </button>
                   <button
                     type="button"
                     onClick={() => void handleLogout()}
-                    className="inline-flex items-center gap-2 rounded-full bg-teal-deep px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal"
+                    className="inline-flex items-center gap-2 rounded-full bg-teal-deep px-3.5 py-2 text-[13px] font-semibold text-white transition hover:bg-teal"
                   >
-                    <LogOut className="h-4 w-4" />
+                    <LogOut className="h-3.5 w-3.5" />
                     Çıkış
                   </button>
                 </>
@@ -522,26 +522,26 @@ export default function AdminPage() {
               extra={
                 <>
                   <div>
-                    <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal/45">
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal/45">
                       Bugün
                     </div>
-                    <div className="mt-2 font-serif text-2xl leading-none text-teal-deep">
+                    <div className="mt-1.5 font-serif text-xl leading-none text-teal-deep">
                       {todayLabel}
                     </div>
-                    <div className="mt-3 text-sm leading-6 text-teal/58">
+                    <div className="mt-2 text-[13px] leading-5 text-teal/58">
                       Aktif alan: {activeTab.label}. Aynı route içinde hızlı geçiş korunur.
                     </div>
                   </div>
-                  <div className="mt-5 space-y-2">
-                    <div className="rounded-2xl border border-white/70 bg-white/80 px-4 py-3">
-                      <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal/45">
+                  <div className="mt-3 space-y-2">
+                    <div className="rounded-xl border border-white/70 bg-white/80 px-3 py-2.5">
+                      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal/45">
                         Yetkili hesap
                       </div>
-                      <div className="mt-1 break-all text-sm font-medium text-teal-deep">
+                      <div className="mt-0.5 break-all text-[13px] font-medium text-teal-deep">
                         {user?.email}
                       </div>
                     </div>
-                    <div className="rounded-2xl border border-teal/10 bg-white/65 px-4 py-3 text-sm text-teal/58">
+                    <div className="rounded-xl border border-teal/10 bg-white/65 px-3 py-2.5 text-[13px] text-teal/58">
                       Dış bağlantılar masaüstünde sol panelde, mobilde aşağıda yer alır.
                     </div>
                   </div>

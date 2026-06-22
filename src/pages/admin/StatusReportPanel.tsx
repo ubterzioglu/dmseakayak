@@ -18,18 +18,18 @@ interface TaskRow {
 const STATUS_META: Record<Status, { label: string; dot: string; chip: string }> = {
   done: {
     label: "Tamamlandı",
-    dot: "bg-emerald-500",
-    chip: "bg-emerald-50 text-emerald-700 ring-emerald-200",
+    dot: "bg-teal",
+    chip: "bg-teal/10 text-teal-deep ring-teal/20",
   },
   partial: {
     label: "İçerik Bekliyor",
-    dot: "bg-amber-500",
-    chip: "bg-amber-50 text-amber-700 ring-amber-200",
+    dot: "bg-orange",
+    chip: "bg-orange/10 text-orange ring-orange/20",
   },
   missing: {
     label: "Eksik",
-    dot: "bg-rose-500",
-    chip: "bg-rose-50 text-rose-700 ring-rose-200",
+    dot: "bg-red-500",
+    chip: "bg-red-50 text-red-600 ring-red-200",
   },
 };
 
