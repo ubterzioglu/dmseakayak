@@ -36,6 +36,7 @@ import {
   AdminSidebar,
   SectionInfoAccordion,
 } from "./admin-ui";
+import { GUIDE_BY_TAB } from "./guide-content";
 
 const ADMIN_EMAILS = [
   "kelifterzioglu@gmail.com",
@@ -63,85 +64,48 @@ const TABS: AdminNavItem<TabKey>[] = [
     label: "Rehber",
     description: "Paneli yeni kullanan ekip üyeleri için adım adım açıklamalar.",
     icon: BookOpenText,
-    help: [
-      "Her bölümün ne işe yaradığını öğrenin",
-      "Adım adım kullanım talimatlarını okuyun",
-    ],
   },
   {
     key: "reservations",
     label: "Rezervasyonlar",
     description: "Gelen talepleri takip edin, durum akışını yönetin.",
     icon: ClipboardList,
-    help: [
-      "Siteden gelen rezervasyon taleplerini görün",
-      "Durumu güncelleyin (Yeni → İletişimde → Onaylı → Tamam)",
-      "Telefon/WhatsApp ile müşteriye ulaşın",
-    ],
   },
   {
     key: "blog",
     label: "Blog",
     description: "Yazı üretin, taslakları düzenleyin, yayına alın.",
     icon: LayoutGrid,
-    help: [
-      "Yeni yazı oluşturun (başlık, kapak, içerik)",
-      "Taslak olarak kaydedin veya yayına alın",
-      "Mevcut yazıları düzenleyin / silin",
-    ],
   },
   {
     key: "gallery",
     label: "Galeri",
     description: "Fotoğraf seçin, sıralayın, görünürlüğünü kontrol edin.",
     icon: Images,
-    help: [
-      "Yeni fotoğraf yükleyin",
-      "Başlık, sıra ve görünürlük ayarlayın",
-      "Fotoğrafları düzenleyin / silin",
-    ],
   },
   {
     key: "reviews",
     label: "Yorumlar",
     description: "Müşteri yorumları ve çeviri akışlarını yönetin.",
     icon: MessageSquareQuote,
-    help: [
-      "Tekil veya toplu yorum ekleyin",
-      "4 dile otomatik çeviri yapın / düzenleyin",
-      "Yayınla / arşivle / sil",
-    ],
   },
   {
     key: "updates",
     label: "Güncellemeler",
     description: "Yayınlanan geliştirmeler ve içerik bekleyen işler.",
     icon: Sparkles,
-    help: [
-      "Tamamlanan geliştirmeleri tarih sırasıyla görün",
-      "Sırada bekleyen / içerik bekleyen işleri izleyin",
-    ],
   },
   {
     key: "status",
     label: "Durum Raporu",
     description: "Proje hedeflerini ve eksik alanları tek tabloda izleyin.",
     icon: ChartColumnBig,
-    help: [
-      "Proje hedeflerini ve tamamlanma durumunu görün",
-      "Eksik / bekleyen alanları tek tabloda izleyin",
-    ],
   },
   {
     key: "revisions",
     label: "Revizyonlar",
     description: "İç ekip isteklerini öncelik ve statüyle düzenleyin.",
     icon: NotebookPen,
-    help: [
-      "Ekip içi değişiklik isteği oluşturun",
-      "Aciliyet (1-10) ve durum atayın",
-      "İlerledikçe durumu güncelleyin veya silin",
-    ],
   },
 ];
 
@@ -337,11 +301,15 @@ function MobileSidebar({
 }
 
 function renderPanel(item: AdminNavItem<TabKey>) {
-  // Collapsed-by-default "what is this section for?" card, embedded as the
-  // second card inside each panel. Driven from the TABS metadata so the copy
-  // stays in one place.
+  // Collapsed-by-default "Bu bölüm ne işe yarar?" card, embedded as the second
+  // card inside each panel. Its body is a verbatim copy of the matching guide
+  // ("Rehber") section, looked up by label; falls back to the one-line tab
+  // description for tabs without a guide entry (Rehber, Durum Raporu).
   const infoSlot = (
-    <SectionInfoAccordion description={item.description} help={item.help} />
+    <SectionInfoAccordion
+      guide={GUIDE_BY_TAB[item.label]}
+      description={item.description}
+    />
   );
   switch (item.key) {
     case "guide":
@@ -554,22 +522,6 @@ export default function AdminPage() {
                 </div>
               }
             />
-
-            {activeTab.help && activeTab.help.length > 0 && (
-              <section className="rounded-[24px] border border-teal/10 bg-white px-5 py-4 shadow-[0_18px_50px_rgba(4,43,37,0.07)] sm:px-6">
-                <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-teal/45">
-                  Bu bölümde neler yapılabilir?
-                </div>
-                <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
-                  {activeTab.help.map((h, i) => (
-                    <li key={i} className="flex gap-2 text-[13px] leading-5 text-teal/75">
-                      <span className="mt-0.5 shrink-0 text-teal-light">›</span>
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
 
             <div key={tab} className={cn("animate-fadeUp")}>
               {renderPanel(activeTab)}

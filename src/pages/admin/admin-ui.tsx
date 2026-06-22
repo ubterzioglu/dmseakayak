@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ChevronDown, ChevronRight, KeyRound, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { GuideSection } from "./guide-content";
 
 /** Shared props for admin panels that embed the section info accordion. */
 export interface AdminPanelProps {
@@ -14,8 +15,6 @@ export interface AdminNavItem<T extends string = string> {
   label: string;
   description: string;
   icon: LucideIcon;
-  /** Short "what can I do here?" bullets shown in the active item's accordion. */
-  help?: string[];
 }
 
 interface AdminSidebarProps<T extends string> {
@@ -268,21 +267,26 @@ export function AdminCollapsible({
 }
 
 interface SectionInfoAccordionProps {
-  /** One-line section description (same text shown in the page header). */
-  description: string;
-  /** "What can I do here?" bullets. */
-  help?: string[];
+  /**
+   * Bölümün rehberdeki birebir içeriği (özet + adımlar + ipuçları). Rehber
+   * sekmesindeki ilgili bölümle aynı kaynaktan gelir; verilmezse `description`
+   * tek satırlık özet olarak kullanılır.
+   */
+  guide?: GuideSection;
+  /** Rehber bölümü yoksa gösterilecek tek satırlık özet (yedek). */
+  description?: string;
   className?: string;
 }
 
 /**
- * Collapsed-by-default accordion repeating the section description + help
- * bullets, embedded as the second card inside each panel. Lets users re-read
- * what a section is for without scrolling back to the header.
+ * Collapsed-by-default "Bu bölüm ne işe yarar?" accordion, embedded as the
+ * second card inside each panel. Its body is a verbatim copy of the matching
+ * guide ("Rehber") section — summary, step-by-step usage and tips — so the two
+ * never drift. Falls back to a one-line `description` when no guide exists.
  */
 export function SectionInfoAccordion({
+  guide,
   description,
-  help,
   className,
 }: SectionInfoAccordionProps) {
   const [open, setOpen] = useState(false);
@@ -311,16 +315,42 @@ export function SectionInfoAccordion({
       </button>
       {open && (
         <div className="border-t border-teal/8 px-4 py-4 sm:px-5">
-          <p className="text-[13px] leading-6 text-teal/70">{description}</p>
-          {help && help.length > 0 && (
-            <ul className="mt-3 grid gap-1.5 sm:grid-cols-2">
-              {help.map((h, i) => (
-                <li key={i} className="flex gap-2 text-[13px] leading-5 text-teal/75">
-                  <span className="mt-0.5 shrink-0 text-teal-light">›</span>
-                  <span>{h}</span>
-                </li>
-              ))}
-            </ul>
+          <p className="text-[13px] leading-6 text-teal/70">
+            {guide ? guide.summary : description}
+          </p>
+
+          {guide && guide.steps.length > 0 && (
+            <>
+              <div className="mt-4 text-[11px] font-bold uppercase tracking-[0.16em] text-teal/45">
+                Nasıl kullanılır
+              </div>
+              <ol className="mt-2 space-y-2">
+                {guide.steps.map((step, i) => (
+                  <li key={i} className="flex gap-2.5 text-[13px] leading-5 text-teal/80">
+                    <span className="mt-0.5 shrink-0 font-bold text-teal-light">
+                      {i + 1}.
+                    </span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </>
+          )}
+
+          {guide && guide.tips && guide.tips.length > 0 && (
+            <div className="mt-4 rounded-xl border border-teal/10 bg-foam/40 p-4">
+              <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-teal/45">
+                İpuçları
+              </div>
+              <ul className="space-y-1.5">
+                {guide.tips.map((tip, i) => (
+                  <li key={i} className="flex gap-2 text-[13px] leading-5 text-teal/80">
+                    <span className="mt-0.5 shrink-0 text-orange">★</span>
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
       )}
