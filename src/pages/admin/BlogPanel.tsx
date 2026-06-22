@@ -13,7 +13,7 @@ import {
 } from "@/hooks/useAdminContent";
 import { useConfirm } from "@/hooks/useConfirm";
 import { useObjectUrl } from "@/hooks/useObjectUrl";
-import { AdminEmptyState, AdminSurface } from "./admin-ui";
+import { AdminCollapsible, AdminEmptyState, AdminSurface } from "./admin-ui";
 
 export default function BlogPanel() {
   const { confirm, dialog } = useConfirm();
@@ -214,8 +214,8 @@ export default function BlogPanel() {
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-6 2xl:grid-cols-[minmax(0,1.1fr)_420px]">
-        <AdminSurface
+      <div className="space-y-6">
+        <AdminCollapsible
           title={editId ? "Yazıyı düzenle" : "Yeni yazı"}
           description="Kapak görseli, özet ve zengin metin içeriğini tek alandan hazırlayın."
         >
@@ -301,7 +301,7 @@ export default function BlogPanel() {
               </button>
             </div>
           </form>
-        </AdminSurface>
+        </AdminCollapsible>
 
         <AdminSurface
           title={`${items.length} yazı`}

@@ -9,9 +9,7 @@ import {
   FolderOpen,
   GalleryVerticalEnd,
   Images,
-  KeyRound,
   LayoutGrid,
-  LogOut,
   Menu,
   MessageSquareQuote,
   NotebookPen,
@@ -65,48 +63,85 @@ const TABS: AdminNavItem<TabKey>[] = [
     label: "Rehber",
     description: "Paneli yeni kullanan ekip üyeleri için adım adım açıklamalar.",
     icon: BookOpenText,
+    help: [
+      "Her bölümün ne işe yaradığını öğrenin",
+      "Adım adım kullanım talimatlarını okuyun",
+    ],
   },
   {
     key: "reservations",
     label: "Rezervasyonlar",
     description: "Gelen talepleri takip edin, durum akışını yönetin.",
     icon: ClipboardList,
+    help: [
+      "Siteden gelen rezervasyon taleplerini görün",
+      "Durumu güncelleyin (Yeni → İletişimde → Onaylı → Tamam)",
+      "Telefon/WhatsApp ile müşteriye ulaşın",
+    ],
   },
   {
     key: "revisions",
     label: "Revizyonlar",
     description: "İç ekip isteklerini öncelik ve statüyle düzenleyin.",
     icon: NotebookPen,
+    help: [
+      "Ekip içi değişiklik isteği oluşturun",
+      "Aciliyet (1-10) ve durum atayın",
+      "İlerledikçe durumu güncelleyin veya silin",
+    ],
   },
   {
     key: "blog",
     label: "Blog",
     description: "Yazı üretin, taslakları düzenleyin, yayına alın.",
     icon: LayoutGrid,
+    help: [
+      "Yeni yazı oluşturun (başlık, kapak, içerik)",
+      "Taslak olarak kaydedin veya yayına alın",
+      "Mevcut yazıları düzenleyin / silin",
+    ],
   },
   {
     key: "gallery",
     label: "Galeri",
     description: "Fotoğraf seçin, sıralayın, görünürlüğünü kontrol edin.",
     icon: Images,
+    help: [
+      "Yeni fotoğraf yükleyin",
+      "Başlık, sıra ve görünürlük ayarlayın",
+      "Fotoğrafları düzenleyin / silin",
+    ],
   },
   {
     key: "reviews",
     label: "Yorumlar",
     description: "Müşteri yorumları ve çeviri akışlarını yönetin.",
     icon: MessageSquareQuote,
+    help: [
+      "Tekil veya toplu yorum ekleyin",
+      "4 dile otomatik çeviri yapın / düzenleyin",
+      "Yayınla / arşivle / sil",
+    ],
   },
   {
     key: "updates",
     label: "Güncellemeler",
     description: "Yayınlanan geliştirmeler ve içerik bekleyen işler.",
     icon: Sparkles,
+    help: [
+      "Tamamlanan geliştirmeleri tarih sırasıyla görün",
+      "Sırada bekleyen / içerik bekleyen işleri izleyin",
+    ],
   },
   {
     key: "status",
     label: "Durum Raporu",
     description: "Proje hedeflerini ve eksik alanları tek tabloda izleyin.",
     icon: ChartColumnBig,
+    help: [
+      "Proje hedeflerini ve tamamlanma durumunu görün",
+      "Eksik / bekleyen alanları tek tabloda izleyin",
+    ],
   },
 ];
 
@@ -238,12 +273,16 @@ function MobileSidebar({
   onSelect,
   onClose,
   userEmail,
+  onChangePassword,
+  onLogout,
 }: {
   open: boolean;
   active: TabKey;
   onSelect: (key: TabKey) => void;
   onClose: () => void;
   userEmail?: string | null;
+  onChangePassword: () => void;
+  onLogout: () => void;
 }) {
   return (
     <AnimatePresence>
@@ -284,6 +323,11 @@ function MobileSidebar({
                 onClose();
               }}
               userEmail={userEmail}
+              onChangePassword={() => {
+                onChangePassword();
+                onClose();
+              }}
+              onLogout={onLogout}
             />
           </motion.div>
         </motion.div>
@@ -446,37 +490,32 @@ export default function AdminPage() {
     );
   }
 
-  const todayLabel = new Date().toLocaleDateString("tr-TR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  });
-
   return (
     <div className="min-h-screen bg-[#f6f3ee]">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(241,110,11,0.11),transparent_22%),radial-gradient(circle_at_80%_0%,rgba(1,99,82,0.08),transparent_26%),linear-gradient(180deg,#f6f3ee_0%,#fbfaf7_100%)]" />
       <div className="relative mx-auto max-w-[1500px] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
         <div className="grid gap-6 xl:grid-cols-[288px_minmax(0,1fr)]">
           <div className="hidden xl:block">
-            <div className="sticky top-6 max-h-[calc(100vh-3rem)]">
+            <div className="sticky top-6 flex max-h-[calc(100vh-3rem)] flex-col gap-4 overflow-y-auto pb-2">
               <AdminSidebar
                 items={TABS}
                 active={tab}
                 onSelect={setTab}
                 userEmail={user?.email}
-                footer={
-                  <div className="space-y-3">
-                    <div className="px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-teal/45">
-                      Hızlı Erişim
-                    </div>
-                    <div className="space-y-3">
-                      {QUICK_LINKS.map((link) => (
-                        <AdminQuickLinkCard key={link.title} {...link} />
-                      ))}
-                    </div>
-                  </div>
-                }
+                onChangePassword={() => setShowChangePassword(true)}
+                onLogout={() => void handleLogout()}
+                className="h-auto shrink-0"
               />
+              <section className="rounded-[28px] border border-teal/10 bg-white/95 p-4 shadow-[0_20px_60px_rgba(4,43,37,0.08)] backdrop-blur">
+                <div className="px-2 pb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-teal/45">
+                  Linkler
+                </div>
+                <div className="space-y-3">
+                  {QUICK_LINKS.map((link) => (
+                    <AdminQuickLinkCard key={link.title} {...link} />
+                  ))}
+                </div>
+              </section>
             </div>
           </div>
 
@@ -499,54 +538,6 @@ export default function AdminPage() {
               eyebrow="Çalışma Alanı"
               title={activeTab.label}
               description={activeTab.description}
-              actions={
-                <>
-                  <button
-                    type="button"
-                    onClick={() => setShowChangePassword(true)}
-                    className="inline-flex items-center gap-2 rounded-full border border-teal/12 bg-white px-3.5 py-2 text-[13px] font-semibold text-teal-deep transition hover:bg-foam"
-                  >
-                    <KeyRound className="h-3.5 w-3.5" />
-                    Şifre Değiştir
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void handleLogout()}
-                    className="inline-flex items-center gap-2 rounded-full bg-teal-deep px-3.5 py-2 text-[13px] font-semibold text-white transition hover:bg-teal"
-                  >
-                    <LogOut className="h-3.5 w-3.5" />
-                    Çıkış
-                  </button>
-                </>
-              }
-              extra={
-                <>
-                  <div>
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal/45">
-                      Bugün
-                    </div>
-                    <div className="mt-1.5 font-serif text-xl leading-none text-teal-deep">
-                      {todayLabel}
-                    </div>
-                    <div className="mt-2 text-[13px] leading-5 text-teal/58">
-                      Aktif alan: {activeTab.label}. Aynı route içinde hızlı geçiş korunur.
-                    </div>
-                  </div>
-                  <div className="mt-3 space-y-2">
-                    <div className="rounded-xl border border-white/70 bg-white/80 px-3 py-2.5">
-                      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal/45">
-                        Yetkili hesap
-                      </div>
-                      <div className="mt-0.5 break-all text-[13px] font-medium text-teal-deep">
-                        {user?.email}
-                      </div>
-                    </div>
-                    <div className="rounded-xl border border-teal/10 bg-white/65 px-3 py-2.5 text-[13px] text-teal/58">
-                      Dış bağlantılar masaüstünde sol panelde, mobilde aşağıda yer alır.
-                    </div>
-                  </div>
-                </>
-              }
             />
 
             <div className="grid gap-4 md:grid-cols-3 xl:hidden">
@@ -568,6 +559,8 @@ export default function AdminPage() {
         onSelect={setTab}
         onClose={() => setMobileNavOpen(false)}
         userEmail={user?.email}
+        onChangePassword={() => setShowChangePassword(true)}
+        onLogout={() => void handleLogout()}
       />
 
       <ChangePasswordModal open={showChangePassword} onClose={() => setShowChangePassword(false)} />

@@ -16,7 +16,7 @@ import {
 } from "@/hooks/useAdminContent";
 import { parseBulkReviews } from "@/lib/parseReviews";
 import { useConfirm } from "@/hooks/useConfirm";
-import { AdminEmptyState, AdminSurface } from "./admin-ui";
+import { AdminCollapsible, AdminEmptyState, AdminSurface } from "./admin-ui";
 
 interface FormState {
   id?: string;
@@ -297,11 +297,12 @@ export default function ReviewsPanel() {
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
+      <div className="space-y-6">
         <div className="space-y-6">
-          <AdminSurface
+          <AdminCollapsible
             title="Otomatik çeviri"
             description="Eksik dilleri topluca tamamlar; elle düzenlenen çeviriler korunur."
+            defaultOpen={false}
           >
             <div className="space-y-4">
               <button
@@ -314,11 +315,12 @@ export default function ReviewsPanel() {
               </button>
               {translateMsg && <div className="text-sm leading-6 text-teal/70">{translateMsg}</div>}
             </div>
-          </AdminSurface>
+          </AdminCollapsible>
 
-          <AdminSurface
+          <AdminCollapsible
             title="Toplu ekle"
             description="JSON dizisi ya da satır tabanlı format ile yorumları toplu içe aktarın."
+            defaultOpen={false}
           >
             <p className="mb-3 text-xs leading-6 text-teal/60">
               Google Maps kazıyıcısının ürettiği JSON dizisini (
@@ -343,9 +345,9 @@ export default function ReviewsPanel() {
               </button>
               {bulkMsg && <span className="text-sm text-teal/70">{bulkMsg}</span>}
             </div>
-          </AdminSurface>
+          </AdminCollapsible>
 
-          <AdminSurface
+          <AdminCollapsible
             title={form.id ? "Yorumu düzenle" : "Yeni yorum"}
             description="Tekil yorum girişi, sıralama ve kaynak bilgisi."
           >
@@ -450,7 +452,7 @@ export default function ReviewsPanel() {
                 )}
               </div>
             </form>
-          </AdminSurface>
+          </AdminCollapsible>
         </div>
 
         <AdminSurface

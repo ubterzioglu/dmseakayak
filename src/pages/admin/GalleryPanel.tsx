@@ -9,7 +9,7 @@ import {
 } from "@/hooks/useAdminContent";
 import { useConfirm } from "@/hooks/useConfirm";
 import { useObjectUrl } from "@/hooks/useObjectUrl";
-import { AdminEmptyState, AdminSurface } from "./admin-ui";
+import { AdminCollapsible, AdminEmptyState, AdminSurface } from "./admin-ui";
 
 export default function GalleryPanel() {
   const { confirm, dialog } = useConfirm();
@@ -121,8 +121,8 @@ export default function GalleryPanel() {
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
-        <AdminSurface
+      <div className="space-y-6">
+        <AdminCollapsible
           title={editId ? "Fotoğrafı düzenle" : "Yeni fotoğraf"}
           description="Görsel yükleyin, metin alanlarını düzenleyin ve yayın görünürlüğünü kontrol edin."
         >
@@ -201,7 +201,7 @@ export default function GalleryPanel() {
               </button>
             </div>
           </form>
-        </AdminSurface>
+        </AdminCollapsible>
 
         <AdminSurface
           title={`${items.length} fotoğraf`}

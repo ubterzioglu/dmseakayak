@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, KeyRound, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface AdminNavItem<T extends string = string> {
@@ -8,6 +8,8 @@ export interface AdminNavItem<T extends string = string> {
   label: string;
   description: string;
   icon: LucideIcon;
+  /** Short "what can I do here?" bullets shown in the active item's accordion. */
+  help?: string[];
 }
 
 interface AdminSidebarProps<T extends string> {
@@ -15,6 +17,8 @@ interface AdminSidebarProps<T extends string> {
   active: T;
   onSelect: (key: T) => void;
   userEmail?: string | null;
+  onChangePassword?: () => void;
+  onLogout?: () => void;
   footer?: ReactNode;
   className?: string;
 }
@@ -24,6 +28,8 @@ export function AdminSidebar<T extends string>({
   active,
   onSelect,
   userEmail,
+  onChangePassword,
+  onLogout,
   footer,
   className,
 }: AdminSidebarProps<T>) {
@@ -46,6 +52,30 @@ export function AdminSidebar<T extends string>({
               Oturum
             </div>
             <div className="mt-0.5 break-all text-xs font-medium text-teal-deep">{userEmail}</div>
+            {(onChangePassword || onLogout) && (
+              <div className="mt-2 flex gap-1.5">
+                {onChangePassword && (
+                  <button
+                    type="button"
+                    onClick={onChangePassword}
+                    className="inline-flex flex-1 items-center justify-center gap-1 rounded-lg border border-teal/15 bg-white px-2 py-1.5 text-[11px] font-semibold text-teal-deep transition hover:bg-foam"
+                  >
+                    <KeyRound className="h-3 w-3" />
+                    Şifre
+                  </button>
+                )}
+                {onLogout && (
+                  <button
+                    type="button"
+                    onClick={onLogout}
+                    className="inline-flex flex-1 items-center justify-center gap-1 rounded-lg bg-teal-deep px-2 py-1.5 text-[11px] font-semibold text-white transition hover:bg-teal"
+                  >
+                    <LogOut className="h-3 w-3" />
+                    Çıkış
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -55,47 +85,54 @@ export function AdminSidebar<T extends string>({
           const Icon = item.icon;
           const isActive = active === item.key;
           return (
-            <button
-              key={item.key}
-              type="button"
-              onClick={() => onSelect(item.key)}
-              className={cn(
-                "group flex w-full items-start gap-2.5 rounded-xl px-2.5 py-2 text-left transition-all",
-                isActive
-                  ? "bg-teal-deep text-white shadow-[0_16px_32px_rgba(1,68,57,0.18)]"
-                  : "text-teal-deep hover:bg-foam/80",
-              )}
-            >
-              <span
+            <div key={item.key}>
+              <button
+                type="button"
+                onClick={() => onSelect(item.key)}
                 className={cn(
-                  "mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border transition-colors",
+                  "group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition-all",
                   isActive
-                    ? "border-white/15 bg-white/10 text-white"
-                    : "border-teal/10 bg-white text-teal",
+                    ? "bg-teal-deep text-white shadow-[0_16px_32px_rgba(1,68,57,0.18)]"
+                    : "text-teal-deep hover:bg-foam/80",
                 )}
               >
-                <Icon className="h-4 w-4" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="flex items-center gap-1.5">
-                  <span className="text-[13px] font-semibold">{item.label}</span>
-                  <ChevronRight
-                    className={cn(
-                      "h-3 w-3 transition-transform",
-                      isActive ? "translate-x-0 text-white/70" : "text-teal/30 group-hover:translate-x-0.5",
-                    )}
-                  />
-                </span>
                 <span
                   className={cn(
-                    "mt-0.5 block text-[11px] leading-4",
-                    isActive ? "text-white/70" : "text-teal/55",
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border transition-colors",
+                    isActive
+                      ? "border-white/15 bg-white/10 text-white"
+                      : "border-teal/10 bg-white text-teal",
                   )}
                 >
-                  {item.description}
+                  <Icon className="h-4 w-4" />
                 </span>
-              </span>
-            </button>
+                <span className="min-w-0 flex-1 text-[13px] font-semibold">{item.label}</span>
+                <ChevronRight
+                  className={cn(
+                    "h-3.5 w-3.5 shrink-0 transition-transform",
+                    isActive
+                      ? "rotate-90 text-white/70"
+                      : "text-teal/30 group-hover:translate-x-0.5",
+                  )}
+                />
+              </button>
+
+              {isActive && item.help && item.help.length > 0 && (
+                <div className="mt-1 ml-2.5 rounded-xl border border-teal/10 bg-foam/45 px-3 py-2.5">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-teal/45">
+                    Bu bölümde neler yapılabilir?
+                  </div>
+                  <ul className="mt-1.5 space-y-1">
+                    {item.help.map((h, i) => (
+                      <li key={i} className="flex gap-1.5 text-[11px] leading-4 text-teal/70">
+                        <span className="mt-0.5 shrink-0 text-teal-light">›</span>
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           );
         })}
       </nav>
@@ -121,30 +158,24 @@ export function AdminPageHeader({
   extra,
 }: AdminPageHeaderProps) {
   return (
-    <section className="overflow-hidden rounded-[28px] border border-teal/10 bg-white px-5 py-4 shadow-[0_24px_80px_rgba(4,43,37,0.08)] sm:px-6">
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-center">
-        <div>
-          {eyebrow && (
-            <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-teal/45">
-              {eyebrow}
-            </div>
-          )}
-          <div className="mt-2 max-w-3xl">
-            <h1 className="font-serif text-[1.9rem] leading-[0.98] text-teal-deep sm:text-[2.25rem]">
+    <section className="overflow-hidden rounded-[24px] border border-teal/10 bg-white px-5 py-3.5 shadow-[0_18px_50px_rgba(4,43,37,0.07)] sm:px-6">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+            <h1 className="font-serif text-[1.5rem] leading-tight text-teal-deep sm:text-[1.75rem]">
               {title}
             </h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-teal/65">
-              {description}
-            </p>
+            {eyebrow && (
+              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-teal/40">
+                {eyebrow}
+              </span>
+            )}
           </div>
-          {actions && <div className="mt-4 flex flex-wrap gap-3">{actions}</div>}
+          <p className="mt-0.5 max-w-2xl text-[13px] leading-5 text-teal/60">{description}</p>
         </div>
-        {extra && (
-          <div className="flex flex-col justify-between rounded-[24px] border border-teal/10 bg-foam/60 p-4">
-            {extra}
-          </div>
-        )}
+        {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
       </div>
+      {extra}
     </section>
   );
 }
@@ -183,6 +214,64 @@ export function AdminSurface({
         </div>
       )}
       <div className={cn("px-4 py-4 sm:px-5", contentClassName)}>{children}</div>
+    </section>
+  );
+}
+
+interface AdminCollapsibleProps {
+  title: string;
+  description?: string;
+  /** Open by default on first render. */
+  defaultOpen?: boolean;
+  children: ReactNode;
+  className?: string;
+  contentClassName?: string;
+}
+
+/**
+ * Accordion-style surface: a clickable header toggles the body open/closed.
+ * Used to keep entry forms collapsible above their content lists.
+ */
+export function AdminCollapsible({
+  title,
+  description,
+  defaultOpen = true,
+  children,
+  className,
+  contentClassName,
+}: AdminCollapsibleProps) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <section
+      className={cn(
+        "overflow-hidden rounded-[28px] border border-teal/10 bg-white shadow-[0_18px_50px_rgba(4,43,37,0.07)]",
+        className,
+      )}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left transition-colors hover:bg-foam/50 sm:px-5"
+      >
+        <div className="min-w-0">
+          <h2 className="text-base font-semibold text-teal-deep">{title}</h2>
+          {description && (
+            <p className="mt-0.5 text-[13px] leading-5 text-teal/58">{description}</p>
+          )}
+        </div>
+        <ChevronDown
+          className={cn(
+            "h-5 w-5 shrink-0 text-teal/50 transition-transform",
+            open ? "rotate-180" : "",
+          )}
+        />
+      </button>
+      {open && (
+        <div className={cn("border-t border-teal/8 px-4 py-4 sm:px-5", contentClassName)}>
+          {children}
+        </div>
+      )}
     </section>
   );
 }

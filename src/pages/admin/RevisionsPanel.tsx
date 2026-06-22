@@ -9,7 +9,7 @@ import {
   type RevisionStatus,
 } from "@/hooks/useAdminContent";
 import { useConfirm } from "@/hooks/useConfirm";
-import { AdminEmptyState, AdminSurface } from "./admin-ui";
+import { AdminCollapsible, AdminEmptyState, AdminSurface } from "./admin-ui";
 
 const STATUS_LABELS: Record<RevisionStatus, string> = {
   open: "Açık",
@@ -123,8 +123,8 @@ export default function RevisionsPanel() {
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
-        <AdminSurface
+      <div className="space-y-6">
+        <AdminCollapsible
           title="Yeni revizyon isteği"
           description="Ekibin görmek istediği değişikliği kısa, net ve öncelikli biçimde girin."
         >
@@ -190,7 +190,7 @@ export default function RevisionsPanel() {
               {submitting ? "Ekleniyor..." : "İsteği Kaydet"}
             </button>
           </form>
-        </AdminSurface>
+        </AdminCollapsible>
 
         <AdminSurface
           title={`${items.length} revizyon isteği`}
