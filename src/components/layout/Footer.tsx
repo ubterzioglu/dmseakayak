@@ -10,23 +10,22 @@ export function Footer() {
 
   return (
     <footer className="bg-teal-deep text-white/85">
-      <div className="container grid gap-10 py-12 md:grid-cols-3">
+      <div className="container space-y-8 py-12">
         <div>
-          <span className="mb-4 inline-block rounded-xl bg-white/95 px-3 py-2">
-            <img src="/logo.png" alt="Dragoman SeaKayak" className="h-10 w-auto" />
-          </span>
-          <p className="max-w-xs text-sm opacity-80">{t("footer.tagline")}</p>
-          <div className="mt-4 flex gap-4">
-            <a href={SITE.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
-              <Instagram className="h-7 w-7" />
-            </a>
-            <a href={SITE.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
-              <Facebook className="h-7 w-7" />
-            </a>
-            <a href={`mailto:${SITE.email}`} aria-label="Email" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
-              <Mail className="h-7 w-7" />
-            </a>
-          </div>
+          <span className="text-xl font-semibold text-white">{SITE.name}</span>
+          <p className="mt-2 max-w-xs text-sm opacity-80">{t("footer.tagline")}</p>
+        </div>
+
+        <div className="flex gap-4">
+          <a href={SITE.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
+            <Instagram className="h-7 w-7" />
+          </a>
+          <a href={SITE.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
+            <Facebook className="h-7 w-7" />
+          </a>
+          <a href={`mailto:${SITE.email}`} aria-label="Email" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
+            <Mail className="h-7 w-7" />
+          </a>
         </div>
 
         <div>
@@ -56,14 +55,13 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 py-5 text-center text-sm opacity-70">
+      <div className="border-t border-white/10 py-5 text-center text-xs opacity-70">
         © {year} {SITE.name} — {t("footer.rights")}
-        <div className="mt-2 text-xs opacity-70">
-          <a href="https://chatio.com.tr/" rel="dofollow" target="_blank" className="hover:text-orange-soft">Canlı Destek Yazılımı</a>
-          <span className="mx-2 text-white/25">·</span>
-          <a href="https://www.spindorai.com/seo/en-iyi-seo-ajansi" rel="dofollow" target="_blank" className="hover:text-orange-soft">Seo Ajansı</a>
-          {" "}Spindora Tarafından Seosu Yapılmıştır.
-        </div>
+        {" · "}
+        <a href="https://chatio.com.tr/" rel="dofollow" target="_blank" className="hover:text-orange-soft">Canlı Destek Yazılımı</a>
+        <span className="mx-2 text-white/25">·</span>
+        <a href="https://www.spindorai.com/seo/en-iyi-seo-ajansi" rel="dofollow" target="_blank" className="hover:text-orange-soft">Seo Ajansı</a>
+        {" "}Spindora Tarafından Seosu Yapılmıştır.
       </div>
     </footer>
   );

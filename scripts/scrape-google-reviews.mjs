@@ -32,18 +32,23 @@ function parseRating(label) {
   return Math.min(5, Math.max(1, n));
 }
 
-/** Crude language guess from the body so source_lang is reasonable; admin can fix. */
+/**
+ * Crude language guess for source_lang. Only tr/en/fr/ru are valid DB values,
+ * so non-supported languages (e.g. German) fall back to "en" — the translator
+ * will still render the body into all 4 target languages from there. Admin can
+ * fix source_lang in the panel if needed.
+ */
 function guessLang(text) {
   const t = (text || "").toLowerCase();
-  if (/[ğşıöçü]/.test(t) || /\b(çok|harika|tur|rehber|deneyim|teşekkür)\b/.test(t)) return "tr";
+  if (/[ğş]|ı\b/.test(t) || /\b(çok|harika|tekne|rehber|deneyim|teşekkür|gezi)\b/.test(t)) return "tr";
   if (/[а-яё]/.test(t)) return "ru";
-  if (/\b(très|était|nous|magnifique|excellent|expérience|guide)\b/.test(t)) return "fr";
-  return "en";
+  if (/\b(très|était|nous avons|magnifique|expérience|génial|merci)\b/.test(t)) return "fr";
+  return "en"; // English + any unsupported language (de, it, es, ...) → en
 }
 
 async function clickReviewsTab(page) {
-  // Try several known labels across locales.
-  const labels = ["Reviews", "Yorumlar", "Avis", "Отзывы"];
+  // Try several known labels across locales (de = Rezensionen).
+  const labels = ["Reviews", "Yorumlar", "Rezensionen", "Avis", "Отзывы"];
   for (const label of labels) {
     const btn = page.getByRole("tab", { name: new RegExp(label, "i") }).first();
     if (await btn.count().catch(() => 0)) {
@@ -63,23 +68,46 @@ async function clickReviewsTab(page) {
 }
 
 async function getScrollable(page) {
-  // The reviews list lives in a scrollable feed pane.
-  const candidates = [
-    'div[role="feed"]',
-    'div.m6QErb[aria-label]',
-    'div.DxyBCb',
-  ];
-  for (const sel of candidates) {
+  // Static candidates first (fast path).
+  for (const sel of ['div[role="feed"]', 'div.m6QErb[tabindex="-1"]', "div.DxyBCb"]) {
     const el = page.locator(sel).first();
-    if (await el.count().catch(() => 0)) return el;
+    if ((await el.count().catch(() => 0)) && (await el.evaluate((e) => e.scrollHeight > e.clientHeight + 50).catch(() => false))) {
+      return el;
+    }
   }
+  // Dynamic: walk up from a review card to its nearest scrollable ancestor and
+  // tag it so we can target it with a locator afterwards.
+  const tagged = await page.evaluate(() => {
+    const card = document.querySelector("div[data-review-id], div.jftiEf");
+    let el = card?.parentElement;
+    while (el) {
+      const oy = getComputedStyle(el).overflowY;
+      if ((oy === "auto" || oy === "scroll") && el.scrollHeight > el.clientHeight + 50) {
+        el.setAttribute("data-scrape-scroll", "1");
+        return true;
+      }
+      el = el.parentElement;
+    }
+    return false;
+  });
+  if (tagged) return page.locator('[data-scrape-scroll="1"]').first();
   return null;
 }
 
 async function expandMoreButtons(page) {
-  // Click every "More"/"Daha fazla" to reveal truncated review bodies.
+  // Reveal truncated bodies. Covers en/tr/de/fr/ru "More" labels. Google uses a
+  // generic button with these texts inside each long review.
   const more = page.locator(
-    'button[aria-label*="More"], button[aria-label*="Daha fazla"], button:has-text("More"), button:has-text("Daha fazla")',
+    [
+      'button[aria-label*="More"]',
+      'button[aria-label*="Daha fazla"]',
+      'button:has-text("More")',
+      'button:has-text("Daha fazla")',
+      'button:has-text("Mehr anzeigen")',
+      'button:has-text("Mehr")',
+      'button:has-text("Plus")',
+      'button:has-text("Ещё")',
+    ].join(", "),
   );
   const count = await more.count().catch(() => 0);
   for (let i = 0; i < count; i++) {
@@ -117,8 +145,19 @@ async function extractReviews(page) {
   });
 }
 
+/** Force the Google UI into English (hl=en) so tab/button labels are stable. */
+function withEnglish(url) {
+  try {
+    const u = new URL(url);
+    u.searchParams.set("hl", "en");
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
 async function main() {
-  const url = process.argv[2] || DEFAULT_URL;
+  const url = withEnglish(process.argv[2] || DEFAULT_URL);
   const headful = process.env.HEADFUL === "1";
   console.log(`Opening: ${url}`);
 
@@ -128,22 +167,37 @@ async function main() {
     viewport: { width: 1280, height: 900 },
   });
 
+  // Short-link (maps.app.goo.gl) redirects; after it settles, hl may be lost —
+  // re-assert English once we're on the final maps URL.
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
   await page.waitForTimeout(3000);
 
-  // Consent screens (EU) — accept if present.
-  for (const name of ["Accept all", "Tümünü kabul et", "Tout accepter", "Принять все"]) {
-    const b = page.getByRole("button", { name: new RegExp(name, "i") }).first();
-    if (await b.count().catch(() => 0)) {
-      await b.click().catch(() => {});
-      await page.waitForTimeout(1500);
-      break;
+  // Consent screens (EU). Google sometimes renders these inside a nested
+  // iframe, so check every frame, not just the main page. de = "Alle akzeptieren".
+  const consentLabels = [
+    "Accept all",
+    "Alle akzeptieren",
+    "Tümünü kabul et",
+    "Tout accepter",
+    "Принять все",
+    "Reject all",
+    "Alle ablehnen",
+  ];
+  for (const frame of page.frames()) {
+    for (const name of consentLabels) {
+      const b = frame.getByRole("button", { name: new RegExp(name, "i") }).first();
+      if (await b.count().catch(() => 0)) {
+        await b.click().catch(() => {});
+        await page.waitForTimeout(2000);
+        break;
+      }
     }
   }
 
   await clickReviewsTab(page);
+  await page.waitForTimeout(2000);
 
-  const scrollable = await getScrollable(page);
+  let scrollable = await getScrollable(page);
   if (!scrollable) {
     console.warn("Could not find the reviews scroll pane. Run with HEADFUL=1 to inspect.");
   }
@@ -151,18 +205,30 @@ async function main() {
   // Scroll until the count stops growing.
   let stable = 0;
   let lastCount = 0;
-  for (let i = 0; i < 400 && stable < 6; i++) {
+  for (let i = 0; i < 400 && stable < 8; i++) {
+    // The scroll pane only materializes once reviews render; retry to find it.
+    if (!scrollable) scrollable = await getScrollable(page);
+
     if (scrollable) {
-      await scrollable.evaluate((el) => el.scrollBy(0, el.scrollHeight)).catch(() => {});
+      await scrollable
+        .evaluate((el) => el.scrollBy(0, el.scrollHeight))
+        .catch(() => {});
     } else {
-      await page.mouse.wheel(0, 4000);
+      // Fallback: hover a card so the wheel scrolls the list, not the map.
+      const card = page.locator("div[data-review-id], div.jftiEf").last();
+      await card.hover().catch(() => {});
+      await page.mouse.wheel(0, 5000);
     }
     await page.waitForTimeout(900);
+
+    // Periodically expand truncated bodies as they load.
+    if (i % 5 === 0) await expandMoreButtons(page);
+
     const current = await page.locator("div[data-review-id], div.jftiEf").count().catch(() => 0);
     if (current === lastCount) stable++;
     else stable = 0;
     lastCount = current;
-    if (i % 10 === 0) console.log(`  ...loaded ~${current} reviews`);
+    if (i % 5 === 0) console.log(`  ...loaded ~${current} reviews`);
   }
 
   await expandMoreButtons(page);
