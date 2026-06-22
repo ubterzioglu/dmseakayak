@@ -74,7 +74,7 @@ export default {
       animation: {
         bob: "bob 5s ease-in-out infinite",
         fadeUp: "fadeUp 0.8s ease both",
-        marquee: "marquee 40s linear infinite",
+        marquee: "marquee 80s linear infinite",
         paddle: "paddle 22s linear infinite",
         rock: "rock 3s ease-in-out infinite",
       },

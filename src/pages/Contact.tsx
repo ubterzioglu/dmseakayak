@@ -94,8 +94,8 @@ export default function Contact() {
             {/* Map embed */}
             <div className="overflow-hidden rounded-2xl border border-teal/10 shadow-[0_4px_16px_rgba(1,68,57,0.07)]">
               <iframe
-                title="Kaş / Kekova haritası"
-                src="https://www.google.com/maps?q=Üçağız,Kekova,Antalya,Turkey&output=embed"
+                title="Dragoman SeaKayak — Kaş haritası"
+                src="https://www.google.com/maps?q=Dragoman+Diving+and+Outdoor,Kaş,Antalya,Turkey&output=embed"
                 width="100%"
                 height="220"
                 style={{ border: 0 }}

@@ -10,13 +10,13 @@ export function Footer() {
 
   return (
     <footer className="bg-teal-deep text-white/85">
-      <div className="container space-y-8 py-12">
-        <div>
+      <div className="container flex flex-col items-center space-y-8 py-12 text-center">
+        <div className="flex flex-col items-center">
           <span className="text-xl font-semibold text-white">{SITE.name}</span>
           <p className="mt-2 max-w-xs text-sm opacity-80">{t("footer.tagline")}</p>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex justify-center gap-4">
           <a href={SITE.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/25 p-3 transition-colors hover:bg-orange hover:border-orange">
             <Instagram className="h-7 w-7" />
           </a>
@@ -30,7 +30,7 @@ export function Footer() {
 
         <div>
           <h3 className="mb-3 font-semibold text-white">{t("footer.quickLinks")}</h3>
-          <nav className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
+          <nav className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm">
             <Link to={localePath(SEG.tours)} className="hover:text-orange-soft">{t("nav.tours")}</Link>
             <span className="text-white/25">|</span>
             <Link to={localePath(SEG.customTours)} className="hover:text-orange-soft">{t("nav.customTours")}</Link>
@@ -48,9 +48,9 @@ export function Footer() {
         <div>
           <h3 className="mb-3 font-semibold text-white">{t("contact.title")}</h3>
           <ul className="space-y-2 text-sm">
-            <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0" /> {SITE.address}</li>
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0" /> <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="hover:text-orange-soft">{SITE.phone}</a></li>
-            <li className="flex items-center gap-2"><Mail className="h-4 w-4 shrink-0" /> <a href={`mailto:${SITE.email}`} className="hover:text-orange-soft">{SITE.email}</a></li>
+            <li className="flex items-start justify-center gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0" /> {SITE.address}</li>
+            <li className="flex items-center justify-center gap-2"><Phone className="h-4 w-4 shrink-0" /> <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="hover:text-orange-soft">{SITE.phone}</a></li>
+            <li className="flex items-center justify-center gap-2"><Mail className="h-4 w-4 shrink-0" /> <a href={`mailto:${SITE.email}`} className="hover:text-orange-soft">{SITE.email}</a></li>
           </ul>
         </div>
       </div>
