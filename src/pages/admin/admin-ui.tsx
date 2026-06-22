@@ -36,10 +36,10 @@ export function AdminSidebar<T extends string>({
     >
       <div className="border-b border-teal/8 px-2 pb-4">
         <div className="inline-flex rounded-full border border-orange/20 bg-orange/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-orange">
-          Admin Workspace
+          Yönetim Paneli
         </div>
         <div className="mt-4 font-serif text-[2rem] leading-none text-teal-deep">Dragoman</div>
-        <div className="text-sm text-teal/62">Açık editorial çalışma alanı</div>
+        <div className="text-sm text-teal/62">İçerik ve rezervasyon yönetimi</div>
         {userEmail && (
           <div className="mt-4 rounded-2xl border border-teal/10 bg-foam/55 px-4 py-3">
             <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal/45">

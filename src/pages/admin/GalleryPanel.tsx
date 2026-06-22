@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { toast } from "sonner";
 import {
   fetchGalleryImages,
   saveGalleryImage,
@@ -6,9 +7,12 @@ import {
   uploadGalleryImage,
   type GalleryRow,
 } from "@/hooks/useAdminContent";
+import { useConfirm } from "@/hooks/useConfirm";
+import { useObjectUrl } from "@/hooks/useObjectUrl";
 import { AdminEmptyState, AdminSurface } from "./admin-ui";
 
 export default function GalleryPanel() {
+  const { confirm, dialog } = useConfirm();
   const [items, setItems] = useState<GalleryRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -81,29 +85,39 @@ export default function GalleryPanel() {
         },
         editId,
       );
+      toast.success(editId ? "Fotoğraf güncellendi." : "Fotoğraf kaydedildi.");
       resetForm();
       await load();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Kaydedilemedi");
+      toast.error("Fotoğraf kaydedilemedi.");
     } finally {
       setSubmitting(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Bu fotoğrafı sil?")) return;
+    const ok = await confirm({
+      title: "Bu fotoğraf silinsin mi?",
+      description: "Bu işlem geri alınamaz.",
+      confirmLabel: "Sil",
+      destructive: true,
+    });
+    if (!ok) return;
     setBusyId(id);
     try {
       await deleteGalleryImage(id);
       setItems((prev) => prev.filter((g) => g.id !== id));
+      toast.success("Fotoğraf silindi.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Silinemedi");
+      toast.error("Fotoğraf silinemedi.");
     } finally {
       setBusyId(null);
     }
   };
 
-  const preview = file ? URL.createObjectURL(file) : imageUrl;
+  const preview = useObjectUrl(file, imageUrl);
 
   return (
     <div className="space-y-6">
@@ -251,6 +265,7 @@ export default function GalleryPanel() {
           </div>
         </AdminSurface>
       </div>
+      {dialog}
     </div>
   );
 }

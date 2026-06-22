@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "sonner";
 import type { Session, User } from "@supabase/supabase-js";
 import {
   BookOpenText,
@@ -19,6 +20,8 @@ import {
   X,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { friendlyAuthError } from "@/lib/authErrors";
+import { PasswordInput } from "@/components/ui/password-input";
 import { cn } from "@/lib/utils";
 import BlogPanel from "./BlogPanel";
 import ChangePasswordModal from "./ChangePasswordModal";
@@ -133,11 +136,12 @@ const QUICK_LINKS = [
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => Promise<void>;
+  onForgotPassword: (email: string) => Promise<void>;
   error: string;
   loading: boolean;
 }
 
-function AdminLogin({ onLogin, error, loading }: LoginFormProps) {
+function AdminLogin({ onLogin, onForgotPassword, error, loading }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -152,29 +156,15 @@ function AdminLogin({ onLogin, error, loading }: LoginFormProps) {
       <div className="relative mx-auto grid min-h-[calc(100vh-5rem)] max-w-6xl items-center gap-8 lg:grid-cols-[1.1fr_480px]">
         <section className="rounded-[36px] border border-teal/10 bg-white/80 p-8 shadow-[0_32px_90px_rgba(4,43,37,0.08)] backdrop-blur sm:p-12">
           <div className="inline-flex rounded-full border border-orange/20 bg-orange/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-orange">
-            Admin Workspace
+            Yönetim Paneli
           </div>
           <h1 className="mt-6 max-w-xl font-serif text-5xl leading-[0.92] text-teal-deep sm:text-6xl">
-            Sade ama güçlü bir yönetim deneyimi.
+            Dragoman Yönetim Paneli
           </h1>
           <p className="mt-5 max-w-lg text-sm leading-7 text-teal/62 sm:text-[15px]">
-            Rezervasyonlar, içerik yönetimi ve ekip içi revizyon akışı tek bir rafine panelde.
-            Mevcut işlevler korunur; odak, okunabilirlik ve hız artar.
+            Rezervasyonları takip edin, blog ve galeriyi yönetin, ekip içi revizyon
+            isteklerini tek yerden düzenleyin. Giriş yapmak için sağdaki formu kullanın.
           </p>
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
-            {[
-              { label: "8 bölüm", value: "Tam kapsam" },
-              { label: "Canlı içerik", value: "Supabase bağlı" },
-              { label: "Hızlı erişim", value: "Drive + Clarity" },
-            ].map((item) => (
-              <div key={item.label} className="rounded-[24px] border border-teal/10 bg-foam/55 p-4">
-                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-teal/45">
-                  {item.label}
-                </div>
-                <div className="mt-2 text-lg font-semibold text-teal-deep">{item.value}</div>
-              </div>
-            ))}
-          </div>
         </section>
 
         <section className="rounded-[32px] border border-teal/10 bg-white p-7 shadow-[0_28px_80px_rgba(4,43,37,0.10)] sm:p-9">
@@ -206,13 +196,11 @@ function AdminLogin({ onLogin, error, loading }: LoginFormProps) {
               <label className="mb-2 block text-sm font-semibold text-teal-deep" htmlFor="adm-pass">
                 Şifre
               </label>
-              <input
+              <PasswordInput
                 id="adm-pass"
-                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full rounded-2xl border border-teal/12 bg-[#fcfbf8] px-4 py-3 text-base outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/10"
               />
             </div>
 
@@ -228,6 +216,14 @@ function AdminLogin({ onLogin, error, loading }: LoginFormProps) {
               className="inline-flex w-full items-center justify-center rounded-full bg-teal-deep px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-teal disabled:opacity-50"
             >
               {loading ? "Giriş yapılıyor..." : "Panele Gir"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => void onForgotPassword(email)}
+              className="block w-full text-center text-sm font-semibold text-teal/70 underline-offset-2 transition hover:text-orange hover:underline"
+            >
+              Şifremi unuttum
             </button>
           </form>
         </section>
@@ -253,7 +249,7 @@ function MobileSidebar({
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 lg:hidden"
+          className="fixed inset-0 z-50 xl:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -322,6 +318,7 @@ function renderPanel(tab: TabKey) {
 export default function AdminPage() {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [authChecking, setAuthChecking] = useState(true);
   const [loginError, setLoginError] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const [tab, setTab] = useState<TabKey>("guide");
@@ -329,16 +326,21 @@ export default function AdminPage() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
-    if (!supabase) return;
+    if (!supabase) {
+      setAuthChecking(false);
+      return;
+    }
     const adminClient = supabase;
     adminClient.auth.getSession().then(({ data }) => {
       const sessUser = data.session?.user ?? null;
       if (data.session && !isAdminEmail(sessUser?.email)) {
         void adminClient.auth.signOut();
+        setAuthChecking(false);
         return;
       }
       setSession(data.session);
       setUser(sessUser);
+      setAuthChecking(false);
     });
     const { data: sub } = adminClient.auth.onAuthStateChange((_event, sess) => {
       const sessUser = sess?.user ?? null;
@@ -346,10 +348,12 @@ export default function AdminPage() {
         void adminClient.auth.signOut();
         setSession(null);
         setUser(null);
+        setAuthChecking(false);
         return;
       }
       setSession(sess);
       setUser(sessUser);
+      setAuthChecking(false);
     });
     return () => sub.subscription.unsubscribe();
   }, []);
@@ -379,7 +383,7 @@ export default function AdminPage() {
     setLoginError("");
     const { data, error } = await adminClient.auth.signInWithPassword({ email, password });
     if (error) {
-      setLoginError(error.message);
+      setLoginError(friendlyAuthError(error));
       setLoginLoading(false);
       return;
     }
@@ -392,13 +396,54 @@ export default function AdminPage() {
     setLoginLoading(false);
   };
 
+  const handleForgotPassword = async (email: string) => {
+    if (!supabase) return;
+    const trimmed = email.trim();
+    if (!trimmed) {
+      setLoginError("Önce e-posta adresinizi yazın, sonra 'Şifremi unuttum'a basın.");
+      return;
+    }
+    if (!isAdminEmail(trimmed)) {
+      setLoginError("Bu e-posta admin paneline kayıtlı değil.");
+      return;
+    }
+    setLoginError("");
+    const { error } = await supabase.auth.resetPasswordForEmail(trimmed, {
+      redirectTo: `${window.location.origin}/admin`,
+    });
+    if (error) {
+      toast.error(friendlyAuthError(error));
+      return;
+    }
+    toast.success("Şifre sıfırlama bağlantısı e-postanıza gönderildi.");
+  };
+
   const handleLogout = async () => {
     if (!supabase) return;
     await supabase.auth.signOut();
+    toast.success("Çıkış yapıldı.");
   };
 
+  if (authChecking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f6f3ee]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-teal/20 border-t-teal-deep" />
+          <div className="text-sm font-semibold text-teal/60">Panel yükleniyor...</div>
+        </div>
+      </div>
+    );
+  }
+
   if (!session) {
-    return <AdminLogin onLogin={handleLogin} error={loginError} loading={loginLoading} />;
+    return (
+      <AdminLogin
+        onLogin={handleLogin}
+        onForgotPassword={handleForgotPassword}
+        error={loginError}
+        loading={loginLoading}
+      />
+    );
   }
 
   const todayLabel = new Date().toLocaleDateString("tr-TR", {
@@ -422,7 +467,7 @@ export default function AdminPage() {
                 footer={
                   <div className="space-y-3">
                     <div className="px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-teal/45">
-                      Quick Access
+                      Hızlı Erişim
                     </div>
                     <div className="space-y-3">
                       {QUICK_LINKS.map((link) => (

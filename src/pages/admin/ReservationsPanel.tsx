@@ -1,7 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
+import { toast } from "sonner";
+import { Phone, MessageCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { ReservationRow } from "@/hooks/useReservations";
 import { AdminEmptyState, AdminStatCard, AdminSurface } from "./admin-ui";
+
+/** Strips a phone string down to wa.me-compatible international digits. */
+function waDigits(phone: string): string {
+  const digits = phone.replace(/[^\d]/g, "");
+  // A leading 0 (local TR format) → assume +90.
+  if (digits.startsWith("0")) return "90" + digits.slice(1);
+  return digits;
+}
 
 type ReservationStatus = "new" | "contacted" | "confirmed" | "done" | "cancelled";
 
@@ -51,8 +61,30 @@ function ReservationCard({ reservation: r, onStatusChange, updating }: Reservati
       </div>
 
       <div className="mb-5 grid gap-2 text-sm leading-6 text-teal/70">
-        <div>
-          <span className="font-semibold text-teal-deep">Telefon:</span> {r.phone}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="font-semibold text-teal-deep">Telefon:</span>
+          {r.phone ? (
+            <>
+              <a
+                href={`tel:${r.phone.replace(/\s+/g, "")}`}
+                className="inline-flex items-center gap-1 font-medium text-teal underline-offset-2 hover:text-orange hover:underline"
+              >
+                <Phone className="h-3.5 w-3.5" />
+                {r.phone}
+              </a>
+              <a
+                href={`https://wa.me/${waDigits(r.phone)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100"
+              >
+                <MessageCircle className="h-3.5 w-3.5" />
+                WhatsApp
+              </a>
+            </>
+          ) : (
+            <span>—</span>
+          )}
         </div>
         {r.tourSlug && (
           <div>
@@ -101,6 +133,7 @@ export default function ReservationsPanel() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(false);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [filter, setFilter] = useState<ReservationStatus | "all">("all");
 
   const fetchReservations = useCallback(async () => {
     if (!supabase) return;
@@ -130,6 +163,9 @@ export default function ReservationsPanel() {
     const { error } = await supabase.from("reservation_requests").update({ status }).eq("id", id);
     if (!error) {
       setReservations((prev) => prev.map((r) => (r.id === id ? { ...r, status } : r)));
+      toast.success(`Durum güncellendi: ${STATUS_LABELS[status]}`);
+    } else {
+      toast.error("Durum güncellenemedi. Lütfen tekrar deneyin.");
     }
     setUpdatingId(null);
   };
@@ -137,27 +173,46 @@ export default function ReservationsPanel() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <AdminStatCard
-          label="Toplam Talep"
-          value={reservations.length}
-          detail="Siteden gelen tüm rezervasyon istekleri."
-          tone="teal"
-        />
-        {STATUSES.map((s) => (
+        <button
+          type="button"
+          onClick={() => setFilter("all")}
+          aria-pressed={filter === "all"}
+          className={`rounded-[24px] text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-orange ${
+            filter === "all" ? "ring-2 ring-teal-deep" : "hover:-translate-y-0.5"
+          }`}
+        >
           <AdminStatCard
-            key={s}
-            label={STATUS_LABELS[s]}
-            value={reservations.filter((r) => r.status === s).length}
-            tone={
-              s === "new"
-                ? "blue"
-                : s === "contacted"
-                  ? "orange"
-                  : s === "cancelled"
-                    ? "rose"
-                    : "emerald"
-            }
+            label="Toplam Talep"
+            value={reservations.length}
+            detail={filter === "all" ? "Tümü gösteriliyor." : "Tümünü göstermek için tıklayın."}
+            tone="teal"
           />
+        </button>
+        {STATUSES.map((s) => (
+          <button
+            key={s}
+            type="button"
+            onClick={() => setFilter(filter === s ? "all" : s)}
+            aria-pressed={filter === s}
+            className={`rounded-[24px] text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-orange ${
+              filter === s ? "ring-2 ring-teal-deep" : "hover:-translate-y-0.5"
+            }`}
+          >
+            <AdminStatCard
+              label={STATUS_LABELS[s]}
+              value={reservations.filter((r) => r.status === s).length}
+              detail={filter === s ? "Filtre aktif." : "Sadece bunları göstermek için tıklayın."}
+              tone={
+                s === "new"
+                  ? "blue"
+                  : s === "contacted"
+                    ? "orange"
+                    : s === "cancelled"
+                      ? "rose"
+                      : "emerald"
+              }
+            />
+          </button>
         ))}
       </div>
 
@@ -183,18 +238,32 @@ export default function ReservationsPanel() {
           />
         )}
 
-        {!loading && reservations.length > 0 && (
-          <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-3">
-            {reservations.map((r) => (
-              <ReservationCard
-                key={r.id}
-                reservation={r}
-                onStatusChange={(id, status) => void handleStatusChange(id, status)}
-                updating={updatingId === r.id}
-              />
-            ))}
-          </div>
-        )}
+        {!loading &&
+          reservations.length > 0 &&
+          (() => {
+            const visible =
+              filter === "all" ? reservations : reservations.filter((r) => r.status === filter);
+            if (visible.length === 0) {
+              return (
+                <AdminEmptyState
+                  title={`"${STATUS_LABELS[filter as ReservationStatus]}" durumunda talep yok`}
+                  description="Başka bir durum seçin veya 'Toplam Talep' ile tüm talepleri görün."
+                />
+              );
+            }
+            return (
+              <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-3">
+                {visible.map((r) => (
+                  <ReservationCard
+                    key={r.id}
+                    reservation={r}
+                    onStatusChange={(id, status) => void handleStatusChange(id, status)}
+                    updating={updatingId === r.id}
+                  />
+                ))}
+              </div>
+            );
+          })()}
       </AdminSurface>
     </div>
   );

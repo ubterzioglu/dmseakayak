@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { toast } from "sonner";
 import {
   fetchRevisions,
   createRevision,
@@ -7,6 +8,7 @@ import {
   type RevisionRow,
   type RevisionStatus,
 } from "@/hooks/useAdminContent";
+import { useConfirm } from "@/hooks/useConfirm";
 import { AdminEmptyState, AdminSurface } from "./admin-ui";
 
 const STATUS_LABELS: Record<RevisionStatus, string> = {
@@ -30,6 +32,7 @@ function urgencyColor(u: number): string {
 }
 
 export default function RevisionsPanel() {
+  const { confirm, dialog } = useConfirm();
   const [items, setItems] = useState<RevisionRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -69,6 +72,7 @@ export default function RevisionsPanel() {
     setError("");
     try {
       await createRevision({ requester: requester.trim(), body: body.trim(), urgency, status });
+      toast.success("Revizyon isteği eklendi.");
       setRequester("");
       setBody("");
       setUrgency(5);
@@ -76,6 +80,7 @@ export default function RevisionsPanel() {
       await load();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Kaydedilemedi");
+      toast.error("İstek kaydedilemedi.");
     } finally {
       setSubmitting(false);
     }
@@ -86,21 +91,31 @@ export default function RevisionsPanel() {
     try {
       await updateRevisionStatus(id, s);
       setItems((prev) => prev.map((r) => (r.id === id ? { ...r, status: s } : r)));
+      toast.success(`Durum güncellendi: ${STATUS_LABELS[s]}`);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Güncellenemedi");
+      toast.error("Durum güncellenemedi.");
     } finally {
       setBusyId(null);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Bu isteği sil?")) return;
+    const ok = await confirm({
+      title: "Bu istek silinsin mi?",
+      description: "Bu işlem geri alınamaz.",
+      confirmLabel: "Sil",
+      destructive: true,
+    });
+    if (!ok) return;
     setBusyId(id);
     try {
       await deleteRevision(id);
       setItems((prev) => prev.filter((r) => r.id !== id));
+      toast.success("İstek silindi.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Silinemedi");
+      toast.error("İstek silinemedi.");
     } finally {
       setBusyId(null);
     }
@@ -241,6 +256,7 @@ export default function RevisionsPanel() {
           ))}
         </AdminSurface>
       </div>
+      {dialog}
     </div>
   );
 }

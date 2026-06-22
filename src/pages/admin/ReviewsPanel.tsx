@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { toast } from "sonner";
 import {
   fetchReviews,
   saveReview,
@@ -14,6 +15,7 @@ import {
   type ReviewTranslationRow,
 } from "@/hooks/useAdminContent";
 import { parseBulkReviews } from "@/lib/parseReviews";
+import { useConfirm } from "@/hooks/useConfirm";
 import { AdminEmptyState, AdminSurface } from "./admin-ui";
 
 interface FormState {
@@ -76,7 +78,10 @@ function TranslationEditor({
     setSaving(true);
     try {
       await saveReviewTranslation(review.id, active, draft.trim());
+      toast.success(`${LANG_LABEL[active]} çevirisi kaydedildi.`);
       onSaved();
+    } catch (e) {
+      toast.error("Çeviri kaydedilemedi: " + (e instanceof Error ? e.message : "bilinmeyen hata"));
     } finally {
       setSaving(false);
     }
@@ -135,6 +140,7 @@ function TranslationEditor({
 // ─── Main panel ────────────────────────────────────────────────────────────────
 
 export default function ReviewsPanel() {
+  const { confirm, dialog } = useConfirm();
   const [items, setItems] = useState<ReviewRow[]>([]);
   const [translations, setTranslations] = useState<ReviewTranslationRow[]>([]);
   const [loading, setLoading] = useState(false);
@@ -186,10 +192,12 @@ export default function ReviewsPanel() {
         },
         form.id,
       );
+      toast.success(form.id ? "Yorum güncellendi." : "Yorum kaydedildi.");
       setForm(EMPTY);
       await load();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Kaydedilemedi");
+      toast.error("Yorum kaydedilemedi.");
     } finally {
       setSubmitting(false);
     }
@@ -210,13 +218,21 @@ export default function ReviewsPanel() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Bu yorumu sil?")) return;
+    const ok = await confirm({
+      title: "Bu yorum silinsin mi?",
+      description: "Yorum ve çevirileri kalıcı olarak silinecek.",
+      confirmLabel: "Sil",
+      destructive: true,
+    });
+    if (!ok) return;
     setBusyId(id);
     try {
       await deleteReview(id);
       setItems((prev) => prev.filter((r) => r.id !== id));
+      toast.success("Yorum silindi.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Silinemedi");
+      toast.error("Yorum silinemedi.");
     } finally {
       setBusyId(null);
     }
@@ -523,6 +539,7 @@ export default function ReviewsPanel() {
           </div>
         </AdminSurface>
       </div>
+      {dialog}
     </div>
   );
 }

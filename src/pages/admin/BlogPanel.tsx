@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Quill from "quill";
 import DOMPurify from "dompurify";
+import { toast } from "sonner";
 import "quill/dist/quill.snow.css";
 import {
   fetchBlogPosts,
@@ -10,9 +11,12 @@ import {
   slugify,
   type BlogPostRow,
 } from "@/hooks/useAdminContent";
+import { useConfirm } from "@/hooks/useConfirm";
+import { useObjectUrl } from "@/hooks/useObjectUrl";
 import { AdminEmptyState, AdminSurface } from "./admin-ui";
 
 export default function BlogPanel() {
+  const { confirm, dialog } = useConfirm();
   const [items, setItems] = useState<BlogPostRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -60,7 +64,9 @@ export default function BlogPanel() {
                   q.insertEmbed(range.index, "image", url, "user");
                   q.setSelection(range.index + 1, 0);
                 } catch (e) {
-                  alert("Görsel yüklenemedi: " + (e instanceof Error ? e.message : e));
+                  toast.error(
+                    "Görsel yüklenemedi: " + (e instanceof Error ? e.message : "bilinmeyen hata"),
+                  );
                 }
               };
               input.click();
@@ -88,7 +94,7 @@ export default function BlogPanel() {
     void load();
   }, [load]);
 
-  const resetForm = () => {
+  const doResetForm = () => {
     setEditId(undefined);
     setTitle("");
     setSlug("");
@@ -100,7 +106,37 @@ export default function BlogPanel() {
     if (quillRef.current) quillRef.current.root.innerHTML = "";
   };
 
-  const handleEdit = (p: BlogPostRow) => {
+  /** True when the form holds work that would be lost on reset. */
+  const isDirty = () => {
+    const hasText = (quillRef.current?.getText().trim().length ?? 0) > 0;
+    return title.trim().length > 0 || hasText || !!coverFile;
+  };
+
+  const resetForm = async () => {
+    if (
+      isDirty() &&
+      !(await confirm({
+        title: "Form temizlensin mi?",
+        description: "Kaydedilmemiş değişiklikler kaybolacak.",
+        confirmLabel: "Temizle",
+        destructive: true,
+      }))
+    ) {
+      return;
+    }
+    doResetForm();
+  };
+
+  const handleEdit = async (p: BlogPostRow) => {
+    if (editId !== p.id && isDirty()) {
+      const ok = await confirm({
+        title: "Başka yazıya geçilsin mi?",
+        description: "Bu formdaki kaydedilmemiş değişiklikler kaybolacak.",
+        confirmLabel: "Devam et",
+        destructive: true,
+      });
+      if (!ok) return;
+    }
     setEditId(p.id);
     setTitle(p.title);
     setSlug(p.slug);
@@ -141,29 +177,40 @@ export default function BlogPanel() {
         },
         editId,
       );
-      resetForm();
+      toast.success(editId ? "Yazı güncellendi." : "Yazı kaydedildi.");
+      doResetForm();
       await load();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Kaydedilemedi");
+      const msg = e instanceof Error ? e.message : "Kaydedilemedi";
+      setError(msg);
+      toast.error("Yazı kaydedilemedi.");
     } finally {
       setSubmitting(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Bu yazıyı sil?")) return;
+    const ok = await confirm({
+      title: "Bu yazı silinsin mi?",
+      description: "Bu işlem geri alınamaz.",
+      confirmLabel: "Sil",
+      destructive: true,
+    });
+    if (!ok) return;
     setBusyId(id);
     try {
       await deleteBlogPost(id);
       setItems((prev) => prev.filter((p) => p.id !== id));
+      toast.success("Yazı silindi.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Silinemedi");
+      toast.error("Yazı silinemedi.");
     } finally {
       setBusyId(null);
     }
   };
 
-  const coverPreview = coverFile ? URL.createObjectURL(coverFile) : coverUrl;
+  const coverPreview = useObjectUrl(coverFile, coverUrl);
 
   return (
     <div className="space-y-6">
@@ -247,7 +294,7 @@ export default function BlogPanel() {
               </button>
               <button
                 type="button"
-                onClick={resetForm}
+                onClick={() => void resetForm()}
                 className="rounded-full border border-teal/20 px-6 py-3 font-semibold text-teal hover:bg-foam"
               >
                 Temizle / Yeni
@@ -302,7 +349,7 @@ export default function BlogPanel() {
               </div>
               <div className="mt-4 flex gap-2">
                 <button
-                  onClick={() => handleEdit(p)}
+                  onClick={() => void handleEdit(p)}
                   className="rounded-full border border-teal/20 px-3 py-1.5 text-xs font-semibold text-teal hover:bg-foam"
                 >
                   Düzenle
@@ -319,6 +366,7 @@ export default function BlogPanel() {
           ))}
         </AdminSurface>
       </div>
+      {dialog}
     </div>
   );
 }

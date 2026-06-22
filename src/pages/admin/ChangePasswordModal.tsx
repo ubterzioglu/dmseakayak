@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
+import { friendlyAuthError } from "@/lib/authErrors";
 import { Modal } from "@/components/ui/modal";
+import { PasswordInput } from "@/components/ui/password-input";
 
 interface ChangePasswordModalProps {
   open: boolean;
@@ -44,12 +47,13 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
     const { error } = await supabase.auth.updateUser({ password });
     setLoading(false);
     if (error) {
-      setError(error.message);
+      setError(friendlyAuthError(error));
       return;
     }
     setSuccess(true);
     setPassword("");
     setConfirm("");
+    toast.success("Şifren başarıyla güncellendi.");
   };
 
   return (
@@ -84,28 +88,24 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
               <label className="mb-1 block text-sm font-semibold text-teal-deep" htmlFor="new-pass">
                 Yeni Şifre
               </label>
-              <input
+              <PasswordInput
                 id="new-pass"
-                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="new-password"
                 required
-                className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 text-base outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
               />
             </div>
             <div>
               <label className="mb-1 block text-sm font-semibold text-teal-deep" htmlFor="confirm-pass">
                 Yeni Şifre (tekrar)
               </label>
-              <input
+              <PasswordInput
                 id="confirm-pass"
-                type="password"
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 autoComplete="new-password"
                 required
-                className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 text-base outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
               />
             </div>
 
