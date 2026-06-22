@@ -6,6 +6,7 @@
  */
 
 import type { ReactNode } from "react";
+import { AdminSurface } from "./admin-ui";
 
 interface GuideSection {
   /** Üst şeritteki sekme adıyla aynı etiket */
@@ -141,22 +142,25 @@ const TOP_BAR = [
 
 function Card({ children }: { children: ReactNode }) {
   return (
-    <div className="rounded-2xl border border-teal/10 bg-white p-6 shadow-sm">{children}</div>
+    <div className="rounded-[28px] border border-teal/10 bg-white p-6 shadow-[0_18px_50px_rgba(4,43,37,0.07)]">
+      {children}
+    </div>
   );
 }
 
 export default function GuidePanel() {
   return (
     <div className="space-y-8">
-      {/* Intro */}
-      <div className="rounded-2xl border border-orange/20 bg-orange/5 p-6">
-        <h2 className="mb-1 text-xl font-bold text-teal-deep">Admin Paneli Rehberi</h2>
-        <p className="text-sm text-teal/70">
-          Bu panel ile sitedeki içeriği (bloglar, galeri, yorumlar) yönetir, rezervasyon
-          taleplerini takip eder ve ekip içi istekleri kaydedersiniz. Aşağıda her bölümün ne işe
-          yaradığı ve nasıl kullanılacağı adım adım anlatılmıştır. Teknik bilgi gerekmez.
-        </p>
-      </div>
+      <AdminSurface
+        title="Admin Paneli Rehberi"
+        description="Bu panel ile sitedeki içeriği yönetir, rezervasyon taleplerini takip eder ve ekip içi istekleri kaydedersiniz. Teknik bilgi gerekmeden ilerleyebilmeniz için her bölümün kullanımı aşağıda özetlenmiştir."
+        className="border-orange/20 bg-orange/5"
+      >
+        <div className="text-sm leading-7 text-teal/70">
+          İlk kez giren kullanıcı için en doğru başlangıç noktası bu ekran. Sekmelerin tamamı
+          mevcut işlevleri korur; sadece yeni çalışma alanında daha net bir akışla sunulur.
+        </div>
+      </AdminSurface>
 
       {/* Genel: üst bar / kartlar */}
       <Card>

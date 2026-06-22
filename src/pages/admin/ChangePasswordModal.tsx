@@ -54,8 +54,11 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
 
   return (
     <Modal open={open} onClose={handleClose} labelledBy="change-pass-title" className="max-w-md">
-      <div className="p-7">
-        <h2 id="change-pass-title" className="mb-1 text-xl font-extrabold text-teal-deep">
+      <div className="p-8">
+        <div className="mb-4 inline-flex rounded-full border border-orange/20 bg-orange/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-orange">
+          Güvenlik
+        </div>
+        <h2 id="change-pass-title" className="mb-1 font-serif text-3xl leading-none text-teal-deep">
           Şifre Değiştir
         </h2>
         <p className="mb-5 text-sm text-teal/60">
@@ -88,7 +91,7 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="new-password"
                 required
-                className="w-full rounded-xl border border-teal/15 px-4 py-2.5 text-base outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
+                className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 text-base outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
               />
             </div>
             <div>
@@ -102,7 +105,7 @@ export default function ChangePasswordModal({ open, onClose }: ChangePasswordMod
                 onChange={(e) => setConfirm(e.target.value)}
                 autoComplete="new-password"
                 required
-                className="w-full rounded-xl border border-teal/15 px-4 py-2.5 text-base outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
+                className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 text-base outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
               />
             </div>
 

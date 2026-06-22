@@ -3,6 +3,7 @@
  * client can follow everything that has been built. Update the ENTRIES array
  * as new work ships.
  */
+import { AdminSurface } from "./admin-ui";
 
 interface UpdateGroup {
   date: string;
@@ -71,17 +72,20 @@ const PENDING: string[] = [
 export default function UpdatesPanel() {
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="mb-1 text-xl font-bold text-teal-deep">Yapılanlar</h2>
-        <p className="text-sm text-teal/60">
-          Sitede tamamlanan tüm geliştirmeler. En yeni en üstte.
-        </p>
-      </div>
+      <AdminSurface
+        title="Yapılanlar"
+        description="Sitede tamamlanan tüm geliştirmeler. En yeni kayıt en üstte tutulur."
+      >
+        <div className="text-sm leading-7 text-teal/65">
+          Bu alan yalnızca okunur. Müşteri ve ekip tarafında “neler bitti, neler sırada” sorusuna
+          tek bakışta cevap vermesi için sade tutulur.
+        </div>
+      </AdminSurface>
 
       {ENTRIES.map((g) => (
         <div
           key={g.title}
-          className="rounded-2xl border border-teal/10 border-l-4 border-l-teal bg-white p-6 shadow-sm"
+          className="rounded-[28px] border border-teal/10 border-l-4 border-l-teal bg-white p-6 shadow-[0_18px_50px_rgba(4,43,37,0.07)]"
         >
           <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
             <h3 className="font-bold text-teal-deep">{g.title}</h3>
@@ -98,7 +102,7 @@ export default function UpdatesPanel() {
         </div>
       ))}
 
-      <div className="rounded-2xl border border-orange/20 bg-orange/5 p-6">
+      <div className="rounded-[28px] border border-orange/20 bg-orange/5 p-6 shadow-[0_18px_50px_rgba(4,43,37,0.05)]">
         <h3 className="mb-3 font-bold text-teal-deep">Sırada / İçerik Bekleyen</h3>
         <ul className="space-y-2">
           {PENDING.map((it, i) => (

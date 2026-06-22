@@ -7,6 +7,7 @@ import {
   type RevisionRow,
   type RevisionStatus,
 } from "@/hooks/useAdminContent";
+import { AdminEmptyState, AdminSurface } from "./admin-ui";
 
 const STATUS_LABELS: Record<RevisionStatus, string> = {
   open: "Açık",
@@ -107,131 +108,138 @@ export default function RevisionsPanel() {
 
   return (
     <div className="space-y-6">
-      {/* New request form */}
-      <div className="rounded-2xl border border-teal/10 bg-white p-6 shadow-sm">
-        <h3 className="mb-4 font-bold text-teal-deep">Yeni Revizyon İsteği</h3>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep">Kimsin?</label>
-            <input
-              value={requester}
-              onChange={(e) => setRequester(e.target.value)}
-              required
-              placeholder="Adınız (örn: Elif)"
-              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep">
-              Revizyon isteğin nedir?
-            </label>
-            <textarea
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              required
-              rows={3}
-              placeholder="Hangi değişiklik isteniyor?"
-              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
-            />
-          </div>
-          <div className="flex flex-wrap items-end gap-4">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
+        <AdminSurface
+          title="Yeni revizyon isteği"
+          description="Ekibin görmek istediği değişikliği kısa, net ve öncelikli biçimde girin."
+        >
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="mb-1 block text-sm font-semibold text-teal-deep">
-                Aciliyet (1-10)
-              </label>
+              <label className="mb-1 block text-sm font-semibold text-teal-deep">Kimsin?</label>
               <input
-                type="number"
-                min={1}
-                max={10}
-                value={urgency}
-                onChange={(e) => setUrgency(Number(e.target.value))}
-                className="w-28 rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
+                value={requester}
+                onChange={(e) => setRequester(e.target.value)}
+                required
+                placeholder="Adınız (örn: Elif)"
+                className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-semibold text-teal-deep">Durum</label>
-              <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value as RevisionStatus)}
-                className="rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
-              >
-                {STATUSES.map((s) => (
-                  <option key={s} value={s}>
-                    {STATUS_LABELS[s]}
-                  </option>
-                ))}
-              </select>
+              <label className="mb-1 block text-sm font-semibold text-teal-deep">
+                Revizyon isteğin nedir?
+              </label>
+              <textarea
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+                required
+                rows={5}
+                placeholder="Hangi değişiklik isteniyor?"
+                className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
+              />
             </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-teal-deep">
+                  Aciliyet (1-10)
+                </label>
+                <input
+                  type="number"
+                  min={1}
+                  max={10}
+                  value={urgency}
+                  onChange={(e) => setUrgency(Number(e.target.value))}
+                  className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-teal-deep">Durum</label>
+                <select
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value as RevisionStatus)}
+                  className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange"
+                >
+                  {STATUSES.map((s) => (
+                    <option key={s} value={s}>
+                      {STATUS_LABELS[s]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            {error && <p className="text-sm text-red-600">{error}</p>}
             <button
               type="submit"
               disabled={submitting}
-              className="rounded-full bg-orange px-6 py-2.5 font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
+              className="rounded-full bg-orange px-6 py-3 font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
             >
-              {submitting ? "Ekleniyor..." : "Ekle"}
+              {submitting ? "Ekleniyor..." : "İsteği Kaydet"}
             </button>
-          </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-        </form>
-      </div>
+          </form>
+        </AdminSurface>
 
-      {/* List */}
-      <div className="flex items-center justify-between">
-        <h3 className="font-bold text-teal-deep">{items.length} istek</h3>
-        <button
-          onClick={() => void load()}
-          disabled={loading}
-          className="rounded-full border border-teal/20 px-4 py-1.5 text-sm font-semibold text-teal hover:bg-foam disabled:opacity-50"
+        <AdminSurface
+          title={`${items.length} revizyon isteği`}
+          description="Durum güncellemeleri ve silme işlemleri kartlar üzerinden yapılır."
+          actions={
+            <button
+              onClick={() => void load()}
+              disabled={loading}
+              className="rounded-full border border-teal/15 bg-white px-4 py-2 text-sm font-semibold text-teal-deep hover:bg-foam disabled:opacity-50"
+            >
+              {loading ? "Yükleniyor..." : "Yenile"}
+            </button>
+          }
+          contentClassName="space-y-3"
         >
-          {loading ? "Yükleniyor..." : "Yenile"}
-        </button>
-      </div>
+          {!loading && items.length === 0 && (
+            <AdminEmptyState
+              title="Henüz revizyon isteği yok"
+              description="Yeni talepler kaydedildiğinde burada önceliklendirilmiş kartlar olarak listelenecek."
+            />
+          )}
 
-      {!loading && items.length === 0 && (
-        <p className="py-12 text-center text-teal/50">Henüz revizyon isteği yok.</p>
-      )}
-
-      <div className="space-y-3">
-        {items.map((r) => (
-          <div
-            key={r.id}
-            className="rounded-2xl border border-teal/10 border-l-4 border-l-orange bg-white p-5 shadow-sm"
-          >
-            <div className="mb-2 flex flex-wrap items-center gap-2">
-              <span className="font-bold text-teal-deep">{r.requester}</span>
-              <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${urgencyColor(r.urgency)}`}>
-                Aciliyet {r.urgency}/10
-              </span>
-              <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${STATUS_COLORS[r.status]}`}>
-                {STATUS_LABELS[r.status]}
-              </span>
-              <span className="text-xs text-teal/40">
-                {new Date(r.created_at).toLocaleString("tr-TR")}
-              </span>
-            </div>
-            <p className="mb-3 text-sm text-teal/80">{r.body}</p>
-            <div className="flex flex-wrap gap-2">
-              {STATUSES.map((s) => (
+          {items.map((r) => (
+            <div
+              key={r.id}
+              className="rounded-[24px] border border-teal/10 border-l-4 border-l-orange bg-[#fcfbf8] p-5 shadow-[0_12px_34px_rgba(4,43,37,0.05)]"
+            >
+              <div className="mb-2 flex flex-wrap items-center gap-2">
+                <span className="font-semibold text-teal-deep">{r.requester}</span>
+                <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${urgencyColor(r.urgency)}`}>
+                  Aciliyet {r.urgency}/10
+                </span>
+                <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${STATUS_COLORS[r.status]}`}>
+                  {STATUS_LABELS[r.status]}
+                </span>
+                <span className="text-xs uppercase tracking-[0.12em] text-teal/35">
+                  {new Date(r.created_at).toLocaleString("tr-TR")}
+                </span>
+              </div>
+              <p className="mb-4 text-sm leading-7 text-teal/80">{r.body}</p>
+              <div className="flex flex-wrap gap-2">
+                {STATUSES.map((s) => (
+                  <button
+                    key={s}
+                    disabled={busyId === r.id || r.status === s}
+                    onClick={() => void handleStatus(r.id, s)}
+                    className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors disabled:opacity-40 ${
+                      r.status === s ? "bg-teal text-white" : "border border-teal/20 text-teal hover:bg-foam"
+                    }`}
+                  >
+                    {STATUS_LABELS[s]}
+                  </button>
+                ))}
                 <button
-                  key={s}
-                  disabled={busyId === r.id || r.status === s}
-                  onClick={() => void handleStatus(r.id, s)}
-                  className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors disabled:opacity-40 ${
-                    r.status === s ? "bg-teal text-white" : "border border-teal/20 text-teal hover:bg-foam"
-                  }`}
+                  disabled={busyId === r.id}
+                  onClick={() => void handleDelete(r.id)}
+                  className="rounded-full border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-40"
                 >
-                  {STATUS_LABELS[s]}
+                  Sil
                 </button>
-              ))}
-              <button
-                disabled={busyId === r.id}
-                onClick={() => void handleDelete(r.id)}
-                className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-40"
-              >
-                Sil
-              </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </AdminSurface>
       </div>
     </div>
   );

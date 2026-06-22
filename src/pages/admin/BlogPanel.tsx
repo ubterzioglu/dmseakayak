@@ -10,6 +10,7 @@ import {
   slugify,
   type BlogPostRow,
 } from "@/hooks/useAdminContent";
+import { AdminEmptyState, AdminSurface } from "./admin-ui";
 
 export default function BlogPanel() {
   const [items, setItems] = useState<BlogPostRow[]>([]);
@@ -166,142 +167,157 @@ export default function BlogPanel() {
 
   return (
     <div className="space-y-6">
-      {/* Form */}
-      <div className="rounded-2xl border border-teal/10 bg-white p-6 shadow-sm">
-        <h3 className="mb-4 font-bold text-teal-deep">{editId ? "Yazıyı Düzenle" : "Yeni Yazı"}</h3>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep">Başlık</label>
-            <input
-              value={title}
-              onChange={(e) => handleTitle(e.target.value)}
-              required
-              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep">
-              Slug (URL) — başlıktan otomatik
-            </label>
-            <input
-              value={slug}
-              onChange={(e) => {
-                setSlug(e.target.value);
-                setSlugTouched(true);
-              }}
-              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep">
-              Özet (liste/SEO)
-            </label>
-            <textarea
-              value={excerpt}
-              onChange={(e) => setExcerpt(e.target.value)}
-              rows={2}
-              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep">Kapak Görseli</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setCoverFile(e.target.files?.[0] ?? null)}
-              className="text-sm"
-            />
-            {coverPreview && (
-              <img src={coverPreview} alt="kapak" className="mt-2 max-w-56 rounded-xl" />
-            )}
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep">İçerik</label>
-            <div ref={editorHost} className="min-h-52 bg-white" />
-          </div>
-          <label className="flex items-center gap-2 text-sm text-teal-deep">
-            <input
-              type="checkbox"
-              checked={published}
-              onChange={(e) => setPublished(e.target.checked)}
-            />
-            Yayınla (işaretsiz = taslak)
-          </label>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="rounded-full bg-orange px-6 py-2.5 font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
-            >
-              {submitting ? "Kaydediliyor..." : "Kaydet"}
-            </button>
-            <button
-              type="button"
-              onClick={resetForm}
-              className="rounded-full border border-teal/20 px-6 py-2.5 font-semibold text-teal hover:bg-foam"
-            >
-              Temizle / Yeni
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* List */}
-      <div className="flex items-center justify-between">
-        <h3 className="font-bold text-teal-deep">{items.length} yazı</h3>
-        <button
-          onClick={() => void load()}
-          disabled={loading}
-          className="rounded-full border border-teal/20 px-4 py-1.5 text-sm font-semibold text-teal hover:bg-foam disabled:opacity-50"
+      <div className="grid gap-6 2xl:grid-cols-[minmax(0,1.1fr)_420px]">
+        <AdminSurface
+          title={editId ? "Yazıyı düzenle" : "Yeni yazı"}
+          description="Kapak görseli, özet ve zengin metin içeriğini tek alandan hazırlayın."
         >
-          {loading ? "Yükleniyor..." : "Yenile"}
-        </button>
-      </div>
-
-      {!loading && items.length === 0 && (
-        <p className="py-12 text-center text-teal/50">Henüz yazı yok.</p>
-      )}
-
-      <div className="space-y-3">
-        {items.map((p) => (
-          <div
-            key={p.id}
-            className="flex flex-wrap items-center gap-3 rounded-2xl border border-teal/10 bg-white p-4 shadow-sm"
-          >
-            {p.cover_image_url && (
-              <img src={p.cover_image_url} alt="" className="h-14 w-20 rounded-lg object-cover" />
-            )}
-            <div className="min-w-44 flex-1">
-              <div className="font-bold text-teal-deep">{p.title}</div>
-              <div className="text-xs text-teal/50">
-                /{p.slug} · {new Date(p.created_at).toLocaleDateString("tr-TR")}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="mb-1 block text-sm font-semibold text-teal-deep">Başlık</label>
+              <input
+                value={title}
+                onChange={(e) => handleTitle(e.target.value)}
+                required
+                className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
+              />
+            </div>
+            <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_280px]">
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-teal-deep">
+                  Slug (URL) — başlıktan otomatik
+                </label>
+                <input
+                  value={slug}
+                  onChange={(e) => {
+                    setSlug(e.target.value);
+                    setSlugTouched(true);
+                  }}
+                  className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-teal-deep">
+                  Kapak Görseli
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setCoverFile(e.target.files?.[0] ?? null)}
+                  className="w-full text-sm"
+                />
               </div>
             </div>
-            <span
-              className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
-                p.published ? "bg-teal/15 text-teal" : "bg-orange/15 text-orange"
-              }`}
-            >
-              {p.published ? "Yayında" : "Taslak"}
-            </span>
-            <div className="flex gap-2">
+            <div>
+              <label className="mb-1 block text-sm font-semibold text-teal-deep">
+                Özet (liste/SEO)
+              </label>
+              <textarea
+                value={excerpt}
+                onChange={(e) => setExcerpt(e.target.value)}
+                rows={3}
+                className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange"
+              />
+            </div>
+            {coverPreview && (
+              <img src={coverPreview} alt="kapak" className="h-56 w-full rounded-[24px] object-cover" />
+            )}
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-teal-deep">İçerik</label>
+              <div className="overflow-hidden rounded-[24px] border border-teal/10 bg-[#fcfbf8]">
+                <div ref={editorHost} className="min-h-64 bg-[#fcfbf8]" />
+              </div>
+            </div>
+            <label className="flex items-center gap-2 text-sm text-teal-deep">
+              <input
+                type="checkbox"
+                checked={published}
+                onChange={(e) => setPublished(e.target.checked)}
+              />
+              Yayınla (işaretsiz = taslak)
+            </label>
+            {error && <p className="text-sm text-red-600">{error}</p>}
+            <div className="flex flex-wrap gap-3">
               <button
-                onClick={() => handleEdit(p)}
-                className="rounded-full border border-teal/20 px-3 py-1 text-xs font-semibold text-teal hover:bg-foam"
+                type="submit"
+                disabled={submitting}
+                className="rounded-full bg-orange px-6 py-3 font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
               >
-                Düzenle
+                {submitting ? "Kaydediliyor..." : "Kaydet"}
               </button>
               <button
-                disabled={busyId === p.id}
-                onClick={() => void handleDelete(p.id)}
-                className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-40"
+                type="button"
+                onClick={resetForm}
+                className="rounded-full border border-teal/20 px-6 py-3 font-semibold text-teal hover:bg-foam"
               >
-                Sil
+                Temizle / Yeni
               </button>
             </div>
-          </div>
-        ))}
+          </form>
+        </AdminSurface>
+
+        <AdminSurface
+          title={`${items.length} yazı`}
+          description="Taslak ve yayındaki içerikleri burada hızlıca yönetin."
+          actions={
+            <button
+              onClick={() => void load()}
+              disabled={loading}
+              className="rounded-full border border-teal/20 px-4 py-2 text-sm font-semibold text-teal hover:bg-foam disabled:opacity-50"
+            >
+              {loading ? "Yükleniyor..." : "Yenile"}
+            </button>
+          }
+          contentClassName="space-y-3"
+        >
+          {!loading && items.length === 0 && (
+            <AdminEmptyState
+              title="Henüz yazı yok"
+              description="İlk blog yazısı kaydedildiğinde burada slug, tarih ve yayın durumu ile listelenecek."
+            />
+          )}
+
+          {items.map((p) => (
+            <div
+              key={p.id}
+              className="rounded-[24px] border border-teal/10 bg-[#fcfbf8] p-4 shadow-[0_12px_34px_rgba(4,43,37,0.05)]"
+            >
+              <div className="flex flex-wrap items-center gap-3">
+                {p.cover_image_url && (
+                  <img src={p.cover_image_url} alt="" className="h-16 w-24 rounded-xl object-cover" />
+                )}
+                <div className="min-w-44 flex-1">
+                  <div className="font-semibold text-teal-deep">{p.title}</div>
+                  <div className="text-xs uppercase tracking-[0.12em] text-teal/45">
+                    /{p.slug} · {new Date(p.created_at).toLocaleDateString("tr-TR")}
+                  </div>
+                </div>
+                <span
+                  className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
+                    p.published ? "bg-teal/15 text-teal" : "bg-orange/15 text-orange"
+                  }`}
+                >
+                  {p.published ? "Yayında" : "Taslak"}
+                </span>
+              </div>
+              <div className="mt-4 flex gap-2">
+                <button
+                  onClick={() => handleEdit(p)}
+                  className="rounded-full border border-teal/20 px-3 py-1.5 text-xs font-semibold text-teal hover:bg-foam"
+                >
+                  Düzenle
+                </button>
+                <button
+                  disabled={busyId === p.id}
+                  onClick={() => void handleDelete(p.id)}
+                  className="rounded-full border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-40"
+                >
+                  Sil
+                </button>
+              </div>
+            </div>
+          ))}
+        </AdminSurface>
       </div>
     </div>
   );

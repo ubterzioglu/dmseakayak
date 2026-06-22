@@ -14,6 +14,7 @@ import {
   type ReviewTranslationRow,
 } from "@/hooks/useAdminContent";
 import { parseBulkReviews } from "@/lib/parseReviews";
+import { AdminEmptyState, AdminSurface } from "./admin-ui";
 
 interface FormState {
   id?: string;
@@ -280,237 +281,247 @@ export default function ReviewsPanel() {
 
   return (
     <div className="space-y-6">
-      {/* Translate all */}
-      <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-orange/20 bg-orange/5 p-5">
-        <div className="flex-1">
-          <div className="font-bold text-teal-deep">Otomatik Çeviri</div>
-          <div className="text-sm text-teal/60">
-            Tüm yorumların eksik dillerini (TR/EN/FR/RU) ücretsiz çeviri servisiyle tamamlar. Zaten
-            çevrilmiş ve elle düzenlenmiş metinler korunur.
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={() => void handleTranslateAll()}
-          disabled={translateAllBusy}
-          className="rounded-full bg-orange px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
-        >
-          {translateAllBusy ? "Çevriliyor..." : "Tümünü Çevir"}
-        </button>
-        {translateMsg && <span className="w-full text-sm text-teal/70">{translateMsg}</span>}
-      </div>
-
-      {/* Toplu ekle */}
-      <div className="rounded-2xl border border-teal/10 bg-white p-6 shadow-sm">
-        <h3 className="mb-2 font-bold text-teal-deep">Toplu Ekle</h3>
-        <p className="mb-2 text-xs text-teal/60">
-          Google Maps kazıyıcısının ürettiği JSON dizisini (
-          <code>scripts/output/reviews.json</code>) buraya yapıştırın. Satır biçimi de desteklenir:
-          ilk satır <code>Ad | 5</code>, sonraki satır(lar) yorum metni, yorumlar arası{" "}
-          <code>---</code>. Eklenen yorumlar otomatik yayınlanır ve arka planda çevrilir.
-        </p>
-        <textarea
-          value={bulk}
-          onChange={(e) => setBulk(e.target.value)}
-          rows={6}
-          placeholder={`[{ "author": "Sophie M.", "rating": 5, "body": "...", "source_lang": "fr" }]`}
-          className="w-full rounded-xl border border-teal/15 p-3 font-mono text-sm outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
-        />
-        <div className="mt-3 flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => void handleBulkAdd()}
-            disabled={bulkBusy}
-            className="rounded-full bg-orange px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
+        <div className="space-y-6">
+          <AdminSurface
+            title="Otomatik çeviri"
+            description="Eksik dilleri topluca tamamlar; elle düzenlenen çeviriler korunur."
           >
-            {bulkBusy ? "Ekleniyor..." : "Yorumları Ekle"}
-          </button>
-          {bulkMsg && <span className="text-sm text-teal/70">{bulkMsg}</span>}
-        </div>
-      </div>
-
-      {/* Form */}
-      <div className="rounded-2xl border border-teal/10 bg-white p-6 shadow-sm">
-        <h3 className="mb-4 font-bold text-teal-deep">{form.id ? "Yorumu Düzenle" : "Yeni Yorum"}</h3>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-wrap gap-4">
-            <div className="flex-1 min-w-48">
-              <label className="mb-1 block text-sm font-semibold text-teal-deep">Yazar</label>
-              <input
-                value={form.author}
-                onChange={(e) => setForm({ ...form, author: e.target.value })}
-                required
-                className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
-              />
-            </div>
-            <div>
-              <label className="mb-1 block text-sm font-semibold text-teal-deep">Puan (1-5)</label>
-              <input
-                type="number"
-                min={1}
-                max={5}
-                value={form.rating}
-                onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })}
-                className="w-24 rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
-              />
-            </div>
-            <div>
-              <label className="mb-1 block text-sm font-semibold text-teal-deep">Orijinal dil</label>
-              <select
-                value={form.source_lang}
-                onChange={(e) => setForm({ ...form, source_lang: e.target.value as ReviewLang })}
-                className="rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
-              >
-                {REVIEW_LANGS.map((l) => (
-                  <option key={l} value={l}>
-                    {LANG_LABEL[l]}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep">
-              Yorum (orijinal dilde)
-            </label>
-            <textarea
-              value={form.body}
-              onChange={(e) => setForm({ ...form, body: e.target.value })}
-              required
-              rows={3}
-              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
-            />
-          </div>
-          <div className="flex flex-wrap items-end gap-4">
-            <div className="flex-1 min-w-48">
-              <label className="mb-1 block text-sm font-semibold text-teal-deep">
-                Kaynak (örn: Google, TripAdvisor)
-              </label>
-              <input
-                value={form.source_label}
-                onChange={(e) => setForm({ ...form, source_label: e.target.value })}
-                className="w-full rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
-              />
-            </div>
-            <div>
-              <label className="mb-1 block text-sm font-semibold text-teal-deep">Sıra</label>
-              <input
-                type="number"
-                value={form.sort_order}
-                onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
-                className="w-24 rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
-              />
-            </div>
-            <div>
-              <label className="mb-1 block text-sm font-semibold text-teal-deep">Durum</label>
-              <select
-                value={form.status}
-                onChange={(e) => setForm({ ...form, status: e.target.value as ReviewStatus })}
-                className="rounded-xl border border-teal/15 px-4 py-2.5 outline-none focus:border-orange"
-              >
-                <option value="published">Yayında</option>
-                <option value="archived">Arşiv</option>
-              </select>
-            </div>
-          </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="rounded-full bg-orange px-6 py-2.5 font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
-            >
-              {submitting ? "Kaydediliyor..." : "Kaydet"}
-            </button>
-            {form.id && (
+            <div className="space-y-4">
               <button
                 type="button"
-                onClick={() => setForm(EMPTY)}
-                className="rounded-full border border-teal/20 px-6 py-2.5 font-semibold text-teal hover:bg-foam"
+                onClick={() => void handleTranslateAll()}
+                disabled={translateAllBusy}
+                className="rounded-full bg-orange px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
               >
-                İptal / Yeni
+                {translateAllBusy ? "Çevriliyor..." : "Tümünü Çevir"}
               </button>
-            )}
-          </div>
-        </form>
-      </div>
-
-      {/* List */}
-      <div className="flex items-center justify-between">
-        <h3 className="font-bold text-teal-deep">{items.length} yorum</h3>
-        <button
-          onClick={() => void load()}
-          disabled={loading}
-          className="rounded-full border border-teal/20 px-4 py-1.5 text-sm font-semibold text-teal hover:bg-foam disabled:opacity-50"
-        >
-          {loading ? "Yükleniyor..." : "Yenile"}
-        </button>
-      </div>
-
-      {!loading && items.length === 0 && (
-        <p className="py-12 text-center text-teal/50">Henüz yorum yok.</p>
-      )}
-
-      <div className="grid gap-3 sm:grid-cols-2">
-        {items.map((r) => {
-          const trs = transFor(r.id);
-          const isOpen = expanded === r.id;
-          return (
-            <div key={r.id} className="rounded-2xl border border-teal/10 bg-white p-5 shadow-sm">
-              <div className="mb-2 flex items-center justify-between gap-2">
-                <span className="font-bold text-teal-deep">{r.author}</span>
-                <span className="text-sm text-orange">{"★".repeat(r.rating)}</span>
-              </div>
-              <p className="mb-3 text-sm text-teal/80">{r.body}</p>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-teal/50">
-                {r.source_label && <span>{r.source_label}</span>}
-                <span className="rounded-full bg-foam px-2 py-0.5 font-bold text-teal">
-                  {(r.source_lang ?? "—").toUpperCase()}
-                </span>
-                <span
-                  className={`rounded-full px-2 py-0.5 font-bold ${
-                    r.status === "published" ? "bg-teal/15 text-teal" : "bg-gray-200 text-gray-500"
-                  }`}
-                >
-                  {r.status === "published" ? "Yayında" : "Arşiv"}
-                </span>
-                <span>{trs.length}/4 dil</span>
-                <span>sıra: {r.sort_order}</span>
-              </div>
-              <div className="mt-3 flex gap-2">
-                <button
-                  onClick={() => setExpanded(isOpen ? null : r.id)}
-                  className="rounded-full border border-teal/20 px-3 py-1 text-xs font-semibold text-teal hover:bg-foam"
-                >
-                  {isOpen ? "Çevirileri gizle" : "Çeviriler"}
-                </button>
-                <button
-                  onClick={() => handleEdit(r)}
-                  className="rounded-full border border-teal/20 px-3 py-1 text-xs font-semibold text-teal hover:bg-foam"
-                >
-                  Düzenle
-                </button>
-                <button
-                  disabled={busyId === r.id}
-                  onClick={() => void handleDelete(r.id)}
-                  className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-40"
-                >
-                  Sil
-                </button>
-              </div>
-
-              {isOpen && (
-                <TranslationEditor
-                  review={r}
-                  translations={trs}
-                  onSaved={() => void refreshTranslations()}
-                  onRetranslate={() => void handleRetranslate(r.id)}
-                  retranslating={retranslateId === r.id}
-                />
-              )}
+              {translateMsg && <div className="text-sm leading-6 text-teal/70">{translateMsg}</div>}
             </div>
-          );
-        })}
+          </AdminSurface>
+
+          <AdminSurface
+            title="Toplu ekle"
+            description="JSON dizisi ya da satır tabanlı format ile yorumları toplu içe aktarın."
+          >
+            <p className="mb-3 text-xs leading-6 text-teal/60">
+              Google Maps kazıyıcısının ürettiği JSON dizisini (
+              <code>scripts/output/reviews.json</code>) buraya yapıştırın. Satır biçimi de desteklenir:
+              ilk satır <code>Ad | 5</code>, sonraki satır(lar) yorum metni, yorumlar arası <code>---</code>.
+            </p>
+            <textarea
+              value={bulk}
+              onChange={(e) => setBulk(e.target.value)}
+              rows={7}
+              placeholder={`[{ "author": "Sophie M.", "rating": 5, "body": "...", "source_lang": "fr" }]`}
+              className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] p-3 font-mono text-sm outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
+            />
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => void handleBulkAdd()}
+                disabled={bulkBusy}
+                className="rounded-full bg-orange px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
+              >
+                {bulkBusy ? "Ekleniyor..." : "Yorumları Ekle"}
+              </button>
+              {bulkMsg && <span className="text-sm text-teal/70">{bulkMsg}</span>}
+            </div>
+          </AdminSurface>
+
+          <AdminSurface
+            title={form.id ? "Yorumu düzenle" : "Yeni yorum"}
+            description="Tekil yorum girişi, sıralama ve kaynak bilgisi."
+          >
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="sm:col-span-2">
+                  <label className="mb-1 block text-sm font-semibold text-teal-deep">Yazar</label>
+                  <input
+                    value={form.author}
+                    onChange={(e) => setForm({ ...form, author: e.target.value })}
+                    required
+                    className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-semibold text-teal-deep">Puan (1-5)</label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={5}
+                    value={form.rating}
+                    onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })}
+                    className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-semibold text-teal-deep">Orijinal dil</label>
+                  <select
+                    value={form.source_lang}
+                    onChange={(e) => setForm({ ...form, source_lang: e.target.value as ReviewLang })}
+                    className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange"
+                  >
+                    {REVIEW_LANGS.map((l) => (
+                      <option key={l} value={l}>
+                        {LANG_LABEL[l]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-teal-deep">
+                  Yorum (orijinal dilde)
+                </label>
+                <textarea
+                  value={form.body}
+                  onChange={(e) => setForm({ ...form, body: e.target.value })}
+                  required
+                  rows={4}
+                  className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange focus:ring-4 focus:ring-orange/10"
+                />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="sm:col-span-2">
+                  <label className="mb-1 block text-sm font-semibold text-teal-deep">
+                    Kaynak (örn: Google, TripAdvisor)
+                  </label>
+                  <input
+                    value={form.source_label}
+                    onChange={(e) => setForm({ ...form, source_label: e.target.value })}
+                    className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-semibold text-teal-deep">Sıra</label>
+                  <input
+                    type="number"
+                    value={form.sort_order}
+                    onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
+                    className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-semibold text-teal-deep">Durum</label>
+                  <select
+                    value={form.status}
+                    onChange={(e) => setForm({ ...form, status: e.target.value as ReviewStatus })}
+                    className="w-full rounded-2xl border border-teal/15 bg-[#fcfbf8] px-4 py-3 outline-none focus:border-orange"
+                  >
+                    <option value="published">Yayında</option>
+                    <option value="archived">Arşiv</option>
+                  </select>
+                </div>
+              </div>
+              {error && <p className="text-sm text-red-600">{error}</p>}
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="rounded-full bg-orange px-6 py-3 font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
+                >
+                  {submitting ? "Kaydediliyor..." : "Kaydet"}
+                </button>
+                {form.id && (
+                  <button
+                    type="button"
+                    onClick={() => setForm(EMPTY)}
+                    className="rounded-full border border-teal/20 px-6 py-3 font-semibold text-teal hover:bg-foam"
+                  >
+                    İptal / Yeni
+                  </button>
+                )}
+              </div>
+            </form>
+          </AdminSurface>
+        </div>
+
+        <AdminSurface
+          title={`${items.length} yorum`}
+          description="Yorumlar, çeviri kapsamı ve yayın durumu ile birlikte kartlar halinde listelenir."
+          actions={
+            <button
+              onClick={() => void load()}
+              disabled={loading}
+              className="rounded-full border border-teal/20 px-4 py-2 text-sm font-semibold text-teal hover:bg-foam disabled:opacity-50"
+            >
+              {loading ? "Yükleniyor..." : "Yenile"}
+            </button>
+          }
+        >
+          {!loading && items.length === 0 && (
+            <AdminEmptyState
+              title="Henüz yorum yok"
+              description="Yeni yorumlar ya da toplu içe aktarılan kayıtlar burada çeviri bilgileriyle birlikte listelenecek."
+            />
+          )}
+
+          <div className="grid gap-4 xl:grid-cols-2">
+            {items.map((r) => {
+              const trs = transFor(r.id);
+              const isOpen = expanded === r.id;
+              return (
+                <div
+                  key={r.id}
+                  className="rounded-[24px] border border-teal/10 bg-[#fcfbf8] p-5 shadow-[0_12px_34px_rgba(4,43,37,0.05)]"
+                >
+                  <div className="mb-2 flex items-center justify-between gap-2">
+                    <span className="font-semibold text-teal-deep">{r.author}</span>
+                    <span className="text-sm text-orange">{"★".repeat(r.rating)}</span>
+                  </div>
+                  <p className="mb-3 text-sm leading-7 text-teal/80">{r.body}</p>
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-teal/50">
+                    {r.source_label && <span>{r.source_label}</span>}
+                    <span className="rounded-full bg-foam px-2 py-0.5 font-bold text-teal">
+                      {(r.source_lang ?? "—").toUpperCase()}
+                    </span>
+                    <span
+                      className={`rounded-full px-2 py-0.5 font-bold ${
+                        r.status === "published" ? "bg-teal/15 text-teal" : "bg-gray-200 text-gray-500"
+                      }`}
+                    >
+                      {r.status === "published" ? "Yayında" : "Arşiv"}
+                    </span>
+                    <span>{trs.length}/4 dil</span>
+                    <span>sıra: {r.sort_order}</span>
+                  </div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <button
+                      onClick={() => setExpanded(isOpen ? null : r.id)}
+                      className="rounded-full border border-teal/20 px-3 py-1.5 text-xs font-semibold text-teal hover:bg-foam"
+                    >
+                      {isOpen ? "Çevirileri gizle" : "Çeviriler"}
+                    </button>
+                    <button
+                      onClick={() => handleEdit(r)}
+                      className="rounded-full border border-teal/20 px-3 py-1.5 text-xs font-semibold text-teal hover:bg-foam"
+                    >
+                      Düzenle
+                    </button>
+                    <button
+                      disabled={busyId === r.id}
+                      onClick={() => void handleDelete(r.id)}
+                      className="rounded-full border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-40"
+                    >
+                      Sil
+                    </button>
+                  </div>
+
+                  {isOpen && (
+                    <TranslationEditor
+                      review={r}
+                      translations={trs}
+                      onSaved={() => void refreshTranslations()}
+                      onRetranslate={() => void handleRetranslate(r.id)}
+                      retranslating={retranslateId === r.id}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </AdminSurface>
       </div>
     </div>
   );

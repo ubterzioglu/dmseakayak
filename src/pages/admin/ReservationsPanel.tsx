@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import type { ReservationRow } from "@/hooks/useReservations";
+import { AdminEmptyState, AdminStatCard, AdminSurface } from "./admin-ui";
 
 type ReservationStatus = "new" | "contacted" | "confirmed" | "done" | "cancelled";
 
@@ -38,18 +39,18 @@ interface ReservationCardProps {
 
 function ReservationCard({ reservation: r, onStatusChange, updating }: ReservationCardProps) {
   return (
-    <div className="rounded-2xl border border-teal/10 bg-white p-6 shadow-[0_4px_16px_rgba(1,68,57,0.07)]">
-      <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+    <div className="rounded-[26px] border border-teal/10 bg-[#fcfbf8] p-5 shadow-[0_16px_36px_rgba(4,43,37,0.05)]">
+      <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <div className="font-bold text-teal-deep">{r.name}</div>
-          <div className="text-sm text-teal/60">{r.email || "—"}</div>
+          <div className="font-semibold text-teal-deep">{r.name}</div>
+          <div className="mt-1 text-sm text-teal/55">{r.email || "—"}</div>
         </div>
         <span className={`rounded-full px-3 py-1 text-xs font-bold ${STATUS_COLORS[r.status]}`}>
           {STATUS_LABELS[r.status]}
         </span>
       </div>
 
-      <div className="mb-4 grid gap-1.5 text-sm text-teal/70">
+      <div className="mb-5 grid gap-2 text-sm leading-6 text-teal/70">
         <div>
           <span className="font-semibold text-teal-deep">Telefon:</span> {r.phone}
         </div>
@@ -73,7 +74,9 @@ function ReservationCard({ reservation: r, onStatusChange, updating }: Reservati
             <span className="font-semibold text-teal-deep">Mesaj:</span> {r.message}
           </div>
         )}
-        <div className="text-xs text-teal/40">{new Date(r.created_at).toLocaleString("tr-TR")}</div>
+        <div className="pt-1 text-xs uppercase tracking-[0.14em] text-teal/35">
+          {new Date(r.created_at).toLocaleString("tr-TR")}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -133,48 +136,66 @@ export default function ReservationsPanel() {
 
   return (
     <div className="space-y-6">
-      {/* Stats */}
-      <div className="flex flex-wrap gap-4">
-        <div className="rounded-xl border border-teal/10 bg-white px-5 py-3 shadow-sm">
-          <div className="text-2xl font-extrabold text-teal-deep">{reservations.length}</div>
-          <div className="text-xs text-teal/60">Toplam talep</div>
-        </div>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <AdminStatCard
+          label="Toplam Talep"
+          value={reservations.length}
+          detail="Siteden gelen tüm rezervasyon istekleri."
+          tone="teal"
+        />
         {STATUSES.map((s) => (
-          <div key={s} className="rounded-xl border border-teal/10 bg-white px-5 py-3 shadow-sm">
-            <div className="text-2xl font-extrabold text-teal-deep">
-              {reservations.filter((r) => r.status === s).length}
-            </div>
-            <div className="text-xs text-teal/60">{STATUS_LABELS[s]}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex items-center justify-between">
-        <h3 className="font-bold text-teal-deep">Rezervasyon Talepleri</h3>
-        <button
-          onClick={() => void fetchReservations()}
-          disabled={loading}
-          className="rounded-full border border-teal/20 px-4 py-1.5 text-sm font-semibold text-teal transition-colors hover:bg-foam disabled:opacity-50"
-        >
-          {loading ? "Yükleniyor..." : "Yenile"}
-        </button>
-      </div>
-
-      {loading && <p className="py-12 text-center text-teal/50">Yükleniyor...</p>}
-      {!loading && reservations.length === 0 && (
-        <p className="py-12 text-center text-teal/50">Henüz rezervasyon talebi yok.</p>
-      )}
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {reservations.map((r) => (
-          <ReservationCard
-            key={r.id}
-            reservation={r}
-            onStatusChange={(id, status) => void handleStatusChange(id, status)}
-            updating={updatingId === r.id}
+          <AdminStatCard
+            key={s}
+            label={STATUS_LABELS[s]}
+            value={reservations.filter((r) => r.status === s).length}
+            tone={
+              s === "new"
+                ? "blue"
+                : s === "contacted"
+                  ? "orange"
+                  : s === "cancelled"
+                    ? "rose"
+                    : "emerald"
+            }
           />
         ))}
       </div>
+
+      <AdminSurface
+        title="Rezervasyon akışı"
+        description="Yeni talepleri gözden geçirin, müşteriyle iletişim durumunu güncelleyin ve ilerlemeyi ekibiniz için görünür tutun."
+        actions={
+          <button
+            onClick={() => void fetchReservations()}
+            disabled={loading}
+            className="rounded-full border border-teal/15 bg-white px-4 py-2 text-sm font-semibold text-teal-deep transition hover:bg-foam disabled:opacity-50"
+          >
+            {loading ? "Yükleniyor..." : "Yenile"}
+          </button>
+        }
+        contentClassName="space-y-5"
+      >
+        {loading && <p className="py-12 text-center text-teal/50">Yükleniyor...</p>}
+        {!loading && reservations.length === 0 && (
+          <AdminEmptyState
+            title="Henüz rezervasyon talebi yok"
+            description="Yeni form gönderimleri burada kart görünümüyle listelenecek."
+          />
+        )}
+
+        {!loading && reservations.length > 0 && (
+          <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-3">
+            {reservations.map((r) => (
+              <ReservationCard
+                key={r.id}
+                reservation={r}
+                onStatusChange={(id, status) => void handleStatusChange(id, status)}
+                updating={updatingId === r.id}
+              />
+            ))}
+          </div>
+        )}
+      </AdminSurface>
     </div>
   );
 }

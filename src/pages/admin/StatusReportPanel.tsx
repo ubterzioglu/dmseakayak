@@ -5,6 +5,7 @@
  *
  * Yeni iş bittikçe ROWS dizisindeki `status` alanını güncelleyin.
  */
+import { AdminStatCard, AdminSurface } from "./admin-ui";
 
 type Status = "done" | "partial" | "missing";
 
@@ -114,31 +115,28 @@ export default function StatusReportPanel() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="mb-1 text-xl font-bold text-teal-deep">Durum Raporu</h2>
-        <p className="text-sm text-teal/60">
-          ChatGPT'den çıkan görev listesinin son durumu. Toplam {total} madde.
-        </p>
-      </div>
+      <AdminSurface
+        title="Durum Raporu"
+        description={`ChatGPT'den çıkan görev listesinin son durumu. Toplam ${total} madde.`}
+      >
+        <div className="text-sm leading-7 text-teal/65">
+          Kod tamamlandı mı, içerik mi bekleniyor, yoksa henüz başlanmadı mı sorusunu tek tabloda
+          görmeniz için hazırlanmış bir izleme yüzeyi.
+        </div>
+      </AdminSurface>
 
-      {/* Özet kartları */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {(["done", "partial", "missing"] as Status[]).map((s) => (
-          <div
+          <AdminStatCard
             key={s}
-            className="flex items-center gap-3 rounded-2xl border border-teal/10 bg-white p-4 shadow-sm"
-          >
-            <span className={`h-3 w-3 flex-shrink-0 rounded-full ${STATUS_META[s].dot}`} />
-            <div>
-              <div className="text-2xl font-extrabold text-teal-deep">{counts[s]}</div>
-              <div className="text-xs font-semibold text-teal/60">{STATUS_META[s].label}</div>
-            </div>
-          </div>
+            label={STATUS_META[s].label}
+            value={counts[s]}
+            tone={s === "done" ? "emerald" : s === "partial" ? "orange" : "rose"}
+          />
         ))}
       </div>
 
-      {/* Tablo */}
-      <div className="overflow-hidden rounded-2xl border border-teal/10 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-[28px] border border-teal/10 bg-white shadow-[0_18px_50px_rgba(4,43,37,0.07)]">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left text-sm">
             <thead>

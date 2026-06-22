@@ -1,19 +1,41 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import type { Session, User } from "@supabase/supabase-js";
+import {
+  BookOpenText,
+  ChartColumnBig,
+  ClipboardList,
+  FolderOpen,
+  GalleryVerticalEnd,
+  Images,
+  KeyRound,
+  LayoutGrid,
+  LogOut,
+  Menu,
+  MessageSquareQuote,
+  NotebookPen,
+  Phone,
+  Sparkles,
+  X,
+} from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import type { User, Session } from "@supabase/supabase-js";
-import ReservationsPanel from "./ReservationsPanel";
-import RevisionsPanel from "./RevisionsPanel";
+import { cn } from "@/lib/utils";
 import BlogPanel from "./BlogPanel";
-import ReviewsPanel from "./ReviewsPanel";
-import UpdatesPanel from "./UpdatesPanel";
-import StatusReportPanel from "./StatusReportPanel";
+import ChangePasswordModal from "./ChangePasswordModal";
 import GalleryPanel from "./GalleryPanel";
 import GuidePanel from "./GuidePanel";
-import ChangePasswordModal from "./ChangePasswordModal";
+import ReservationsPanel from "./ReservationsPanel";
+import ReviewsPanel from "./ReviewsPanel";
+import RevisionsPanel from "./RevisionsPanel";
+import StatusReportPanel from "./StatusReportPanel";
+import UpdatesPanel from "./UpdatesPanel";
+import {
+  type AdminNavItem,
+  AdminPageHeader,
+  AdminQuickLinkCard,
+  AdminSidebar,
+} from "./admin-ui";
 
-// ─── Admin allowlist ─────────────────────────────────────────────────────────
-// Sadece bu e-postalar admin paneline girebilir. Supabase'de kayıtlı olsalar
-// bile listede olmayan kullanıcılar otomatik olarak çıkış yaptırılır.
 const ADMIN_EMAILS = [
   "kelifterzioglu@gmail.com",
   "ubterzioglu@gmail.com",
@@ -24,7 +46,90 @@ function isAdminEmail(email: string | null | undefined): boolean {
   return !!email && ADMIN_EMAILS.includes(email.trim().toLowerCase());
 }
 
-// ─── Login form ──────────────────────────────────────────────────────────────
+type TabKey =
+  | "guide"
+  | "reservations"
+  | "revisions"
+  | "blog"
+  | "gallery"
+  | "reviews"
+  | "updates"
+  | "status";
+
+const TABS: AdminNavItem<TabKey>[] = [
+  {
+    key: "guide",
+    label: "Rehber",
+    description: "Paneli yeni kullanan ekip üyeleri için adım adım açıklamalar.",
+    icon: BookOpenText,
+  },
+  {
+    key: "reservations",
+    label: "Rezervasyonlar",
+    description: "Gelen talepleri takip edin, durum akışını yönetin.",
+    icon: ClipboardList,
+  },
+  {
+    key: "revisions",
+    label: "Revizyonlar",
+    description: "İç ekip isteklerini öncelik ve statüyle düzenleyin.",
+    icon: NotebookPen,
+  },
+  {
+    key: "blog",
+    label: "Blog",
+    description: "Yazı üretin, taslakları düzenleyin, yayına alın.",
+    icon: LayoutGrid,
+  },
+  {
+    key: "gallery",
+    label: "Galeri",
+    description: "Fotoğraf seçin, sıralayın, görünürlüğünü kontrol edin.",
+    icon: Images,
+  },
+  {
+    key: "reviews",
+    label: "Yorumlar",
+    description: "Müşteri yorumları ve çeviri akışlarını yönetin.",
+    icon: MessageSquareQuote,
+  },
+  {
+    key: "updates",
+    label: "Güncellemeler",
+    description: "Yayınlanan geliştirmeler ve içerik bekleyen işler.",
+    icon: Sparkles,
+  },
+  {
+    key: "status",
+    label: "Durum Raporu",
+    description: "Proje hedeflerini ve eksik alanları tek tabloda izleyin.",
+    icon: ChartColumnBig,
+  },
+];
+
+const QUICK_LINKS = [
+  {
+    title: "Google Drive",
+    description: "Proje klasörü, görseller ve içerik dokümanları.",
+    href: "https://drive.google.com/drive/folders/1AsR07x9toMgQ8X5qUHDuzOXRjwBJLTvI",
+    icon: FolderOpen,
+    accentClassName: "bg-orange/10 text-orange border-orange/15",
+  },
+  {
+    title: "Microsoft Clarity",
+    description: "Ziyaretçi oturumları, ısı haritaları ve analitik görünümü.",
+    href: "https://clarity.microsoft.com/projects/view/x9l7k2sbw2/dashboard?date=Last%203%20days",
+    icon: GalleryVerticalEnd,
+    accentClassName: "bg-sky-50 text-sky-700 border-sky-100",
+  },
+  {
+    title: "WhatsApp Grubu",
+    description: "Proje iletişimini hızlıca aynı yerden sürdürün.",
+    href: "https://chat.whatsapp.com/JYC5ORJnbLnAFALiEEwX3G",
+    icon: Phone,
+    accentClassName: "bg-emerald-50 text-emerald-700 border-emerald-100",
+  },
+] as const;
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => Promise<void>;
@@ -42,80 +147,177 @@ function AdminLogin({ onLogin, error, loading }: LoginFormProps) {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <div className="w-full max-w-sm rounded-2xl border border-teal/10 bg-white p-8 shadow-[0_10px_40px_rgba(1,68,57,0.1)]">
-        <div className="mb-6 text-center">
-          <div className="text-2xl font-extrabold text-teal-deep">Dragoman SeaKayak</div>
-          <div className="mt-1 text-sm text-teal/60">Admin Paneli</div>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep" htmlFor="adm-email">
-              E-posta
-            </label>
-            <input
-              id="adm-email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 text-base outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
-            />
+    <div className="relative min-h-screen overflow-hidden bg-[#f6f3ee] px-4 py-10 sm:px-6">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(241,110,11,0.14),transparent_26%),radial-gradient(circle_at_85%_15%,rgba(1,99,82,0.10),transparent_22%),linear-gradient(180deg,#f6f3ee_0%,#fbfaf7_100%)]" />
+      <div className="relative mx-auto grid min-h-[calc(100vh-5rem)] max-w-6xl items-center gap-8 lg:grid-cols-[1.1fr_480px]">
+        <section className="rounded-[36px] border border-teal/10 bg-white/80 p-8 shadow-[0_32px_90px_rgba(4,43,37,0.08)] backdrop-blur sm:p-12">
+          <div className="inline-flex rounded-full border border-orange/20 bg-orange/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-orange">
+            Admin Workspace
           </div>
-          <div>
-            <label className="mb-1 block text-sm font-semibold text-teal-deep" htmlFor="adm-pass">
-              Şifre
-            </label>
-            <input
-              id="adm-pass"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full rounded-xl border border-teal/15 px-4 py-2.5 text-base outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
-            />
+          <h1 className="mt-6 max-w-xl font-serif text-5xl leading-[0.92] text-teal-deep sm:text-6xl">
+            Sade ama güçlü bir yönetim deneyimi.
+          </h1>
+          <p className="mt-5 max-w-lg text-sm leading-7 text-teal/62 sm:text-[15px]">
+            Rezervasyonlar, içerik yönetimi ve ekip içi revizyon akışı tek bir rafine panelde.
+            Mevcut işlevler korunur; odak, okunabilirlik ve hız artar.
+          </p>
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {[
+              { label: "8 bölüm", value: "Tam kapsam" },
+              { label: "Canlı içerik", value: "Supabase bağlı" },
+              { label: "Hızlı erişim", value: "Drive + Clarity" },
+            ].map((item) => (
+              <div key={item.label} className="rounded-[24px] border border-teal/10 bg-foam/55 p-4">
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-teal/45">
+                  {item.label}
+                </div>
+                <div className="mt-2 text-lg font-semibold text-teal-deep">{item.value}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-[32px] border border-teal/10 bg-white p-7 shadow-[0_28px_80px_rgba(4,43,37,0.10)] sm:p-9">
+          <div className="mb-8 flex items-start justify-between gap-4">
+            <div>
+              <div className="font-serif text-3xl leading-none text-teal-deep">Dragoman</div>
+              <div className="mt-2 text-sm text-teal/58">Admin paneline güvenli giriş</div>
+            </div>
+            <div className="rounded-full border border-teal/10 bg-foam/60 px-3 py-1 text-xs font-semibold text-teal-deep">
+              Yetkili hesap
+            </div>
           </div>
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-teal-deep" htmlFor="adm-email">
+                E-posta
+              </label>
+              <input
+                id="adm-email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full rounded-2xl border border-teal/12 bg-[#fcfbf8] px-4 py-3 text-base outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/10"
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-teal-deep" htmlFor="adm-pass">
+                Şifre
+              </label>
+              <input
+                id="adm-pass"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full rounded-2xl border border-teal/12 bg-[#fcfbf8] px-4 py-3 text-base outline-none transition focus:border-orange focus:ring-4 focus:ring-orange/10"
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-full bg-teal py-3 font-semibold text-white transition-colors hover:bg-teal-light disabled:opacity-50"
-          >
-            {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
-          </button>
-        </form>
+            {error && (
+              <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex w-full items-center justify-center rounded-full bg-teal-deep px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-teal disabled:opacity-50"
+            >
+              {loading ? "Giriş yapılıyor..." : "Panele Gir"}
+            </button>
+          </form>
+        </section>
       </div>
     </div>
   );
 }
 
-// ─── Tabs ──────────────────────────────────────────────────────────────────────
+function MobileSidebar({
+  open,
+  active,
+  onSelect,
+  onClose,
+  userEmail,
+}: {
+  open: boolean;
+  active: TabKey;
+  onSelect: (key: TabKey) => void;
+  onClose: () => void;
+  userEmail?: string | null;
+}) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-50 lg:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-teal-deep/35 backdrop-blur-sm"
+            onClick={onClose}
+            aria-label="Navigasyonu kapat"
+          />
+          <motion.div
+            initial={{ x: -32, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -24, opacity: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="relative h-full w-full max-w-[360px] p-4"
+          >
+            <div className="mb-3 flex justify-end">
+              <button
+                type="button"
+                onClick={onClose}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/35 bg-white/85 text-teal-deep shadow-sm"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <AdminSidebar
+              items={TABS}
+              active={active}
+              onSelect={(key) => {
+                onSelect(key);
+                onClose();
+              }}
+              userEmail={userEmail}
+            />
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
-type TabKey =
-  | "guide"
-  | "reservations"
-  | "revisions"
-  | "blog"
-  | "gallery"
-  | "reviews"
-  | "updates"
-  | "status";
-
-const TABS: { key: TabKey; label: string }[] = [
-  { key: "guide", label: "Rehber" },
-  { key: "reservations", label: "Rezervasyonlar" },
-  { key: "revisions", label: "Revizyonlar" },
-  { key: "blog", label: "Blog" },
-  { key: "gallery", label: "Galeri" },
-  { key: "reviews", label: "Yorumlar" },
-  { key: "updates", label: "Güncellemeler" },
-  { key: "status", label: "Durum Raporu" },
-];
-
-// ─── Main admin page ─────────────────────────────────────────────────────────
+function renderPanel(tab: TabKey) {
+  switch (tab) {
+    case "guide":
+      return <GuidePanel />;
+    case "reservations":
+      return <ReservationsPanel />;
+    case "revisions":
+      return <RevisionsPanel />;
+    case "blog":
+      return <BlogPanel />;
+    case "gallery":
+      return <GalleryPanel />;
+    case "reviews":
+      return <ReviewsPanel />;
+    case "updates":
+      return <UpdatesPanel />;
+    case "status":
+      return <StatusReportPanel />;
+    default:
+      return null;
+  }
+}
 
 export default function AdminPage() {
   const [session, setSession] = useState<Session | null>(null);
@@ -124,22 +326,24 @@ export default function AdminPage() {
   const [loginLoading, setLoginLoading] = useState(false);
   const [tab, setTab] = useState<TabKey>("guide");
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
     if (!supabase) return;
-    supabase.auth.getSession().then(({ data }) => {
+    const adminClient = supabase;
+    adminClient.auth.getSession().then(({ data }) => {
       const sessUser = data.session?.user ?? null;
       if (data.session && !isAdminEmail(sessUser?.email)) {
-        void supabase!.auth.signOut();
+        void adminClient.auth.signOut();
         return;
       }
       setSession(data.session);
       setUser(sessUser);
     });
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, sess) => {
+    const { data: sub } = adminClient.auth.onAuthStateChange((_event, sess) => {
       const sessUser = sess?.user ?? null;
       if (sess && !isAdminEmail(sessUser?.email)) {
-        void supabase!.auth.signOut();
+        void adminClient.auth.signOut();
         setSession(null);
         setUser(null);
         return;
@@ -150,12 +354,17 @@ export default function AdminPage() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  const activeTab = useMemo(
+    () => TABS.find((item) => item.key === tab) ?? TABS[0],
+    [tab],
+  );
+
   if (!supabase) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 p-8 text-center">
-        <div className="max-w-sm rounded-2xl border border-teal/10 bg-white p-8">
-          <div className="text-xl font-bold text-teal-deep">Admin Paneli</div>
-          <p className="mt-3 text-sm text-teal/70">
+      <div className="flex min-h-screen items-center justify-center bg-[#f6f3ee] p-8">
+        <div className="max-w-md rounded-[32px] border border-teal/10 bg-white p-8 text-center shadow-[0_24px_70px_rgba(4,43,37,0.08)]">
+          <div className="font-serif text-3xl text-teal-deep">Admin Paneli</div>
+          <p className="mt-3 text-sm leading-7 text-teal/65">
             Supabase yapılandırılmamış. Ortam değişkenlerini ekleyin ve sayfayı yenileyin.
           </p>
         </div>
@@ -165,16 +374,17 @@ export default function AdminPage() {
 
   const handleLogin = async (email: string, password: string) => {
     if (!supabase) return;
+    const adminClient = supabase;
     setLoginLoading(true);
     setLoginError("");
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await adminClient.auth.signInWithPassword({ email, password });
     if (error) {
       setLoginError(error.message);
       setLoginLoading(false);
       return;
     }
     if (!isAdminEmail(data.user?.email)) {
-      await supabase.auth.signOut();
+      await adminClient.auth.signOut();
       setLoginError("Bu hesabın admin paneline erişim yetkisi yok.");
       setLoginLoading(false);
       return;
@@ -191,127 +401,131 @@ export default function AdminPage() {
     return <AdminLogin onLogin={handleLogin} error={loginError} loading={loginLoading} />;
   }
 
+  const todayLabel = new Date().toLocaleDateString("tr-TR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-teal shadow-md">
-        <div className="container flex items-center justify-between py-4">
-          <div>
-            <div className="font-extrabold text-white">Dragoman SeaKayak</div>
-            <div className="text-xs text-white/70">Admin Paneli</div>
+    <div className="min-h-screen bg-[#f6f3ee]">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(241,110,11,0.11),transparent_22%),radial-gradient(circle_at_80%_0%,rgba(1,99,82,0.08),transparent_26%),linear-gradient(180deg,#f6f3ee_0%,#fbfaf7_100%)]" />
+      <div className="relative mx-auto max-w-[1500px] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
+        <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
+          <div className="hidden xl:block">
+            <div className="sticky top-6 h-[calc(100vh-3rem)]">
+              <AdminSidebar
+                items={TABS}
+                active={tab}
+                onSelect={setTab}
+                userEmail={user?.email}
+                footer={
+                  <div className="space-y-3">
+                    <div className="px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-teal/45">
+                      Quick Access
+                    </div>
+                    <div className="space-y-3">
+                      {QUICK_LINKS.map((link) => (
+                        <AdminQuickLinkCard key={link.title} {...link} />
+                      ))}
+                    </div>
+                  </div>
+                }
+              />
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="hidden text-sm text-white/70 sm:block">{user?.email}</span>
-            <button
-              onClick={() => setShowChangePassword(true)}
-              className="rounded-full border border-white/30 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-            >
-              Şifre Değiştir
-            </button>
-            <button
-              onClick={() => void handleLogout()}
-              className="rounded-full border border-white/30 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-            >
-              Çıkış
-            </button>
-          </div>
-        </div>
-      </header>
 
-      <div className="container py-8">
-        {/* Google Drive card */}
-        <div className="mb-6 flex items-center gap-4 rounded-2xl border border-orange/20 bg-orange/5 p-5">
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-orange/10">
-            <svg viewBox="0 0 24 24" className="h-5 w-5 fill-orange" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4.433 22l4-6.928H22l-4 6.928H4.433zM2 18l4-6.928 3.567 6.928H2zM8.567 11.072 12.567 4l4 6.928-4 6.928-4-6.856z" />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <div className="font-semibold text-teal-deep">Google Drive — Proje Klasörü</div>
-            <div className="text-sm text-teal/60">Tüm belge, görsel ve dosyalar</div>
-          </div>
-          <a
-            href="https://drive.google.com/drive/folders/1AsR07x9toMgQ8X5qUHDuzOXRjwBJLTvI"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full bg-orange px-4 py-2 text-sm font-semibold text-white hover:bg-orange-soft"
-          >
-            Aç
-          </a>
-        </div>
+          <main className="min-w-0 space-y-6">
+            <div className="flex items-center justify-between xl:hidden">
+              <button
+                type="button"
+                onClick={() => setMobileNavOpen(true)}
+                className="inline-flex items-center gap-2 rounded-full border border-teal/10 bg-white px-4 py-2 text-sm font-semibold text-teal-deep shadow-sm"
+              >
+                <Menu className="h-4 w-4" />
+                Bölümler
+              </button>
+              <div className="rounded-full border border-teal/10 bg-white px-4 py-2 text-xs font-semibold text-teal/60 shadow-sm">
+                {activeTab.label}
+              </div>
+            </div>
 
-        {/* Microsoft Clarity card */}
-        <div className="mb-6 flex items-center gap-4 rounded-2xl border border-[#0078D4]/20 bg-[#0078D4]/5 p-5">
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#0078D4]/10">
-            <svg viewBox="0 0 24 24" className="h-5 w-5 fill-[#0078D4]" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 13h2v8H3v-8zm4-6h2v14H7V7zm4 3h2v11h-2V10zm4-6h2v17h-2V4zm4 9h2v8h-2v-8z" />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <div className="font-semibold text-teal-deep">Microsoft Clarity — Analytics</div>
-            <div className="text-sm text-teal/60">Ziyaretçi istatistikleri, ısı haritaları ve oturum kayıtları</div>
-          </div>
-          <a
-            href="https://clarity.microsoft.com/projects/view/x9l7k2sbw2/dashboard?date=Last%203%20days"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full bg-[#0078D4] px-4 py-2 text-sm font-semibold text-white hover:bg-[#106ebe]"
-          >
-            Aç
-          </a>
-        </div>
+            <AdminPageHeader
+              eyebrow="Çalışma Alanı"
+              title={activeTab.label}
+              description={activeTab.description}
+              actions={
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setShowChangePassword(true)}
+                    className="inline-flex items-center gap-2 rounded-full border border-teal/12 bg-white px-4 py-2.5 text-sm font-semibold text-teal-deep transition hover:bg-foam"
+                  >
+                    <KeyRound className="h-4 w-4" />
+                    Şifre Değiştir
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void handleLogout()}
+                    className="inline-flex items-center gap-2 rounded-full bg-teal-deep px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Çıkış
+                  </button>
+                </>
+              }
+              extra={
+                <>
+                  <div>
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal/45">
+                      Bugün
+                    </div>
+                    <div className="mt-2 font-serif text-2xl leading-none text-teal-deep">
+                      {todayLabel}
+                    </div>
+                    <div className="mt-3 text-sm leading-6 text-teal/58">
+                      Aktif alan: {activeTab.label}. Aynı route içinde hızlı geçiş korunur.
+                    </div>
+                  </div>
+                  <div className="mt-5 space-y-2">
+                    <div className="rounded-2xl border border-white/70 bg-white/80 px-4 py-3">
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal/45">
+                        Yetkili hesap
+                      </div>
+                      <div className="mt-1 break-all text-sm font-medium text-teal-deep">
+                        {user?.email}
+                      </div>
+                    </div>
+                    <div className="rounded-2xl border border-teal/10 bg-white/65 px-4 py-3 text-sm text-teal/58">
+                      Dış bağlantılar masaüstünde sol panelde, mobilde aşağıda yer alır.
+                    </div>
+                  </div>
+                </>
+              }
+            />
 
-        {/* WhatsApp group card */}
-        <div className="mb-6 flex items-center gap-4 rounded-2xl border border-[#25D366]/20 bg-[#25D366]/5 p-5">
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#25D366]/10">
-            <svg viewBox="0 0 24 24" className="h-5 w-5 fill-[#25D366]" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.04c-.24.68-1.42 1.31-1.95 1.36-.5.05-.99.27-3.39-.71-2.86-1.13-4.68-4.05-4.82-4.24-.14-.19-1.16-1.54-1.16-2.94s.74-2.09 1-2.37c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.57.81 1.97.88 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.28.14.44.12.6-.07.17-.19.69-.81.88-1.09.18-.28.37-.23.62-.14.25.09 1.61.76 1.89.9.28.14.46.21.53.33.07.12.07.69-.17 1.36z" />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <div className="font-semibold text-teal-deep">SeaKayak Web Sitesi — WhatsApp Grubu</div>
-            <div className="text-sm text-teal/60">Proje iletişim grubu</div>
-          </div>
-          <a
-            href="https://chat.whatsapp.com/JYC5ORJnbLnAFALiEEwX3G"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1ebe57]"
-          >
-            Aç
-          </a>
-        </div>
+            <div className="grid gap-4 md:grid-cols-3 xl:hidden">
+              {QUICK_LINKS.map((link) => (
+                <AdminQuickLinkCard key={link.title} {...link} actionLabel="Aç" />
+              ))}
+            </div>
 
-        {/* Tabs */}
-        <div className="mb-6 flex flex-wrap gap-1 border-b-2 border-teal/10">
-          {TABS.map((t) => (
-            <button
-              key={t.key}
-              onClick={() => setTab(t.key)}
-              className={`-mb-0.5 border-b-[3px] px-4 py-2.5 text-sm font-semibold transition-colors ${
-                tab === t.key
-                  ? "border-orange text-orange"
-                  : "border-transparent text-teal/60 hover:text-teal"
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
+            <div key={tab} className={cn("animate-fadeUp")}>
+              {renderPanel(tab)}
+            </div>
+          </main>
         </div>
-
-        {tab === "guide" && <GuidePanel />}
-        {tab === "reservations" && <ReservationsPanel />}
-        {tab === "revisions" && <RevisionsPanel />}
-        {tab === "blog" && <BlogPanel />}
-        {tab === "gallery" && <GalleryPanel />}
-        {tab === "reviews" && <ReviewsPanel />}
-        {tab === "updates" && <UpdatesPanel />}
-        {tab === "status" && <StatusReportPanel />}
       </div>
 
-      <ChangePasswordModal
-        open={showChangePassword}
-        onClose={() => setShowChangePassword(false)}
+      <MobileSidebar
+        open={mobileNavOpen}
+        active={tab}
+        onSelect={setTab}
+        onClose={() => setMobileNavOpen(false)}
+        userEmail={user?.email}
       />
+
+      <ChangePasswordModal open={showChangePassword} onClose={() => setShowChangePassword(false)} />
     </div>
   );
 }
