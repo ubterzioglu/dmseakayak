@@ -236,6 +236,27 @@ export default function AdminPage() {
           </a>
         </div>
 
+        {/* Microsoft Clarity card */}
+        <div className="mb-6 flex items-center gap-4 rounded-2xl border border-[#0078D4]/20 bg-[#0078D4]/5 p-5">
+          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#0078D4]/10">
+            <svg viewBox="0 0 24 24" className="h-5 w-5 fill-[#0078D4]" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 13h2v8H3v-8zm4-6h2v14H7V7zm4 3h2v11h-2V10zm4-6h2v17h-2V4zm4 9h2v8h-2v-8z" />
+            </svg>
+          </div>
+          <div className="flex-1">
+            <div className="font-semibold text-teal-deep">Microsoft Clarity — Analytics</div>
+            <div className="text-sm text-teal/60">Ziyaretçi istatistikleri, ısı haritaları ve oturum kayıtları</div>
+          </div>
+          <a
+            href="https://clarity.microsoft.com/projects/view/x9l7k2sbw2/dashboard?date=Last%203%20days"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full bg-[#0078D4] px-4 py-2 text-sm font-semibold text-white hover:bg-[#106ebe]"
+          >
+            Aç
+          </a>
+        </div>
+
         {/* WhatsApp group card */}
         <div className="mb-6 flex items-center gap-4 rounded-2xl border border-[#25D366]/20 bg-[#25D366]/5 p-5">
           <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#25D366]/10">
