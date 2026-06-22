@@ -9,9 +9,14 @@ import {
 } from "@/hooks/useAdminContent";
 import { useConfirm } from "@/hooks/useConfirm";
 import { useObjectUrl } from "@/hooks/useObjectUrl";
-import { AdminCollapsible, AdminEmptyState, AdminSurface } from "./admin-ui";
+import {
+  type AdminPanelProps,
+  AdminCollapsible,
+  AdminEmptyState,
+  AdminSurface,
+} from "./admin-ui";
 
-export default function GalleryPanel() {
+export default function GalleryPanel({ infoSlot }: AdminPanelProps) {
   const { confirm, dialog } = useConfirm();
   const [items, setItems] = useState<GalleryRow[]>([]);
   const [loading, setLoading] = useState(false);
@@ -202,6 +207,8 @@ export default function GalleryPanel() {
             </div>
           </form>
         </AdminCollapsible>
+
+        {infoSlot}
 
         <AdminSurface
           title={`${items.length} fotoğraf`}

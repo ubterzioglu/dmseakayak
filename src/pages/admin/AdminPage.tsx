@@ -34,6 +34,7 @@ import {
   type AdminNavItem,
   AdminPageHeader,
   AdminSidebar,
+  SectionInfoAccordion,
 } from "./admin-ui";
 
 const ADMIN_EMAILS = [
@@ -335,24 +336,30 @@ function MobileSidebar({
   );
 }
 
-function renderPanel(tab: TabKey) {
-  switch (tab) {
+function renderPanel(item: AdminNavItem<TabKey>) {
+  // Collapsed-by-default "what is this section for?" card, embedded as the
+  // second card inside each panel. Driven from the TABS metadata so the copy
+  // stays in one place.
+  const infoSlot = (
+    <SectionInfoAccordion description={item.description} help={item.help} />
+  );
+  switch (item.key) {
     case "guide":
-      return <GuidePanel />;
+      return <GuidePanel infoSlot={infoSlot} />;
     case "reservations":
-      return <ReservationsPanel />;
+      return <ReservationsPanel infoSlot={infoSlot} />;
     case "revisions":
-      return <RevisionsPanel />;
+      return <RevisionsPanel infoSlot={infoSlot} />;
     case "blog":
-      return <BlogPanel />;
+      return <BlogPanel infoSlot={infoSlot} />;
     case "gallery":
-      return <GalleryPanel />;
+      return <GalleryPanel infoSlot={infoSlot} />;
     case "reviews":
-      return <ReviewsPanel />;
+      return <ReviewsPanel infoSlot={infoSlot} />;
     case "updates":
-      return <UpdatesPanel />;
+      return <UpdatesPanel infoSlot={infoSlot} />;
     case "status":
-      return <StatusReportPanel />;
+      return <StatusReportPanel infoSlot={infoSlot} />;
     default:
       return null;
   }
@@ -565,7 +572,7 @@ export default function AdminPage() {
             )}
 
             <div key={tab} className={cn("animate-fadeUp")}>
-              {renderPanel(tab)}
+              {renderPanel(activeTab)}
             </div>
           </main>
         </div>

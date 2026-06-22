@@ -10,7 +10,7 @@ export function Footer() {
 
   return (
     <footer className="bg-teal-deep text-white/85">
-      <div className="container flex flex-col items-center space-y-8 py-12 text-center">
+      <div className="container flex flex-col items-center space-y-6 py-10 text-center">
         <div className="flex flex-col items-center">
           <span className="text-xl font-semibold text-white">{SITE.name}</span>
           <p className="mt-2 whitespace-nowrap text-sm opacity-80">{t("footer.tagline")}</p>
@@ -30,16 +30,18 @@ export function Footer() {
 
         <div>
           <h3 className="mb-3 font-semibold text-white">{t("contact.title")}</h3>
-          <ul className="space-y-2 text-sm">
-            <li className="flex items-start justify-center gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0" /> {SITE.address}</li>
-            <li className="flex items-center justify-center gap-2"><Phone className="h-4 w-4 shrink-0" /> <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="hover:text-orange-soft">{SITE.phone}</a></li>
-            <li className="flex items-center justify-center gap-2"><Mail className="h-4 w-4 shrink-0" /> <a href={`mailto:${SITE.email}`} className="hover:text-orange-soft">{SITE.email}</a></li>
-          </ul>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
+            <span className="flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0" /> {SITE.address}</span>
+            <span className="text-white/25">·</span>
+            <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 hover:text-orange-soft"><Phone className="h-4 w-4 shrink-0" /> {SITE.phone}</a>
+            <span className="text-white/25">·</span>
+            <a href={`mailto:${SITE.email}`} className="flex items-center gap-2 hover:text-orange-soft"><Mail className="h-4 w-4 shrink-0" /> {SITE.email}</a>
+          </div>
         </div>
 
-        <div className="w-full border-t border-white/10" />
+        <div className="w-full border-t border-white/10 pt-1" />
 
-        <nav className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm">
+        <nav className="-mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm">
           <Link to={localePath(SEG.tours)} className="hover:text-orange-soft">{t("nav.tours")}</Link>
           <span className="text-white/25">|</span>
           <Link to={localePath(SEG.customTours)} className="hover:text-orange-soft">{t("nav.customTours")}</Link>

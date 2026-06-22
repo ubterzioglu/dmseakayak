@@ -79,7 +79,7 @@ export default function ComingSoon() {
   return (
     <>
       <Seo title={`${SITE.name} — Coming Soon`} description="Çok yakında / Coming soon." />
-      <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-teal-deep px-6 text-center text-white">
+      <main className="relative flex min-h-screen flex-col items-center justify-start overflow-hidden bg-teal-deep px-6 pt-16 text-center text-white md:pt-20">
         {/* Layer 1: drifting radial glow blobs */}
         {!reduceMotion && (
           <>
@@ -182,7 +182,7 @@ export default function ComingSoon() {
             <img
               src="/transparanlogo.png"
               alt={SITE.name}
-              className="h-32 w-auto drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)] sm:h-40"
+              className="h-64 w-auto drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)] sm:h-80"
             />
           </motion.div>
 

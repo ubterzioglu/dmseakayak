@@ -16,7 +16,12 @@ import {
 } from "@/hooks/useAdminContent";
 import { parseBulkReviews } from "@/lib/parseReviews";
 import { useConfirm } from "@/hooks/useConfirm";
-import { AdminCollapsible, AdminEmptyState, AdminSurface } from "./admin-ui";
+import {
+  type AdminPanelProps,
+  AdminCollapsible,
+  AdminEmptyState,
+  AdminSurface,
+} from "./admin-ui";
 
 interface FormState {
   id?: string;
@@ -139,7 +144,7 @@ function TranslationEditor({
 
 // ─── Main panel ────────────────────────────────────────────────────────────────
 
-export default function ReviewsPanel() {
+export default function ReviewsPanel({ infoSlot }: AdminPanelProps) {
   const { confirm, dialog } = useConfirm();
   const [items, setItems] = useState<ReviewRow[]>([]);
   const [translations, setTranslations] = useState<ReviewTranslationRow[]>([]);
@@ -316,6 +321,8 @@ export default function ReviewsPanel() {
               {translateMsg && <div className="text-sm leading-6 text-teal/70">{translateMsg}</div>}
             </div>
           </AdminCollapsible>
+
+          {infoSlot}
 
           <AdminCollapsible
             title="Toplu ekle"

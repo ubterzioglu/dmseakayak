@@ -3,7 +3,12 @@ import { toast } from "sonner";
 import { Phone, MessageCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { ReservationRow } from "@/hooks/useReservations";
-import { AdminEmptyState, AdminStatCard, AdminSurface } from "./admin-ui";
+import {
+  type AdminPanelProps,
+  AdminEmptyState,
+  AdminStatCard,
+  AdminSurface,
+} from "./admin-ui";
 
 /** Strips a phone string down to wa.me-compatible international digits. */
 function waDigits(phone: string): string {
@@ -129,7 +134,7 @@ function ReservationCard({ reservation: r, onStatusChange, updating }: Reservati
   );
 }
 
-export default function ReservationsPanel() {
+export default function ReservationsPanel({ infoSlot }: AdminPanelProps) {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(false);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
@@ -215,6 +220,8 @@ export default function ReservationsPanel() {
           </button>
         ))}
       </div>
+
+      {infoSlot}
 
       <AdminSurface
         title="Rezervasyon akışı"

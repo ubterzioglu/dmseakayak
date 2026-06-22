@@ -3,6 +3,12 @@ import type { LucideIcon } from "lucide-react";
 import { ChevronDown, ChevronRight, KeyRound, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/** Shared props for admin panels that embed the section info accordion. */
+export interface AdminPanelProps {
+  /** Collapsed "what is this section for?" card, rendered as the 2nd card. */
+  infoSlot?: ReactNode;
+}
+
 export interface AdminNavItem<T extends string = string> {
   key: T;
   label: string;
@@ -255,6 +261,67 @@ export function AdminCollapsible({
       {open && (
         <div className={cn("border-t border-teal/8 px-4 py-4 sm:px-5", contentClassName)}>
           {children}
+        </div>
+      )}
+    </section>
+  );
+}
+
+interface SectionInfoAccordionProps {
+  /** One-line section description (same text shown in the page header). */
+  description: string;
+  /** "What can I do here?" bullets. */
+  help?: string[];
+  className?: string;
+}
+
+/**
+ * Collapsed-by-default accordion repeating the section description + help
+ * bullets, embedded as the second card inside each panel. Lets users re-read
+ * what a section is for without scrolling back to the header.
+ */
+export function SectionInfoAccordion({
+  description,
+  help,
+  className,
+}: SectionInfoAccordionProps) {
+  const [open, setOpen] = useState(false);
+  return (
+    <section
+      className={cn(
+        "overflow-hidden rounded-[24px] border border-teal/10 bg-white shadow-[0_14px_40px_rgba(4,43,37,0.06)]",
+        className,
+      )}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-4 px-4 py-3.5 text-left transition-colors hover:bg-foam/50 sm:px-5"
+      >
+        <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-teal/55">
+          Bu bölüm ne işe yarar?
+        </span>
+        <ChevronDown
+          className={cn(
+            "h-5 w-5 shrink-0 text-teal/50 transition-transform",
+            open ? "rotate-180" : "",
+          )}
+        />
+      </button>
+      {open && (
+        <div className="border-t border-teal/8 px-4 py-4 sm:px-5">
+          <p className="text-[13px] leading-6 text-teal/70">{description}</p>
+          {help && help.length > 0 && (
+            <ul className="mt-3 grid gap-1.5 sm:grid-cols-2">
+              {help.map((h, i) => (
+                <li key={i} className="flex gap-2 text-[13px] leading-5 text-teal/75">
+                  <span className="mt-0.5 shrink-0 text-teal-light">›</span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
     </section>

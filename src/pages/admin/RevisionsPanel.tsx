@@ -9,7 +9,12 @@ import {
   type RevisionStatus,
 } from "@/hooks/useAdminContent";
 import { useConfirm } from "@/hooks/useConfirm";
-import { AdminCollapsible, AdminEmptyState, AdminSurface } from "./admin-ui";
+import {
+  type AdminPanelProps,
+  AdminCollapsible,
+  AdminEmptyState,
+  AdminSurface,
+} from "./admin-ui";
 
 const STATUS_LABELS: Record<RevisionStatus, string> = {
   open: "Açık",
@@ -31,7 +36,7 @@ function urgencyColor(u: number): string {
   return "bg-teal/15 text-teal";
 }
 
-export default function RevisionsPanel() {
+export default function RevisionsPanel({ infoSlot }: AdminPanelProps) {
   const { confirm, dialog } = useConfirm();
   const [items, setItems] = useState<RevisionRow[]>([]);
   const [loading, setLoading] = useState(false);
@@ -191,6 +196,8 @@ export default function RevisionsPanel() {
             </button>
           </form>
         </AdminCollapsible>
+
+        {infoSlot}
 
         <AdminSurface
           title={`${items.length} revizyon isteği`}

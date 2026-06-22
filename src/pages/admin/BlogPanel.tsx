@@ -13,9 +13,14 @@ import {
 } from "@/hooks/useAdminContent";
 import { useConfirm } from "@/hooks/useConfirm";
 import { useObjectUrl } from "@/hooks/useObjectUrl";
-import { AdminCollapsible, AdminEmptyState, AdminSurface } from "./admin-ui";
+import {
+  type AdminPanelProps,
+  AdminCollapsible,
+  AdminEmptyState,
+  AdminSurface,
+} from "./admin-ui";
 
-export default function BlogPanel() {
+export default function BlogPanel({ infoSlot }: AdminPanelProps) {
   const { confirm, dialog } = useConfirm();
   const [items, setItems] = useState<BlogPostRow[]>([]);
   const [loading, setLoading] = useState(false);
@@ -302,6 +307,8 @@ export default function BlogPanel() {
             </div>
           </form>
         </AdminCollapsible>
+
+        {infoSlot}
 
         <AdminSurface
           title={`${items.length} yazı`}

@@ -25,7 +25,7 @@ export function Hero() {
       <div className="hero-gradient absolute inset-0" />
 
       {/* Content */}
-      <div className="relative z-10 flex min-h-[90vh] flex-col items-center justify-center px-4 text-center">
+      <div className="relative z-10 flex min-h-[90vh] flex-col items-center justify-start px-4 pt-16 text-center md:pt-20">
         {/* Floating transparent logo */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -41,7 +41,7 @@ export function Hero() {
           <img
             src="/transparanlogo.png"
             alt="Dragoman SeaKayak"
-            className="relative h-28 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] md:h-36 lg:h-44"
+            className="relative h-56 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] md:h-72 lg:h-[22rem]"
             onError={(e) => (e.currentTarget.style.display = "none")}
           />
         </motion.div>
