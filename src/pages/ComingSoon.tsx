@@ -126,8 +126,9 @@ export default function ComingSoon() {
               <line x1="40" y1="14" x2="80" y2="42" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
               <ellipse cx="38" cy="12" rx="7" ry="3.5" fill="#fff" transform="rotate(35 38 12)" />
               <ellipse cx="82" cy="44" rx="7" ry="3.5" fill="#fff" transform="rotate(35 82 44)" />
-              <circle cx="60" cy="28" r="6" fill="#014439" />
-              <rect x="55" y="32" width="10" height="9" rx="4" fill="#014439" />
+              {/* Paddler head + body: white so they stand out on the dark teal. */}
+              <circle cx="60" cy="28" r="6" fill="#ffffff" />
+              <rect x="55" y="32" width="10" height="9" rx="4" fill="#ffffff" />
             </svg>
           </div>
         </div>
