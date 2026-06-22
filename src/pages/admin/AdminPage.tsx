@@ -7,6 +7,7 @@ import BlogPanel from "./BlogPanel";
 import ReviewsPanel from "./ReviewsPanel";
 import UpdatesPanel from "./UpdatesPanel";
 import GalleryPanel from "./GalleryPanel";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 // ─── Admin allowlist ─────────────────────────────────────────────────────────
 // Sadece bu e-postalar admin paneline girebilir. Supabase'de kayıtlı olsalar
@@ -109,6 +110,7 @@ export default function AdminPage() {
   const [loginError, setLoginError] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const [tab, setTab] = useState<TabKey>("reservations");
+  const [showChangePassword, setShowChangePassword] = useState(false);
 
   useEffect(() => {
     if (!supabase) return;
@@ -184,8 +186,14 @@ export default function AdminPage() {
             <div className="font-extrabold text-white">Dragoman SeaKayak</div>
             <div className="text-xs text-white/70">Admin Paneli</div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <span className="hidden text-sm text-white/70 sm:block">{user?.email}</span>
+            <button
+              onClick={() => setShowChangePassword(true)}
+              className="rounded-full border border-white/30 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              Şifre Değiştir
+            </button>
             <button
               onClick={() => void handleLogout()}
               className="rounded-full border border-white/30 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
