@@ -7,6 +7,7 @@ import BlogPanel from "./BlogPanel";
 import ReviewsPanel from "./ReviewsPanel";
 import UpdatesPanel from "./UpdatesPanel";
 import GalleryPanel from "./GalleryPanel";
+import GuidePanel from "./GuidePanel";
 import ChangePasswordModal from "./ChangePasswordModal";
 
 // ─── Admin allowlist ─────────────────────────────────────────────────────────
@@ -92,9 +93,17 @@ function AdminLogin({ onLogin, error, loading }: LoginFormProps) {
 
 // ─── Tabs ──────────────────────────────────────────────────────────────────────
 
-type TabKey = "reservations" | "revisions" | "blog" | "gallery" | "reviews" | "updates";
+type TabKey =
+  | "guide"
+  | "reservations"
+  | "revisions"
+  | "blog"
+  | "gallery"
+  | "reviews"
+  | "updates";
 
 const TABS: { key: TabKey; label: string }[] = [
+  { key: "guide", label: "Rehber" },
   { key: "reservations", label: "Rezervasyonlar" },
   { key: "revisions", label: "Revizyonlar" },
   { key: "blog", label: "Blog" },
@@ -110,7 +119,7 @@ export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
   const [loginError, setLoginError] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
-  const [tab, setTab] = useState<TabKey>("reservations");
+  const [tab, setTab] = useState<TabKey>("guide");
   const [showChangePassword, setShowChangePassword] = useState(false);
 
   useEffect(() => {
@@ -265,6 +274,7 @@ export default function AdminPage() {
           ))}
         </div>
 
+        {tab === "guide" && <GuidePanel />}
         {tab === "reservations" && <ReservationsPanel />}
         {tab === "revisions" && <RevisionsPanel />}
         {tab === "blog" && <BlogPanel />}
