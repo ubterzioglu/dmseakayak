@@ -180,7 +180,7 @@ export default function ComingSoon() {
             className={`mb-8 rounded-[2rem] border border-white/15 bg-white/10 p-3 shadow-2xl ring-1 ring-black/5 backdrop-blur-sm ${reduceMotion ? "" : "animate-bob"}`}
           >
             <div className="rounded-2xl bg-foam px-12 py-9">
-              <img src="/logo.png?v=2" alt={SITE.name} className="h-28 w-auto sm:h-32" />
+              <img src="/logo.png?v=3" alt={SITE.name} className="h-28 w-auto sm:h-32" />
             </div>
           </motion.div>
 

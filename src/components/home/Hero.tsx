@@ -39,7 +39,7 @@ export function Hero() {
             className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"
           />
           <img
-            src="/logo.png?v=2"
+            src="/logo.png?v=3"
             alt="Dragoman SeaKayak"
             className="relative h-28 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] md:h-36 lg:h-44"
             onError={(e) => (e.currentTarget.style.display = "none")}
