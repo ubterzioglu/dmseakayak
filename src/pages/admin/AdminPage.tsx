@@ -15,6 +15,7 @@ import ChangePasswordModal from "./ChangePasswordModal";
 const ADMIN_EMAILS = [
   "kelifterzioglu@gmail.com",
   "ubterzioglu@gmail.com",
+  "oguzhandurmus@msn.com",
 ];
 
 function isAdminEmail(email: string | null | undefined): boolean {
@@ -271,6 +272,11 @@ export default function AdminPage() {
         {tab === "reviews" && <ReviewsPanel />}
         {tab === "updates" && <UpdatesPanel />}
       </div>
+
+      <ChangePasswordModal
+        open={showChangePassword}
+        onClose={() => setShowChangePassword(false)}
+      />
     </div>
   );
 }
