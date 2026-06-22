@@ -10,7 +10,7 @@ export function Footer() {
 
   return (
     <footer className="bg-teal-deep text-white/85">
-      <div className="container flex flex-col items-center space-y-6 py-10 text-center">
+      <div className="container flex flex-col items-center space-y-4 py-6 text-center">
         <div className="flex flex-col items-center">
           <span className="text-xl font-semibold text-white">{SITE.name}</span>
           <p className="mt-2 whitespace-nowrap text-sm opacity-80">{t("footer.tagline")}</p>
@@ -29,8 +29,8 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="mb-3 font-semibold text-white">{t("contact.title")}</h3>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
+            <span className="font-semibold text-white">{t("contact.title")} :</span>
             <span className="flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0" /> {SITE.address}</span>
             <span className="text-white/25">·</span>
             <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 hover:text-orange-soft"><Phone className="h-4 w-4 shrink-0" /> {SITE.phone}</a>
