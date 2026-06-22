@@ -68,21 +68,19 @@ async function clickReviewsTab(page) {
 }
 
 async function getScrollable(page) {
-  // Static candidates first (fast path).
-  for (const sel of ['div[role="feed"]', 'div.m6QErb[tabindex="-1"]', "div.DxyBCb"]) {
-    const el = page.locator(sel).first();
-    if ((await el.count().catch(() => 0)) && (await el.evaluate((e) => e.scrollHeight > e.clientHeight + 50).catch(() => false))) {
-      return el;
-    }
-  }
-  // Dynamic: walk up from a review card to its nearest scrollable ancestor and
-  // tag it so we can target it with a locator afterwards.
+  // Walk up from a review card to the nearest ancestor whose computed overflow-y
+  // is auto/scroll, and tag it. No height gate here — at detection time the list
+  // may not be tall enough yet, but this IS the scroll container. We scroll it by
+  // setting scrollTop, which works even before the gate would pass.
   const tagged = await page.evaluate(() => {
+    document.querySelectorAll("[data-scrape-scroll]").forEach((e) =>
+      e.removeAttribute("data-scrape-scroll"),
+    );
     const card = document.querySelector("div[data-review-id], div.jftiEf");
     let el = card?.parentElement;
-    while (el) {
+    while (el && el !== document.body) {
       const oy = getComputedStyle(el).overflowY;
-      if ((oy === "auto" || oy === "scroll") && el.scrollHeight > el.clientHeight + 50) {
+      if (oy === "auto" || oy === "scroll") {
         el.setAttribute("data-scrape-scroll", "1");
         return true;
       }
@@ -91,6 +89,12 @@ async function getScrollable(page) {
     return false;
   });
   if (tagged) return page.locator('[data-scrape-scroll="1"]').first();
+
+  // Static fallback (known Google Maps containers).
+  for (const sel of ['div[role="feed"]', "div.m6QErb.DxyBCb", "div.DxyBCb", "div.m6QErb"]) {
+    const el = page.locator(sel).first();
+    if (await el.count().catch(() => 0)) return el;
+  }
   return null;
 }
 
@@ -210,8 +214,17 @@ async function main() {
     if (!scrollable) scrollable = await getScrollable(page);
 
     if (scrollable) {
+      // Jump to the bottom (scrollTop = scrollHeight) and also nudge the last
+      // card into view — Google loads the next batch on either signal.
       await scrollable
-        .evaluate((el) => el.scrollBy(0, el.scrollHeight))
+        .evaluate((el) => {
+          el.scrollTop = el.scrollHeight;
+        })
+        .catch(() => {});
+      await page
+        .locator("div[data-review-id], div.jftiEf")
+        .last()
+        .scrollIntoViewIfNeeded()
         .catch(() => {});
     } else {
       // Fallback: hover a card so the wheel scrolls the list, not the map.

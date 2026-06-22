@@ -151,7 +151,13 @@ export async function fetchReviews(): Promise<ReviewRow[]> {
     .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
   if (error) throw new Error(error.message);
-  return (data ?? []) as ReviewRow[];
+  // DB rows predating migration 0004 (or inserted via paths that skipped the
+  // column default) can have a null source_lang. The render layer assumes it is
+  // always a valid ReviewLang, so normalize at the boundary instead of casting.
+  return (data ?? []).map((r: Record<string, unknown>) => ({
+    ...r,
+    source_lang: (r.source_lang ?? "en") as ReviewLang,
+  })) as ReviewRow[];
 }
 
 export async function saveReview(input: ReviewInput, id?: string): Promise<void> {

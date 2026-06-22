@@ -465,7 +465,7 @@ export default function ReviewsPanel() {
               <div className="flex flex-wrap items-center gap-2 text-xs text-teal/50">
                 {r.source_label && <span>{r.source_label}</span>}
                 <span className="rounded-full bg-foam px-2 py-0.5 font-bold text-teal">
-                  {r.source_lang.toUpperCase()}
+                  {(r.source_lang ?? "—").toUpperCase()}
                 </span>
                 <span
                   className={`rounded-full px-2 py-0.5 font-bold ${
