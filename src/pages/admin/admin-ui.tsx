@@ -85,54 +85,37 @@ export function AdminSidebar<T extends string>({
           const Icon = item.icon;
           const isActive = active === item.key;
           return (
-            <div key={item.key}>
-              <button
-                type="button"
-                onClick={() => onSelect(item.key)}
+            <button
+              key={item.key}
+              type="button"
+              onClick={() => onSelect(item.key)}
+              className={cn(
+                "group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition-all",
+                isActive
+                  ? "bg-teal-deep text-white shadow-[0_16px_32px_rgba(1,68,57,0.18)]"
+                  : "text-teal-deep hover:bg-foam/80",
+              )}
+            >
+              <span
                 className={cn(
-                  "group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition-all",
+                  "flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border transition-colors",
                   isActive
-                    ? "bg-teal-deep text-white shadow-[0_16px_32px_rgba(1,68,57,0.18)]"
-                    : "text-teal-deep hover:bg-foam/80",
+                    ? "border-white/15 bg-white/10 text-white"
+                    : "border-teal/10 bg-white text-teal",
                 )}
               >
-                <span
-                  className={cn(
-                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border transition-colors",
-                    isActive
-                      ? "border-white/15 bg-white/10 text-white"
-                      : "border-teal/10 bg-white text-teal",
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                </span>
-                <span className="min-w-0 flex-1 text-[13px] font-semibold">{item.label}</span>
-                <ChevronRight
-                  className={cn(
-                    "h-3.5 w-3.5 shrink-0 transition-transform",
-                    isActive
-                      ? "rotate-90 text-white/70"
-                      : "text-teal/30 group-hover:translate-x-0.5",
-                  )}
-                />
-              </button>
-
-              {isActive && item.help && item.help.length > 0 && (
-                <div className="mt-1 ml-2.5 rounded-xl border border-teal/10 bg-foam/45 px-3 py-2.5">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-teal/45">
-                    Bu bölümde neler yapılabilir?
-                  </div>
-                  <ul className="mt-1.5 space-y-1">
-                    {item.help.map((h, i) => (
-                      <li key={i} className="flex gap-1.5 text-[11px] leading-4 text-teal/70">
-                        <span className="mt-0.5 shrink-0 text-teal-light">›</span>
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+                <Icon className="h-4 w-4" />
+              </span>
+              <span className="min-w-0 flex-1 text-[13px] font-semibold">{item.label}</span>
+              <ChevronRight
+                className={cn(
+                  "h-3.5 w-3.5 shrink-0 transition-transform",
+                  isActive
+                    ? "translate-x-0 text-white/70"
+                    : "text-teal/30 group-hover:translate-x-0.5",
+                )}
+              />
+            </button>
           );
         })}
       </nav>
@@ -159,7 +142,7 @@ export function AdminPageHeader({
 }: AdminPageHeaderProps) {
   return (
     <section className="overflow-hidden rounded-[24px] border border-teal/10 bg-white px-5 py-3.5 shadow-[0_18px_50px_rgba(4,43,37,0.07)] sm:px-6">
-      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
         <div className="min-w-0">
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
             <h1 className="font-serif text-[1.5rem] leading-tight text-teal-deep sm:text-[1.75rem]">
@@ -173,9 +156,11 @@ export function AdminPageHeader({
           </div>
           <p className="mt-0.5 max-w-2xl text-[13px] leading-5 text-teal/60">{description}</p>
         </div>
-        {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
+        <div className="flex flex-wrap items-center gap-2">
+          {extra}
+          {actions}
+        </div>
       </div>
-      {extra}
     </section>
   );
 }

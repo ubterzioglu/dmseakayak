@@ -33,7 +33,6 @@ import UpdatesPanel from "./UpdatesPanel";
 import {
   type AdminNavItem,
   AdminPageHeader,
-  AdminQuickLinkCard,
   AdminSidebar,
 } from "./admin-ui";
 
@@ -496,7 +495,7 @@ export default function AdminPage() {
       <div className="relative mx-auto max-w-[1500px] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
         <div className="grid gap-6 xl:grid-cols-[288px_minmax(0,1fr)]">
           <div className="hidden xl:block">
-            <div className="sticky top-6 flex max-h-[calc(100vh-3rem)] flex-col gap-4 overflow-y-auto pb-2">
+            <div className="sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto pb-2">
               <AdminSidebar
                 items={TABS}
                 active={tab}
@@ -504,18 +503,8 @@ export default function AdminPage() {
                 userEmail={user?.email}
                 onChangePassword={() => setShowChangePassword(true)}
                 onLogout={() => void handleLogout()}
-                className="h-auto shrink-0"
+                className="h-auto"
               />
-              <section className="rounded-[28px] border border-teal/10 bg-white/95 p-4 shadow-[0_20px_60px_rgba(4,43,37,0.08)] backdrop-blur">
-                <div className="px-2 pb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-teal/45">
-                  Linkler
-                </div>
-                <div className="space-y-3">
-                  {QUICK_LINKS.map((link) => (
-                    <AdminQuickLinkCard key={link.title} {...link} />
-                  ))}
-                </div>
-              </section>
             </div>
           </div>
 
@@ -538,13 +527,42 @@ export default function AdminPage() {
               eyebrow="Çalışma Alanı"
               title={activeTab.label}
               description={activeTab.description}
+              extra={
+                <div className="flex flex-wrap gap-2">
+                  {QUICK_LINKS.map((link) => {
+                    const Icon = link.icon;
+                    return (
+                      <a
+                        key={link.title}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-teal/12 bg-foam/60 px-3 py-1.5 text-[12px] font-semibold text-teal-deep transition hover:bg-foam"
+                      >
+                        <Icon className="h-3.5 w-3.5 text-orange" />
+                        {link.title}
+                      </a>
+                    );
+                  })}
+                </div>
+              }
             />
 
-            <div className="grid gap-4 md:grid-cols-3 xl:hidden">
-              {QUICK_LINKS.map((link) => (
-                <AdminQuickLinkCard key={link.title} {...link} actionLabel="Aç" />
-              ))}
-            </div>
+            {activeTab.help && activeTab.help.length > 0 && (
+              <section className="rounded-[24px] border border-teal/10 bg-white px-5 py-4 shadow-[0_18px_50px_rgba(4,43,37,0.07)] sm:px-6">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-teal/45">
+                  Bu bölümde neler yapılabilir?
+                </div>
+                <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
+                  {activeTab.help.map((h, i) => (
+                    <li key={i} className="flex gap-2 text-[13px] leading-5 text-teal/75">
+                      <span className="mt-0.5 shrink-0 text-teal-light">›</span>
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             <div key={tab} className={cn("animate-fadeUp")}>
               {renderPanel(tab)}
