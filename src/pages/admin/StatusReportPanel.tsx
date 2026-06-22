@@ -5,7 +5,7 @@
  *
  * Yeni iş bittikçe ROWS dizisindeki `status` alanını güncelleyin.
  */
-import { AdminStatCard, AdminSurface } from "./admin-ui";
+import { type AdminPanelProps, AdminStatCard, AdminSurface } from "./admin-ui";
 
 type Status = "done" | "partial" | "missing";
 
