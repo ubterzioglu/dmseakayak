@@ -34,7 +34,18 @@
     "askQuestion": "Ask a question",
     "loading": "Loading...",
     "km": "km",
-    "hikingKm": "km hiking"
+    "hikingKm": "km hiking",
+    "day": "Day",
+    "days": "days",
+    "nights": "nights",
+    "dates": "Departure dates",
+    "notIncluded": "Not included",
+    "groupSize": "Group size",
+    "singleSupplement": "Single supplement",
+    "onRequest": "On request",
+    "privateSession": "Private session",
+    "comingSoonItinerary": "Detailed itinerary coming soon.",
+    "draft": "Draft"
   },
   "level": {
     "beginner": "Beginner-friendly",
@@ -46,7 +57,9 @@
   },
   "tours": {
     "title": "Tours & Adventures",
-    "subtitle": "From calm coves to open-sea routes — options for every level."
+    "subtitle": "From calm coves to open-sea routes — options for every level.",
+    "multiDayTitle": "Multi-Day Expeditions",
+    "multiDaySubtitle": "Longer journeys along the Lycian coast — paddle, camp and explore over several days."
   },
   "reservation": {
     "title": "Reservation Request",

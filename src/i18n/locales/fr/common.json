@@ -34,7 +34,18 @@
     "askQuestion": "Poser une question",
     "loading": "Chargement...",
     "km": "km",
-    "hikingKm": "km de randonnée"
+    "hikingKm": "km de randonnée",
+    "day": "Jour",
+    "days": "jours",
+    "nights": "nuits",
+    "dates": "Dates de départ",
+    "notIncluded": "Non inclus",
+    "groupSize": "Taille du groupe",
+    "singleSupplement": "Supplément single",
+    "onRequest": "Sur demande",
+    "privateSession": "Session privée",
+    "comingSoonItinerary": "Programme détaillé bientôt disponible.",
+    "draft": "Brouillon"
   },
   "level": {
     "beginner": "Accessible aux débutants",
@@ -46,7 +57,9 @@
   },
   "tours": {
     "title": "Excursions & Aventures",
-    "subtitle": "Des criques calmes aux itinéraires en pleine mer — des options pour tous les niveaux."
+    "subtitle": "Des criques calmes aux itinéraires en pleine mer — des options pour tous les niveaux.",
+    "multiDayTitle": "Expéditions de plusieurs jours",
+    "multiDaySubtitle": "Des voyages plus longs le long de la côte lycienne — pagayer, camper et explorer sur plusieurs jours."
   },
   "reservation": {
     "title": "Demande de réservation",

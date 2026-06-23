@@ -7,7 +7,8 @@ import { ShieldCheck, Users, Award } from "lucide-react";
 export default function About() {
   const { t, pick } = useLang();
 
-  const whyChoose = pick(TOURS[0].whyChoose);
+  // Day tours always define whyChoose; the widened Tour type makes it optional.
+  const whyChoose = pick(TOURS[0].whyChoose!);
 
   return (
     <>

@@ -2,7 +2,7 @@ import { Seo } from "@/components/seo/Seo";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { TourGrid } from "@/components/tours/TourGrid";
 import { CurrencyConverter } from "@/components/tours/CurrencyConverter";
-import { TOURS } from "@/content/tours";
+import { TOURS, MULTI_DAY_TOURS } from "@/content/tours";
 import { useLang } from "@/hooks/useLang";
 
 export default function Tours() {
@@ -18,6 +18,13 @@ export default function Tours() {
         />
         <CurrencyConverter />
         <TourGrid tours={TOURS} />
+      </Section>
+      <Section className="bg-foam/40">
+        <SectionHeading
+          title={t("tours.multiDayTitle")}
+          subtitle={t("tours.multiDaySubtitle")}
+        />
+        <TourGrid tours={MULTI_DAY_TOURS} />
       </Section>
     </>
   );

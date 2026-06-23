@@ -5,7 +5,8 @@ import { useLang } from "@/hooks/useLang";
 
 export function WhyChooseUs() {
   const { t, pick } = useLang();
-  const benefits = pick(TOURS[0].whyChoose);
+  // Day tours always define whyChoose; the widened Tour type makes it optional.
+  const benefits = pick(TOURS[0].whyChoose!);
 
   return (
     <Section className="bg-sand">

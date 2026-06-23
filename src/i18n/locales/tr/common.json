@@ -34,7 +34,18 @@
     "askQuestion": "Soru sor",
     "loading": "Yükleniyor...",
     "km": "km",
-    "hikingKm": "km yürüyüş"
+    "hikingKm": "km yürüyüş",
+    "day": "Gün",
+    "days": "gün",
+    "nights": "gece",
+    "dates": "Kalkış tarihleri",
+    "notIncluded": "Dahil olmayanlar",
+    "groupSize": "Grup büyüklüğü",
+    "singleSupplement": "Tek kişi farkı",
+    "onRequest": "Talep üzerine",
+    "privateSession": "Özel seans",
+    "comingSoonItinerary": "Ayrıntılı program yakında eklenecek.",
+    "draft": "Taslak"
   },
   "level": {
     "beginner": "Başlangıç dostu",
@@ -46,7 +57,9 @@
   },
   "tours": {
     "title": "Turlar & Maceralar",
-    "subtitle": "Sakin koylardan açık deniz rotalarına kadar her seviyeye uygun seçenekler."
+    "subtitle": "Sakin koylardan açık deniz rotalarına kadar her seviyeye uygun seçenekler.",
+    "multiDayTitle": "Çok Günlü Expedisyonlar",
+    "multiDaySubtitle": "Likya kıyısı boyunca daha uzun yolculuklar — birkaç gün boyunca kürek çek, kamp yap ve keşfet."
   },
   "reservation": {
     "title": "Rezervasyon Talebi",
