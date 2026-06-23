@@ -13,6 +13,31 @@ interface UpdateGroup {
 
 const ENTRIES: UpdateGroup[] = [
   {
+    date: "23 Haziran 2026",
+    title: "Çok günlü tur (expedition) kartları ve tur sayfası genişletmesi",
+    items: [
+      "Çok günlü turlar eklendi: 7 Günlük Akdeniz Macerası, Coast of Light (4 gün), Kekova Sound (2 gün), Lycian Kayak & Comfort Escape (7 gün), Carian Shore (1 hafta) ve TRAK Signature Experience.",
+      "Tur kartları çok günlü turları otomatik tanıyor: süre (örn. '7 gün / 6 gece') ve kişi başı paket fiyatı gösteriliyor; günlük turların görünümü değişmedi.",
+      "Fiyatı netleşmemiş turlarda 'Talep üzerine' yazıyor; iç maliyet rakamları hiçbir zaman gösterilmiyor.",
+      "Taslak turlarda 'Taslak', TRAK'ta 'Özel' rozeti; içeriği henüz hazır olmayan turda 'Program yakında' notu.",
+      "Tur detay sayfası çok günlü turlar için gün-gün program, tarihler, dahil olanlar ve dahil OLMAYANLAR bölümleriyle genişletildi.",
+      "Çok günlü turlar hem Turlar sayfasında hem ana sayfada ayrı bir bölümde listeleniyor; TRAK kartı kendi sayfasına yönlendiriyor.",
+      "Tüm yeni tur içerikleri ve etiketleri 4 dilde (TR / EN / FR / RU) hazırlandı.",
+    ],
+  },
+  {
+    date: "22 Haziran 2026",
+    title: "TRAK Experience, kur çevirici, Coming Soon ve yorum çevirisi",
+    items: [
+      "TRAK Experience sayfası eklendi (menü ve footer linkiyle).",
+      "Turlar sayfasına kur çevirici eklendi (EUR / TRY / USD / GBP / RUB).",
+      "Lansman öncesi için sinematik animasyonlu 'Coming Soon' (Çok Yakında) ekranı: marka logosu, kürekçi animasyonu ve geri sayım; site geçici olarak /mvp altında sahnelendi.",
+      "Google yorumları için otomatik çekme betiği ve yorumların 4 dile otomatik çevirisi (Supabase Edge Function) altyapısı.",
+      "Yenilenen marka logosu tüm sayfalarda; eski logonun önbellekten gelmesi sorunu giderildi (cache-bust).",
+      "Galeri açıklamaları (caption) çok dilli hale getirildi.",
+    ],
+  },
+  {
     date: "22 Haziran 2026",
     title: "Yönetim paneli kullanım kolaylığı iyileştirmeleri",
     items: [
@@ -27,6 +52,10 @@ const ENTRIES: UpdateGroup[] = [
       "Rezervasyonlarda üstteki sayaç kartlarına tıklayarak duruma göre filtreleme (örn. sadece 'Yeni').",
       "Rezervasyon kartındaki telefon artık tıklanabilir: doğrudan arama veya WhatsApp ile yazma.",
       "Panel genelinde dil tutarlı hale getirildi (kalan İngilizce etiketler Türkçeleştirildi).",
+      "Yetkili artık panel içinden kendi şifresini değiştirebiliyor.",
+      "Hızlı bağlantılar üst bara taşındı, her bölüme yardım kartı eklendi, başlık küçültüldü.",
+      "Yeni 'Durum Raporu' paneli: bitenler / sırada bekleyenler tek bakışta.",
+      "Yeni 'Rehber' paneli: paneli kullananlar için adım adım kullanım kılavuzu.",
     ],
   },
   {
