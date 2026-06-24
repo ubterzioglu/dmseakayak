@@ -12,9 +12,33 @@ export default function Contact() {
 
   const waLink = buildWhatsappLink();
 
+  const localBusinessLd = {
+    "@context": "https://schema.org",
+    "@type": "SportsActivityLocation",
+    name: SITE.name,
+    url: SITE.domain,
+    image: SITE.ogImage,
+    telephone: SITE.phone,
+    email: SITE.email,
+    priceRange: "€€",
+    sport: "Sea Kayaking",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Uzunçarşı Cad. No:15",
+      addressLocality: "Kaş",
+      addressRegion: "Antalya",
+      postalCode: "07580",
+      addressCountry: "TR",
+    },
+    geo: { "@type": "GeoCoordinates", latitude: 36.201899, longitude: 29.638667 },
+    hasMap: "https://www.google.com/maps/search/?api=1&query=36.201899,29.638667",
+    areaServed: ["Kekova", "Kaş", "Kalkan", "Antalya"],
+    sameAs: [SITE.instagram, SITE.facebook],
+  };
+
   return (
     <>
-      <Seo title={t("contact.title")} description={t("contact.subtitle")} />
+      <Seo title={t("contact.title")} description={t("contact.subtitle")} jsonLd={localBusinessLd} />
 
       <Section>
         <SectionHeading title={t("contact.title")} subtitle={t("contact.subtitle")} />

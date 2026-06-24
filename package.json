@@ -10,7 +10,10 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "scrape:reviews": "node scripts/scrape-google-reviews.mjs"
+    "scrape:reviews": "node scripts/scrape-google-reviews.mjs",
+    "import:gallery": "node scripts/import-gallery-images.mjs",
+    "gallery:reset": "node scripts/reset-supabase-gallery.mjs",
+    "sitemap": "node scripts/generate-sitemap.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

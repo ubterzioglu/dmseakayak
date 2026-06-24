@@ -176,7 +176,9 @@
   },
   "notFound": {
     "title": "Page introuvable",
-    "subtitle": "La page que vous recherchez n'existe pas ou a été déplacée.",
-    "cta": "Retour à l'accueil"
+    "subtitle": "La page que vous recherchez n'existe pas ou a été déplacée. Essayez l'un des liens ci-dessous.",
+    "cta": "Retour à l'accueil",
+    "ctaTours": "Découvrir les excursions",
+    "popular": "Pages populaires"
   }
 }

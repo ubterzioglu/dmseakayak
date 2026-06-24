@@ -9,6 +9,7 @@ import { Section, SectionHeading } from "@/components/ui/section";
 import { getTour } from "@/content/tours";
 import { useLang } from "@/hooks/useLang";
 import { SEG } from "@/lib/routes";
+import { SITE } from "@/lib/site";
 import { buildWhatsappLink } from "@/lib/whatsapp";
 
 export default function TourDetail() {
@@ -55,19 +56,44 @@ export default function TourDetail() {
     setLightboxIndex((i) => (i === null ? null : (i + 1) % galleryImages.length));
 
   const price = md ? md.pricePerPersonEur : tour.priceEur;
-  const jsonLd = {
+  const heroImageUrl = `${SITE.domain}${tour.heroImage}`;
+  const tripLd = {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
     name: title,
     description: tagline,
+    image: heroImageUrl,
+    touristType: t(`level.${tour.level}`),
+    provider: {
+      "@type": "Organization",
+      name: SITE.name,
+      url: SITE.domain,
+    },
     ...(price != null
-      ? { offers: { "@type": "Offer", price, priceCurrency: "EUR" } }
+      ? {
+          offers: {
+            "@type": "Offer",
+            price,
+            priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+          },
+        }
       : {}),
   };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: SITE.name, item: `${SITE.domain}${localePath()}` },
+      { "@type": "ListItem", position: 2, name: t("nav.tours"), item: `${SITE.domain}${localePath(SEG.tours)}` },
+      { "@type": "ListItem", position: 3, name: title },
+    ],
+  };
+  const jsonLd = [tripLd, breadcrumbLd];
 
   return (
     <>
-      <Seo title={title} description={tagline} jsonLd={jsonLd} />
+      <Seo title={title} description={tagline} image={heroImageUrl} jsonLd={jsonLd} />
 
       {lightboxIndex !== null && (
         <Lightbox

@@ -176,7 +176,9 @@
   },
   "notFound": {
     "title": "Sayfa Bulunamadı",
-    "subtitle": "Aradığınız sayfa mevcut değil veya taşınmış olabilir.",
-    "cta": "Ana sayfaya dön"
+    "subtitle": "Aradığınız sayfa mevcut değil veya taşınmış olabilir. Aşağıdaki bağlantılardan devam edebilirsiniz.",
+    "cta": "Ana sayfaya dön",
+    "ctaTours": "Turları keşfet",
+    "popular": "Popüler sayfalar"
   }
 }
