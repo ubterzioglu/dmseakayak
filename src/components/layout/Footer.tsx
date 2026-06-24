@@ -32,7 +32,14 @@ export function Footer() {
         className="absolute inset-0 -z-10 bg-gradient-to-b from-teal-deep/60 via-teal-deep/25 to-teal-deep/65"
       />
 
-      <div className="container flex flex-col items-center space-y-4 py-6 text-center [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]">
+      <div className="container flex flex-col items-center space-y-4 py-10 text-center [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]">
+        <img
+          src="/transparanlogo.png"
+          alt="Dragoman SeaKayak"
+          className="h-28 w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)] md:h-36"
+          onError={(e) => (e.currentTarget.style.display = "none")}
+        />
+
         <div className="flex flex-col items-center">
           <span className="text-xl font-semibold text-white">{SITE.name}</span>
           <p className="mt-2 whitespace-nowrap text-sm opacity-80">{t("footer.tagline")}</p>

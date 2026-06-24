@@ -9,7 +9,8 @@ export function Hero() {
 
   return (
     <div className="hero-gradient relative min-h-[90vh] overflow-hidden">
-      {/* Background video — loads silently; if /videos/hero.mp4 404s the gradient shows */}
+      {/* Background video — loads silently; if /videos/hero.mp4 404s the poster/gradient shows.
+          No overlay on top so the footage stays fully visible. */}
       <video
         src="/videos/hero.mp4"
         poster="/seakayakog.jpg"
@@ -18,32 +19,18 @@ export function Hero() {
         loop
         playsInline
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover opacity-30"
+        className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* Gradient overlay sits on top of the video */}
-      <div className="hero-gradient absolute inset-0" />
-
       {/* Content */}
-      <div className="relative z-10 flex min-h-[90vh] flex-col items-center justify-start px-4 pb-28 pt-16 text-center md:pb-24 md:pt-20">
-        {/* Floating transparent logo */}
+      <div className="relative z-10 flex min-h-[90vh] flex-col items-center justify-center px-4 pb-28 pt-16 text-center [text-shadow:0_2px_10px_rgba(0,0,0,0.55)] md:pb-24 md:pt-20">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="animate-bob group relative mb-8 inline-flex items-center justify-center overflow-hidden rounded-[2rem] border border-white/50 bg-white/65 px-10 py-8 shadow-[0_20px_60px_rgba(1,68,57,0.35),inset_0_1px_0_rgba(255,255,255,0.7)] ring-1 ring-white/30 backdrop-blur-xl"
+          className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-base"
         >
-          {/* Glass sheen highlight */}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"
-          />
-          <img
-            src="/transparanlogo.png"
-            alt="Dragoman SeaKayak"
-            className="relative h-56 w-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] md:h-72 lg:h-[22rem]"
-            onError={(e) => (e.currentTarget.style.display = "none")}
-          />
+          Dragoman Diving &amp; Outdoors · SeaKayak
         </motion.div>
 
         <motion.h1
