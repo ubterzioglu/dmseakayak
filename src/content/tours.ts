@@ -102,7 +102,7 @@ export const TOURS: Tour[] = [
     departure: "07:30",
     arrival: "14:30 / 15:00",
     routeStops: ["Üçağız (Theimussa)", "Kekova Island", "Tersane Bay", "Sunken City", "Simena"],
-    heroImage: "/images/tours/kekova-classic.jpg",
+    heroImage: "/images/tours/kekova-classic/tomb1-kekovaklasik-bunukullan.jpg",
     gallery: TOUR_IMAGES["kekova-classic"] ?? [],
     title: { tr: "Kekova Classic", en: "Kekova Classic", fr: "Kekova Classic", ru: "Кекова Классик" },
     tagline: {
@@ -208,7 +208,7 @@ export const TOURS: Tour[] = [
     departure: "07:30",
     arrival: "16:30 / 17:00",
     routeStops: ["Üçağız (Theimussa)", "Kekova Sound & Islands", "Polemos", "Sıcak", "Aperlai"],
-    heroImage: "/images/tours/kekova-west.jpg",
+    heroImage: "/images/tours/kekova-west/aperlai5-kekovawest-bunukullan.jpg",
     gallery: TOUR_IMAGES["kekova-west"] ?? [],
     title: { tr: "Kekova West", en: "Kekova West", fr: "Kekova West", ru: "Кекова Запад" },
     tagline: {
@@ -313,7 +313,7 @@ export const TOURS: Tour[] = [
     departure: "07:30",
     arrival: "17:00 / 17:30",
     routeStops: ["Üçağız", "Simena", "Hamidiye Bay", "Aşırlı Island", "Çayağzı (Andriake)"],
-    heroImage: "/images/tours/kekova-east.jpg",
+    heroImage: "/images/tours/kekova-east/east2kilise-kekovaeast-bunukullan.jpg",
     gallery: TOUR_IMAGES["kekova-east"] ?? [],
     title: { tr: "Kekova East", en: "Kekova East", fr: "Kekova East", ru: "Кекова Восток" },
     tagline: {
