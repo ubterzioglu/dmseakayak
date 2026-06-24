@@ -106,10 +106,10 @@ export const TOURS: Tour[] = [
     gallery: TOUR_IMAGES["kekova-classic"] ?? [],
     title: { tr: "Kekova Classic", en: "Kekova Classic", fr: "Kekova Classic", ru: "Кекова Классик" },
     tagline: {
-      tr: "Kekova'nın ünlü Batık Şehir kıyısında deniz kayağı — her seviyeye uygun.",
-      en: "Sea kayaking along Kekova's famous Sunken City coastline — for all levels.",
-      fr: "Kayak de mer le long de la célèbre côte de la Cité engloutie de Kekova — pour tous les niveaux.",
-      ru: "Морской каякинг вдоль знаменитого Затонувшего города Кековы — для всех уровней.",
+      tr: "Kekova'nın eşsiz güzelliğini bu unutulmaz deniz kayağı macerasında keşfedin!",
+      en: "Discover the breathtaking beauty of Kekova on this unforgettable sea kayaking adventure!",
+      fr: "Découvrez la beauté à couper le souffle de Kekova lors de cette aventure inoubliable en kayak de mer !",
+      ru: "Откройте для себя захватывающую красоту Кековы в этом незабываемом приключении на морском каяке!",
     },
     highlights: {
       tr: ["Batık Şehir kıyısı", "Tersane Koyu'nda yüzme molası", "Simena köyü ve kale manzarası", "Başlangıç dostu rota"],
@@ -216,10 +216,10 @@ export const TOURS: Tour[] = [
     gallery: TOUR_IMAGES["kekova-west"] ?? [],
     title: { tr: "Kekova West", en: "Kekova West", fr: "Kekova West", ru: "Кекова Запад" },
     tagline: {
-      tr: "Aperlai ve ıssız kıyı şeridiyle daha uzun bir Kekova rotası.",
-      en: "A longer Kekova route with Aperlai and remote coastline.",
-      fr: "Un itinéraire de Kekova plus long avec Aperlai et une côte sauvage.",
-      ru: "Более длинный маршрут Кековы с Аперлаи и безлюдным побережьем.",
+      tr: "Kekova & Aperlai tam gün deniz kayağı macerası!",
+      en: "Kekova & Aperlai Full-Day Sea Kayaking Adventure!",
+      fr: "Aventure en kayak de mer d'une journée complète à Kekova et Aperlai !",
+      ru: "Морское каякинг-приключение на целый день в Кекове и Аперлаи!",
     },
     highlights: {
       tr: ["Kekova Boğazı ve adaları", "Aperlai antik kenti", "Deniz kayağı ve kısa yürüyüş", "Tam gün rota"],
@@ -321,10 +321,10 @@ export const TOURS: Tour[] = [
     gallery: TOUR_IMAGES["kekova-east"] ?? [],
     title: { tr: "Kekova East", en: "Kekova East", fr: "Kekova East", ru: "Кекова Восток" },
     tagline: {
-      tr: "Çayağzı ve Demre'ye doğru tam gün doğu Kekova rotası.",
-      en: "A full-day eastern Kekova route towards Çayağzı and Demre.",
-      fr: "Un itinéraire d'une journée vers l'est de Kekova, vers Çayağzı et Demre.",
-      ru: "Маршрут на целый день в восточную Кекову — к Чаягзы и Демре.",
+      tr: "Kekova Çayağzı ve Demre tam gün deniz kayağı & şnorkel macerası!",
+      en: "Kekova Çayağzı and Demre Full-Day Sea Kayaking & Snorkeling Adventure!",
+      fr: "Aventure d'une journée complète en kayak de mer et snorkeling à Kekova Çayağzı et Demre !",
+      ru: "Морское каякинг и снорклинг-приключение на целый день в Кекова Чаягзы и Демре!",
     },
     highlights: {
       tr: ["Theimussa ve Simena", "Hamidiye Koyu", "Aşırlı Adası korsan mağarası", "Andriake limanında bitiş"],
