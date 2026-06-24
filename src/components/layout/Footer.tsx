@@ -32,16 +32,17 @@ export function Footer() {
         className="absolute inset-0 -z-10 bg-gradient-to-b from-teal-deep/60 via-teal-deep/25 to-teal-deep/65"
       />
 
-      <div className="container flex flex-col items-center space-y-4 py-10 text-center [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]">
-        <div className="inline-flex items-center justify-center rounded-[2rem] border border-white/25 bg-teal-deep/35 px-8 py-6 shadow-[0_20px_60px_rgba(1,68,57,0.35),inset_0_1px_0_rgba(255,255,255,0.25)] ring-1 ring-white/10 backdrop-blur-md backdrop-saturate-150">
-          <img
-            src="/transparanlogo.png"
-            alt="Dragoman SeaKayak"
-            className="h-24 w-auto object-contain md:h-28"
-            onError={(e) => (e.currentTarget.style.display = "none")}
-          />
-        </div>
+      {/* Full-width white logo band, edge to edge */}
+      <div className="flex w-full items-center justify-center border-b border-black/5 bg-white px-4 py-6 shadow-[0_8px_24px_rgba(0,0,0,0.18)]">
+        <img
+          src="/transparanlogo.png"
+          alt="Dragoman SeaKayak"
+          className="h-24 w-auto object-contain md:h-28"
+          onError={(e) => (e.currentTarget.style.display = "none")}
+        />
+      </div>
 
+      <div className="container flex flex-col items-center space-y-4 py-10 text-center [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]">
         <div className="flex flex-col items-center">
           <span className="text-xl font-semibold text-white">{SITE.name}</span>
           <p className="mt-2 whitespace-nowrap text-sm opacity-80">{t("footer.tagline")}</p>
