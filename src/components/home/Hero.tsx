@@ -36,11 +36,22 @@ export function Hero() {
           transition={{ duration: 0.7 }}
           className="w-full max-w-2xl rounded-[2rem] border border-white/25 bg-teal-deep/35 px-6 py-8 shadow-[0_20px_60px_rgba(1,68,57,0.35),inset_0_1px_0_rgba(255,255,255,0.25)] ring-1 ring-white/10 backdrop-blur-md backdrop-saturate-150 sm:px-10 sm:py-10 [text-shadow:0_2px_10px_rgba(0,0,0,0.45)]"
         >
-          <div className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-base">
+          <div className="mb-4 flex justify-center">
+            <span className="inline-flex items-center justify-center rounded-2xl bg-white/90 px-5 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+              <img
+                src="/transparanlogo.png"
+                alt="Dragoman SeaKayak"
+                className="h-12 w-auto object-contain md:h-14"
+                onError={(e) => (e.currentTarget.style.display = "none")}
+              />
+            </span>
+          </div>
+
+          <div className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-sm">
             Dragoman Diving &amp; Outdoors · SeaKayak
           </div>
 
-          <h1 className="text-4xl font-extrabold leading-tight text-white md:text-5xl">
+          <h1 className="text-3xl font-extrabold leading-tight text-white md:text-4xl">
             {t("hero.title").split(" ").slice(0, -2).join(" ")}{" "}
             <span className="text-orange-soft">{t("hero.title").split(" ").slice(-2).join(" ")}</span>
           </h1>
