@@ -13,6 +13,16 @@ interface UpdateGroup {
 
 const ENTRIES: UpdateGroup[] = [
   {
+    date: "24 Haziran 2026",
+    title: "Yönetim panelinde formlar varsayılan kapalı (akordeon) hâle getirildi",
+    items: [
+      "Blog, Galeri ve Revizyon bölümlerindeki ekleme formları artık varsayılan olarak kapalı açılıyor; bölüm ilk bakışta daha sade ve okunaklı.",
+      "Bir kaydı düzenlemeye başlayınca ilgili form otomatik açılıyor (Blog ve Galeri); yeni kayıtta kapalı kalıyor.",
+      "Form açıldıktan sonra istenirse elle tekrar kapatılabiliyor.",
+      "Panele admin maskot logosu eklendi.",
+    ],
+  },
+  {
     date: "23 Haziran 2026",
     title: "Çok günlü tur (expedition) kartları ve tur sayfası genişletmesi",
     items: [
