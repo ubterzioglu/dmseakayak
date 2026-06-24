@@ -49,7 +49,7 @@ export function AdminSidebar<T extends string>({
         <img
           src="/maskotadminlogo.png"
           alt="Dragoman Admin"
-          className="h-20 w-auto object-contain"
+          className="h-32 w-auto object-contain"
         />
         <div className="mt-3 inline-flex rounded-full border border-orange/20 bg-orange/5 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-orange">
           Yönetim Paneli
