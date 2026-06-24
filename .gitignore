@@ -18,3 +18,6 @@ docs/GORSEL/*.zip
 # Footer source video (optimized copy lives in public/videos/)
 docs/footervideo.*
 docs/herovideo.*
+
+# Footer source video (compressed copy lives in public/videos/)
+newfooter.mp4
