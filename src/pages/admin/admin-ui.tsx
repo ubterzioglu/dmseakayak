@@ -47,7 +47,7 @@ export function AdminSidebar<T extends string>({
     >
       <div className="border-b border-teal/8 px-1.5 pb-3">
         <img
-          src="/maskotadminlogo.png"
+          src="/tekrardene.png"
           alt="Dragoman Admin"
           className="h-32 w-auto object-contain"
         />

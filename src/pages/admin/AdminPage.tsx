@@ -155,7 +155,7 @@ function AdminLogin({ onLogin, onForgotPassword, error, loading }: LoginFormProp
       <div className="relative mx-auto grid min-h-[calc(100vh-5rem)] max-w-6xl items-center gap-8 lg:grid-cols-[1.1fr_480px]">
         <section className="rounded-[36px] border border-teal/10 bg-white/80 p-8 shadow-[0_32px_90px_rgba(4,43,37,0.08)] backdrop-blur sm:p-12">
           <img
-            src="/maskotadminlogo.png"
+            src="/tekrardene.png"
             alt="Dragoman Admin"
             className="mb-6 h-64 w-auto object-contain sm:h-80"
           />
