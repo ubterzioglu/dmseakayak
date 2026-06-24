@@ -38,9 +38,9 @@ export function Hero() {
         >
           <div className="mb-4 flex justify-center">
             <img
-              src="/transparanlogo.png"
+              src="/kenarliklilogo.png"
               alt="Dragoman SeaKayak"
-              className="h-24 w-auto object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.4)] md:h-28"
+              className="h-28 w-auto rounded-2xl object-contain shadow-[0_10px_30px_rgba(0,0,0,0.35)] md:h-32"
               onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
