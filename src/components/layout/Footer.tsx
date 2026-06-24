@@ -20,15 +20,16 @@ export function Footer() {
         aria-hidden="true"
         className="absolute inset-0 -z-20 h-full w-full object-cover"
       />
-      {/* Green glassmorphism overlay: brand-teal tint + blur so text stays readable
-          while the video shows through. */}
+      {/* Green glassmorphism overlay: light brand-teal tint + subtle blur so the
+          video stays clearly visible while text remains readable. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-teal-deep/70 backdrop-blur-md backdrop-saturate-150"
+        className="absolute inset-0 -z-10 bg-teal-deep/35 backdrop-blur-[2px] backdrop-saturate-150"
       />
+      {/* Soft darkening only behind the text blocks (top & bottom) for contrast. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-gradient-to-b from-teal-deep/40 via-teal-deep/55 to-teal-deep/80"
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-teal-deep/45 via-teal-deep/20 to-teal-deep/55"
       />
 
       <div className="container flex flex-col items-center space-y-4 py-6 text-center">
