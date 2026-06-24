@@ -40,7 +40,7 @@ export function Hero() {
             <img
               src="/kenarliklilogo.png"
               alt="Dragoman SeaKayak"
-              className="h-28 w-auto rounded-2xl object-contain shadow-[0_10px_30px_rgba(0,0,0,0.35)] md:h-32"
+              className="h-28 w-auto object-contain drop-shadow-[0_6px_20px_rgba(0,0,0,0.45)] md:h-32"
               onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
