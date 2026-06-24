@@ -33,7 +33,7 @@ export function Footer() {
       />
 
       <div className="container flex flex-col items-center space-y-4 py-10 text-center [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]">
-        <div className="inline-flex items-center justify-center rounded-[1.5rem] border border-white/25 bg-white/85 px-7 py-5 shadow-[0_16px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.6)] ring-1 ring-white/20 backdrop-blur-md">
+        <div className="inline-flex items-center justify-center rounded-[2rem] border border-white/25 bg-teal-deep/35 px-8 py-6 shadow-[0_20px_60px_rgba(1,68,57,0.35),inset_0_1px_0_rgba(255,255,255,0.25)] ring-1 ring-white/10 backdrop-blur-md backdrop-saturate-150">
           <img
             src="/transparanlogo.png"
             alt="Dragoman SeaKayak"

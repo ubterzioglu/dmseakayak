@@ -22,6 +22,12 @@ export function Hero() {
         className="absolute inset-0 h-full w-full object-cover"
       />
 
+      {/* Thin white veil — softens compression artifacts without hiding the video */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-white/15 backdrop-blur-[1px]"
+      />
+
       {/* Content */}
       <div className="relative z-10 flex min-h-[52vh] flex-col items-center justify-center px-4 py-14 text-center">
         <motion.div
