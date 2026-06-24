@@ -16,7 +16,6 @@ export default function Tours() {
           title={t("tours.title")}
           subtitle={t("tours.subtitle")}
         />
-        <CurrencyConverter />
         <TourGrid tours={TOURS} />
       </Section>
       <Section className="bg-foam/40">
@@ -25,6 +24,9 @@ export default function Tours() {
           subtitle={t("tours.multiDaySubtitle")}
         />
         <TourGrid tours={MULTI_DAY_TOURS} />
+      </Section>
+      <Section>
+        <CurrencyConverter />
       </Section>
     </>
   );
