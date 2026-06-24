@@ -1,11 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
+import { MessageSquare } from "lucide-react";
 import {
   fetchRevisions,
   createRevision,
   updateRevisionStatus,
   deleteRevision,
+  fetchRevisionComments,
+  addRevisionComment,
+  deleteRevisionComment,
   type RevisionRow,
+  type RevisionCommentRow,
   type RevisionStatus,
 } from "@/hooks/useAdminContent";
 import { useConfirm } from "@/hooks/useConfirm";
@@ -34,6 +39,125 @@ function urgencyColor(u: number): string {
   if (u >= 8) return "bg-red-100 text-red-600";
   if (u >= 4) return "bg-orange/15 text-orange";
   return "bg-teal/15 text-teal";
+}
+
+/** Threaded comments under a single revision request. Self-contained: loads its
+ *  own comments and posts new ones. */
+function RevisionComments({ revisionId }: { revisionId: string }) {
+  const [comments, setComments] = useState<RevisionCommentRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [author, setAuthor] = useState("");
+  const [body, setBody] = useState("");
+  const [posting, setPosting] = useState(false);
+  const [busyId, setBusyId] = useState<string | null>(null);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      setComments(await fetchRevisionComments([revisionId]));
+    } catch {
+      // Surface nothing here; the parent already shows global errors.
+    } finally {
+      setLoading(false);
+    }
+  }, [revisionId]);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const handleAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!author.trim() || !body.trim()) return;
+    setPosting(true);
+    try {
+      const created = await addRevisionComment(revisionId, author.trim(), body.trim());
+      setComments((prev) => [...prev, created]);
+      setBody("");
+      toast.success("Yorum eklendi.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Yorum eklenemedi.");
+    } finally {
+      setPosting(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    setBusyId(id);
+    try {
+      await deleteRevisionComment(id);
+      setComments((prev) => prev.filter((c) => c.id !== id));
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Yorum silinemedi.");
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  return (
+    <div className="mt-4 border-t border-teal/10 pt-3">
+      <div className="mb-2 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-teal/45">
+        <MessageSquare className="h-3.5 w-3.5" />
+        Yorumlar{comments.length > 0 ? ` (${comments.length})` : ""}
+      </div>
+
+      {loading ? (
+        <p className="text-xs text-teal/40">Yükleniyor…</p>
+      ) : (
+        comments.length > 0 && (
+          <ul className="mb-3 space-y-2">
+            {comments.map((c) => (
+              <li
+                key={c.id}
+                className="group rounded-xl border border-teal/10 bg-white px-3 py-2"
+              >
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="text-xs font-semibold text-teal-deep">{c.author}</span>
+                  <span className="text-[10px] uppercase tracking-[0.1em] text-teal/35">
+                    {new Date(c.created_at).toLocaleString("tr-TR")}
+                  </span>
+                </div>
+                <p className="mt-1 whitespace-pre-wrap text-[13px] leading-5 text-teal/80">
+                  {c.body}
+                </p>
+                <button
+                  type="button"
+                  disabled={busyId === c.id}
+                  onClick={() => void handleDelete(c.id)}
+                  className="mt-1 text-[10px] font-semibold text-red-500/70 opacity-0 transition hover:text-red-600 group-hover:opacity-100 disabled:opacity-40"
+                >
+                  Sil
+                </button>
+              </li>
+            ))}
+          </ul>
+        )
+      )}
+
+      <form onSubmit={handleAdd} className="flex flex-wrap items-start gap-2">
+        <input
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          placeholder="Adınız"
+          className="w-28 rounded-lg border border-teal/15 bg-white px-2.5 py-1.5 text-xs outline-none focus:border-orange"
+        />
+        <textarea
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+          placeholder="Yorum yazın…"
+          rows={1}
+          className="min-w-0 flex-1 resize-y rounded-lg border border-teal/15 bg-white px-2.5 py-1.5 text-xs outline-none focus:border-orange"
+        />
+        <button
+          type="submit"
+          disabled={posting || !author.trim() || !body.trim()}
+          className="rounded-lg bg-teal-deep px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-teal disabled:opacity-40"
+        >
+          {posting ? "…" : "Ekle"}
+        </button>
+      </form>
+    </div>
+  );
 }
 
 export default function RevisionsPanel({ infoSlot }: AdminPanelProps) {
@@ -189,6 +313,7 @@ export default function RevisionsPanel({ infoSlot }: AdminPanelProps) {
           Sil
         </button>
       </div>
+      <RevisionComments revisionId={r.id} />
     </div>
   );
 

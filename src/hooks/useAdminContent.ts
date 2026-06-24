@@ -56,6 +56,51 @@ export async function deleteRevision(id: string): Promise<void> {
   if (error) throw new Error(error.message);
 }
 
+// ─── Revision comments ──────────────────────────────────────────────────────────
+
+export interface RevisionCommentRow {
+  id: string;
+  revision_id: string;
+  author: string;
+  body: string;
+  created_at: string;
+}
+
+/** Fetches comments for the given revision IDs, oldest first. */
+export async function fetchRevisionComments(
+  revisionIds: string[],
+): Promise<RevisionCommentRow[]> {
+  if (!supabase || !revisionIds.length) return [];
+  const { data, error } = await supabase
+    .from("revision_comments")
+    .select("*")
+    .in("revision_id", revisionIds)
+    .order("created_at", { ascending: true });
+  if (error) throw new Error(error.message);
+  return (data ?? []) as RevisionCommentRow[];
+}
+
+export async function addRevisionComment(
+  revisionId: string,
+  author: string,
+  body: string,
+): Promise<RevisionCommentRow> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  const { data, error } = await supabase
+    .from("revision_comments")
+    .insert({ revision_id: revisionId, author, body })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return data as RevisionCommentRow;
+}
+
+export async function deleteRevisionComment(id: string): Promise<void> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  const { error } = await supabase.from("revision_comments").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
 // ─── Blog posts ───────────────────────────────────────────────────────────────
 
 export interface BlogPostRow {
