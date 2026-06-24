@@ -118,6 +118,7 @@ const ENTRIES: UpdateGroup[] = [
 ];
 
 const PENDING: string[] = [
+  "⚠️ ÖNEMLİ — Şifre sıfırlama / sistem e-postaları için özel SMTP (örn. Resend) kurulumu: kendi domain'imizden (noreply@dragomanseakayak.com) gönderim + Türkçe markalı mail şablonu. Şu an Supabase'in ücretsiz paylaşımlı maili kullanılıyor (limitli ve şablon değiştirilemiyor).",
   "Gerçek yüksek çözünürlüklü fotoğraflar ve drone videosu (içerik Drive'dan gelince yüklenecek).",
   "TRAK Experience sayfasının gerçek metin ve görselleri (şu an placeholder).",
   "Kur çeviriciyi canlı döviz kuruna bağlama (şu an yaklaşık placeholder kurlar).",
