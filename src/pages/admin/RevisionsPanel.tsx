@@ -136,6 +136,7 @@ export default function RevisionsPanel({ infoSlot }: AdminPanelProps) {
   return (
     <div className="space-y-6">
       <AdminCollapsible
+        defaultOpen={false}
         title="Yeni revizyon isteği"
         description="Ekibin görmek istediği değişikliği kısa, net ve öncelikli biçimde girin."
       >

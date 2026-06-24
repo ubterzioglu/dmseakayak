@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ChevronDown, ChevronRight, KeyRound, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -46,11 +46,17 @@ export function AdminSidebar<T extends string>({
       )}
     >
       <div className="border-b border-teal/8 px-1.5 pb-3">
-        <div className="inline-flex rounded-full border border-orange/20 bg-orange/5 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-orange">
-          Yönetim Paneli
+        <div className="flex items-center gap-2.5">
+          <img
+            src="/maskotadminlogo.png"
+            alt="Dragoman Admin"
+            className="h-9 w-9 shrink-0 object-contain"
+          />
+          <div className="inline-flex rounded-full border border-orange/20 bg-orange/5 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-orange">
+            Yönetim Paneli
+          </div>
         </div>
-        <div className="mt-2.5 font-serif text-[1.5rem] leading-none text-teal-deep">Dragoman</div>
-        <div className="text-xs text-teal/62">İçerik ve rezervasyon yönetimi</div>
+        <div className="mt-2.5 font-serif text-[1.5rem] leading-none text-teal-deep">Admin</div>
         {userEmail && (
           <div className="mt-3 rounded-xl border border-teal/10 bg-foam/55 px-3 py-2">
             <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal/45">
@@ -213,6 +219,12 @@ interface AdminCollapsibleProps {
   description?: string;
   /** Open by default on first render. */
   defaultOpen?: boolean;
+  /**
+   * When this value changes to something truthy, the accordion opens. Used to
+   * auto-expand a collapsed form when the user starts editing a record. The
+   * accordion stays uncontrolled — the user can collapse it again afterward.
+   */
+  forceOpenSignal?: unknown;
   children: ReactNode;
   className?: string;
   contentClassName?: string;
@@ -226,11 +238,16 @@ export function AdminCollapsible({
   title,
   description,
   defaultOpen = true,
+  forceOpenSignal,
   children,
   className,
   contentClassName,
 }: AdminCollapsibleProps) {
   const [open, setOpen] = useState(defaultOpen);
+
+  useEffect(() => {
+    if (forceOpenSignal) setOpen(true);
+  }, [forceOpenSignal]);
   return (
     <section
       className={cn(

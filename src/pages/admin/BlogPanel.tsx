@@ -221,6 +221,8 @@ export default function BlogPanel({ infoSlot }: AdminPanelProps) {
     <div className="space-y-6">
       <div className="space-y-6">
         <AdminCollapsible
+          defaultOpen={false}
+          forceOpenSignal={editId}
           title={editId ? "Yazıyı düzenle" : "Yeni yazı"}
           description="Kapak görseli, özet ve zengin metin içeriğini tek alandan hazırlayın."
         >

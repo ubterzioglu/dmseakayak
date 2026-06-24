@@ -140,6 +140,8 @@ export default function GalleryPanel({ infoSlot }: AdminPanelProps) {
     <div className="space-y-6">
       <div className="space-y-6">
         <AdminCollapsible
+          defaultOpen={false}
+          forceOpenSignal={editId}
           title={editId ? "Fotoğrafı düzenle" : "Yeni fotoğraf"}
           description="Görsel yükleyin, metin alanlarını düzenleyin ve yayın görünürlüğünü kontrol edin."
         >
