@@ -14,6 +14,24 @@ interface UpdateGroup {
 const ENTRIES: UpdateGroup[] = [
   {
     date: "24 Haziran 2026",
+    title: "Fotoğraflar, Hakkımızda, 404 sayfası ve revizyon yorumları",
+    items: [
+      "Tüm tur fotoğrafları siteye yüklendi: Kekova Classic, Doğu, Batı ve TRAK için toplam 67 fotoğraf — web için küçültülüp hızlandırıldı.",
+      "Her tur detay sayfasına fotoğraf galerisi eklendi; fotoğrafa tıklayınca tam ekran büyüyor.",
+      "Galeri sayfası bu yeni fotoğraflarla yenilendi; eski örnek görseller kaldırıldı. Fotoğraflar yine panelden (Galeri sekmesi) yönetilebiliyor.",
+      "Hakkımızda sayfasına yeni tanıtım metni eklendi; yazılar iki yana yaslı ve daha derli toplu, yanına ofis fotoğrafı kondu.",
+      "Admin giriş ekranındaki ve yan paneldeki maskot logo büyütülüp netleştirildi; oturum/şifre/çıkış butonları sağ üste taşındı.",
+      "WhatsApp iletişim numarası doğru numarayla güncellendi (0533 290 1463).",
+      "İletişim e-postası info@dragoman-turkey.com olarak güncellendi.",
+      "Revizyonlar bölümüne durum filtresi eklendi; tamamlanan istekler ayrı, kapalı bir kartta toplanıyor.",
+      "Revizyon isteklerinin altına yorum yazma özelliği eklendi — ekip her istek için not/yorum bırakabiliyor.",
+      "Kur çevirici, Turlar sayfasının en altına alındı ve daha kompakt hâle getirildi.",
+      "Yeni, markaya uygun 'Sayfa bulunamadı' (404) ekranı: hatalı bir adrese girildiğinde ana sayfa, turlar ve popüler sayfalara hızlı bağlantılar gösteriyor.",
+      "Arama motorları için ek iyileştirmeler: tur sayfalarına zengin veri (fiyat, konum, işletme bilgisi) ve site genelinde SEO/konum (GEO) güncellemeleri.",
+    ],
+  },
+  {
+    date: "24 Haziran 2026",
     title: "Yönetim panelinde formlar varsayılan kapalı (akordeon) hâle getirildi",
     items: [
       "Blog, Galeri ve Revizyon bölümlerindeki ekleme formları artık varsayılan olarak kapalı açılıyor; bölüm ilk bakışta daha sade ve okunaklı.",
@@ -118,12 +136,12 @@ const ENTRIES: UpdateGroup[] = [
 ];
 
 const PENDING: string[] = [
-  "⚠️ ÖNEMLİ — Şifre sıfırlama / sistem e-postaları için özel SMTP (örn. Resend) kurulumu: kendi domain'imizden (noreply@dragomanseakayak.com) gönderim + Türkçe markalı mail şablonu. Şu an Supabase'in ücretsiz paylaşımlı maili kullanılıyor (limitli ve şablon değiştirilemiyor).",
-  "Gerçek yüksek çözünürlüklü fotoğraflar ve drone videosu (içerik Drive'dan gelince yüklenecek).",
-  "TRAK Experience sayfasının gerçek metin ve görselleri (şu an placeholder).",
+  "⚠️ ÖNEMLİ — Şifre sıfırlama / sistem e-postaları için özel SMTP (örn. Resend) kurulumu: kendi domain'imizden gönderim + Türkçe markalı mail şablonu. Şu an Supabase'in ücretsiz paylaşımlı maili kullanılıyor (limitli ve şablon değiştirilemiyor).",
+  "Drone videosu (içerik Drive'dan gelince yüklenecek).",
+  "TRAK Experience sayfasının gerçek metni (şu an placeholder; fotoğrafı eklendi).",
   "Kur çeviriciyi canlı döviz kuruna bağlama (şu an yaklaşık placeholder kurlar).",
   "Yorumların gerçek Google içerikleriyle doldurulması (admin > Yorumlar > Toplu Ekle).",
-  "Gerçek WhatsApp mobil numarası ve Google Haritalar işletme linki.",
+  "Google Haritalar işletme linki.",
 ];
 
 export default function UpdatesPanel({ infoSlot }: AdminPanelProps) {
