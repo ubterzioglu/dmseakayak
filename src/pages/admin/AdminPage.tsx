@@ -509,48 +509,46 @@ export default function AdminPage() {
               eyebrow="Çalışma Alanı"
               title={activeTab.label}
               description={activeTab.description}
-              extra={
-                <div className="flex flex-wrap gap-2">
-                  {QUICK_LINKS.map((link) => {
-                    const Icon = link.icon;
-                    return (
-                      <a
-                        key={link.title}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-full border border-teal/12 bg-foam/60 px-3 py-1.5 text-[12px] font-semibold text-teal-deep transition hover:bg-foam"
-                      >
-                        <Icon className="h-3.5 w-3.5 text-orange" />
-                        {link.title}
-                      </a>
-                    );
-                  })}
-                </div>
-              }
               actions={
-                <div className="hidden items-center gap-2 xl:flex">
+                <div className="flex w-full flex-col items-stretch gap-2 sm:w-auto sm:min-w-[360px]">
                   {user?.email && (
-                    <span className="hidden max-w-[200px] truncate text-[12px] font-medium text-teal/55 2xl:inline">
+                    <div className="truncate text-right text-[12px] font-medium text-teal/55">
                       {user.email}
-                    </span>
+                    </div>
                   )}
-                  <button
-                    type="button"
-                    onClick={() => setShowChangePassword(true)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-teal/15 bg-white px-3 py-1.5 text-[12px] font-semibold text-teal-deep transition hover:bg-foam"
-                  >
-                    <KeyRound className="h-3.5 w-3.5" />
-                    Şifre
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void handleLogout()}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-teal-deep px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-teal"
-                  >
-                    <LogOut className="h-3.5 w-3.5" />
-                    Çıkış
-                  </button>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                    {QUICK_LINKS.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <a
+                          key={link.title}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-1.5 rounded-full border border-teal/12 bg-foam/60 px-3 py-1.5 text-[12px] font-semibold text-teal-deep transition hover:bg-foam"
+                        >
+                          <Icon className="h-3.5 w-3.5 shrink-0 text-orange" />
+                          <span className="truncate">{link.title}</span>
+                        </a>
+                      );
+                    })}
+                    <button
+                      type="button"
+                      onClick={() => setShowChangePassword(true)}
+                      className="inline-flex items-center justify-center gap-1.5 rounded-full border border-teal/15 bg-white px-3 py-1.5 text-[12px] font-semibold text-teal-deep transition hover:bg-foam"
+                    >
+                      <KeyRound className="h-3.5 w-3.5 shrink-0" />
+                      Şifre
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void handleLogout()}
+                      className="inline-flex items-center justify-center gap-1.5 rounded-full bg-teal-deep px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-teal"
+                    >
+                      <LogOut className="h-3.5 w-3.5 shrink-0" />
+                      Çıkış
+                    </button>
+                  </div>
                 </div>
               }
             />

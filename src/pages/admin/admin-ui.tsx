@@ -159,10 +159,12 @@ export function AdminPageHeader({
           </div>
           <p className="mt-0.5 max-w-2xl text-[13px] leading-5 text-teal/60">{description}</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          {extra}
-          {actions}
-        </div>
+        {(extra || actions) && (
+          <div className="flex flex-wrap items-center gap-2 sm:ml-auto sm:justify-end">
+            {extra}
+            {actions}
+          </div>
+        )}
       </div>
     </section>
   );
