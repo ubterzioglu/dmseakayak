@@ -9,9 +9,9 @@ export const SITE = {
   ogImage: "https://dragomanseakayak.com/seakayakog.jpg",
   // Contact (from the hotel-presentation PDF / business records)
   phone: "+90 242 836 3614",
-  // WhatsApp number in international digits, no "+" or spaces. TODO: confirm a
-  // mobile WhatsApp line — falls back to the landline for now.
-  whatsapp: "902428363614",
+  // WhatsApp number in international digits, no "+" or spaces.
+  // Mobile WhatsApp line: 0533 290 1463.
+  whatsapp: "905332901463",
   email: "info@dragomanseakayak.com",
   address: "Uzunçarşı Cad. No:15, Kaş 07580, Antalya, Türkiye",
   instagram: "https://instagram.com/dragomanseakayak",
