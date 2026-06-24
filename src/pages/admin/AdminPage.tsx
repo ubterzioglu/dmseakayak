@@ -157,7 +157,7 @@ function AdminLogin({ onLogin, onForgotPassword, error, loading }: LoginFormProp
           <img
             src="/maskotadminlogo.png"
             alt="Dragoman Admin"
-            className="mb-6 h-28 w-auto object-contain sm:h-36"
+            className="mb-6 h-40 w-auto object-contain sm:h-52"
           />
           <div className="inline-flex rounded-full border border-orange/20 bg-orange/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-orange">
             Yönetim Paneli

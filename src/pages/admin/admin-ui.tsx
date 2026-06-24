@@ -46,15 +46,13 @@ export function AdminSidebar<T extends string>({
       )}
     >
       <div className="border-b border-teal/8 px-1.5 pb-3">
-        <div className="flex items-center gap-2.5">
-          <img
-            src="/maskotadminlogo.png"
-            alt="Dragoman Admin"
-            className="h-9 w-9 shrink-0 object-contain"
-          />
-          <div className="inline-flex rounded-full border border-orange/20 bg-orange/5 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-orange">
-            Yönetim Paneli
-          </div>
+        <img
+          src="/maskotadminlogo.png"
+          alt="Dragoman Admin"
+          className="h-20 w-auto object-contain"
+        />
+        <div className="mt-3 inline-flex rounded-full border border-orange/20 bg-orange/5 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-orange">
+          Yönetim Paneli
         </div>
         <div className="mt-2.5 font-serif text-[1.5rem] leading-none text-teal-deep">Admin</div>
         {userEmail && (
