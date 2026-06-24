@@ -76,7 +76,7 @@ export default function About() {
           title={t("whyChoose.title")}
           subtitle={t("whyChoose.subtitle")}
         />
-        <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+        <ul className="mt-6 grid gap-4">
           {whyChoose.map((item, i) => (
             <li key={i} className="flex items-start gap-3">
               <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal/10 text-teal">
@@ -90,7 +90,7 @@ export default function About() {
 
       {/* Guides & Safety */}
       <Section>
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8">
           {/* Guides */}
           <div className="rounded-2xl border border-teal/10 bg-white p-7 shadow-[0_10px_30px_rgba(1,68,57,0.08)]">
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-teal/10">
