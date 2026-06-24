@@ -9,10 +9,12 @@ interface SeoProps {
   image?: string;
   /** JSON-LD structured data object(s). */
   jsonLd?: object | object[];
+  /** When true, emits robots noindex (e.g. 404, admin) and skips canonical. */
+  noindex?: boolean;
 }
 
 /** Per-route head manager: title, description, OG/Twitter, canonical, hreflang, JSON-LD. */
-export function Seo({ title, description, image = SITE.ogImage, jsonLd }: SeoProps) {
+export function Seo({ title, description, image = SITE.ogImage, jsonLd, noindex }: SeoProps) {
   const { locale } = useLang();
   const location = useLocation();
   const path = location.pathname;
@@ -34,11 +36,18 @@ export function Seo({ title, description, image = SITE.ogImage, jsonLd }: SeoPro
       <html lang={locale} />
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={canonical} />
-      {alternates.map((a) => (
-        <link key={a.lang} rel="alternate" hrefLang={a.lang} href={a.href} />
-      ))}
-      <link rel="alternate" hrefLang="x-default" href={`${SITE.domain}/${LOCALES[0]}`} />
+      {noindex ? (
+        <meta name="robots" content="noindex,follow" />
+      ) : (
+        <link rel="canonical" href={canonical} />
+      )}
+      {!noindex &&
+        alternates.map((a) => (
+          <link key={a.lang} rel="alternate" hrefLang={a.lang} href={a.href} />
+        ))}
+      {!noindex && (
+        <link rel="alternate" hrefLang="x-default" href={`${SITE.domain}/${LOCALES[0]}`} />
+      )}
 
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={SITE.name} />

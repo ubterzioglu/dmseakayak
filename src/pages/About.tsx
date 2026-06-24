@@ -29,10 +29,10 @@ export default function About() {
 
       {/* Story */}
       <Section>
-        <div className="grid gap-12 md:grid-cols-2 md:items-center">
+        <div className="grid gap-12 md:grid-cols-2 md:items-start">
           <div>
             <SectionHeading title={t("about.storyTitle")} />
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {t("about.storyBody")
                 .split("\n")
                 .map((para) => para.trim())
@@ -44,23 +44,26 @@ export default function About() {
                   return isHeading ? (
                     <h3
                       key={i}
-                      className="pt-2 text-lg font-bold text-teal-deep"
+                      className="pt-2 text-base font-bold text-teal-deep"
                     >
                       {para}
                     </h3>
                   ) : (
-                    <p key={i} className="text-base leading-relaxed text-teal/80">
+                    <p
+                      key={i}
+                      className="text-[13.5px] leading-6 text-teal/80 [text-align:justify] [hyphens:auto]"
+                    >
                       {para}
                     </p>
                   );
                 })}
             </div>
           </div>
-          <div className="overflow-hidden rounded-2xl">
+          <div className="overflow-hidden rounded-2xl md:sticky md:top-24">
             <img
-              src="/seakayakog.jpg"
-              alt="Dragoman SeaKayak — Kekova"
-              className="h-72 w-full object-cover md:h-96"
+              src="/images/ofis.jpg"
+              alt="Dragoman ofis — Kaş"
+              className="h-72 w-full object-cover md:h-[32rem]"
             />
           </div>
         </div>
