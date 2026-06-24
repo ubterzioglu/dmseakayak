@@ -37,34 +37,32 @@ export function Hero() {
           className="w-full max-w-2xl rounded-[2rem] border border-white/25 bg-teal-deep/35 px-6 py-8 shadow-[0_20px_60px_rgba(1,68,57,0.35),inset_0_1px_0_rgba(255,255,255,0.25)] ring-1 ring-white/10 backdrop-blur-md backdrop-saturate-150 sm:px-10 sm:py-10 [text-shadow:0_2px_10px_rgba(0,0,0,0.45)]"
         >
           <div className="mb-4 flex justify-center">
-            <span className="inline-flex items-center justify-center rounded-2xl bg-white/90 px-5 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
-              <img
-                src="/transparanlogo.png"
-                alt="Dragoman SeaKayak"
-                className="h-12 w-auto object-contain md:h-14"
-                onError={(e) => (e.currentTarget.style.display = "none")}
-              />
-            </span>
+            <img
+              src="/transparanlogo.png"
+              alt="Dragoman SeaKayak"
+              className="h-24 w-auto object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.4)] md:h-28"
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
           </div>
 
-          <div className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-sm">
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-xs">
             Dragoman Diving &amp; Outdoors · SeaKayak
           </div>
 
-          <h1 className="text-3xl font-extrabold leading-tight text-white md:text-4xl">
+          <h1 className="text-2xl font-extrabold leading-tight text-white md:text-3xl">
             {t("hero.title").split(" ").slice(0, -2).join(" ")}{" "}
             <span className="text-orange-soft">{t("hero.title").split(" ").slice(-2).join(" ")}</span>
           </h1>
 
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/90 md:text-lg">
+          <p className="mx-auto mt-3 max-w-xl text-sm text-white/90 md:text-base">
             {t("hero.subtitle")}
           </p>
 
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
-            <Button asChild size="lg" variant="primary">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <Button asChild variant="primary">
               <Link to={localePath(SEG.tours)}>{t("hero.ctaTours")}</Link>
             </Button>
-            <Button asChild size="lg" variant="ghost">
+            <Button asChild variant="ghost">
               <Link to={localePath(SEG.contact)}>{t("hero.ctaBook")}</Link>
             </Button>
           </div>
