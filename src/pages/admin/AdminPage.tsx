@@ -154,6 +154,11 @@ function AdminLogin({ onLogin, onForgotPassword, error, loading }: LoginFormProp
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(241,110,11,0.14),transparent_26%),radial-gradient(circle_at_85%_15%,rgba(1,99,82,0.10),transparent_22%),linear-gradient(180deg,#f6f3ee_0%,#fbfaf7_100%)]" />
       <div className="relative mx-auto grid min-h-[calc(100vh-5rem)] max-w-6xl items-center gap-8 lg:grid-cols-[1.1fr_480px]">
         <section className="rounded-[36px] border border-teal/10 bg-white/80 p-8 shadow-[0_32px_90px_rgba(4,43,37,0.08)] backdrop-blur sm:p-12">
+          <img
+            src="/maskotadminlogo.png"
+            alt="Dragoman Admin"
+            className="mb-6 h-28 w-auto object-contain sm:h-36"
+          />
           <div className="inline-flex rounded-full border border-orange/20 bg-orange/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-orange">
             Yönetim Paneli
           </div>
