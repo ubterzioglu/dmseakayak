@@ -9,7 +9,28 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-teal-deep text-white/85">
+    <footer className="relative isolate overflow-hidden bg-teal-deep text-white/85">
+      {/* Background video — silent loop; falls back to the teal background if it 404s */}
+      <video
+        src="/videos/footer.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+        className="absolute inset-0 -z-20 h-full w-full object-cover"
+      />
+      {/* Green glassmorphism overlay: brand-teal tint + blur so text stays readable
+          while the video shows through. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-teal-deep/70 backdrop-blur-md backdrop-saturate-150"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-teal-deep/40 via-teal-deep/55 to-teal-deep/80"
+      />
+
       <div className="container flex flex-col items-center space-y-4 py-6 text-center">
         <div className="flex flex-col items-center">
           <span className="text-xl font-semibold text-white">{SITE.name}</span>
