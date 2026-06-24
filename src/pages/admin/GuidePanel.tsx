@@ -74,7 +74,7 @@ export default function GuidePanel({ infoSlot }: AdminPanelProps) {
             <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-orange/15 text-sm font-bold text-orange">
               {idx + 1}
             </span>
-            <h3 className="font-bold text-teal-deep">{s.tab} sekmesi</h3>
+            <h3 className="font-bold text-teal-deep">{s.tab} sekmesi — Nasıl kullanılır</h3>
           </div>
           <p className="mb-4 text-sm text-teal/70">{s.summary}</p>
 

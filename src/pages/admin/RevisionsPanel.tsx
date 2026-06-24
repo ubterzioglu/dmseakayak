@@ -275,6 +275,17 @@ export default function RevisionsPanel({ infoSlot }: AdminPanelProps) {
 
       {infoSlot}
 
+      {doneItems.length > 0 && (
+        <AdminCollapsible
+          defaultOpen={false}
+          title={`Tamamlananlar (${doneItems.length})`}
+          description="Tamamlandı olarak işaretlenmiş revizyon istekleri."
+          contentClassName="space-y-3"
+        >
+          {doneItems.map(renderCard)}
+        </AdminCollapsible>
+      )}
+
       <AdminSurface
         title={`${activeItems.length} aktif revizyon isteği`}
         description="Durum güncellemeleri ve silme işlemleri kartlar üzerinden yapılır."
@@ -322,17 +333,6 @@ export default function RevisionsPanel({ infoSlot }: AdminPanelProps) {
 
         {filteredActive.map(renderCard)}
       </AdminSurface>
-
-      {doneItems.length > 0 && (
-        <AdminCollapsible
-          defaultOpen={false}
-          title={`Tamamlananlar (${doneItems.length})`}
-          description="Tamamlandı olarak işaretlenmiş revizyon istekleri."
-          contentClassName="space-y-3"
-        >
-          {doneItems.map(renderCard)}
-        </AdminCollapsible>
-      )}
       {dialog}
     </div>
   );

@@ -32,7 +32,29 @@ export default function About() {
         <div className="grid gap-12 md:grid-cols-2 md:items-center">
           <div>
             <SectionHeading title={t("about.storyTitle")} />
-            <p className="text-base leading-relaxed text-teal/80">{t("about.storyBody")}</p>
+            <div className="space-y-4">
+              {t("about.storyBody")
+                .split("\n")
+                .map((para) => para.trim())
+                .filter(Boolean)
+                .map((para, i) => {
+                  // Short standalone lines (no inner sentence break) act as
+                  // sub-headings, e.g. "DRAGOMAN bir ekip işi!" / "Biz Kimiz?".
+                  const isHeading = para.length <= 40 && !para.includes(". ");
+                  return isHeading ? (
+                    <h3
+                      key={i}
+                      className="pt-2 text-lg font-bold text-teal-deep"
+                    >
+                      {para}
+                    </h3>
+                  ) : (
+                    <p key={i} className="text-base leading-relaxed text-teal/80">
+                      {para}
+                    </p>
+                  );
+                })}
+            </div>
           </div>
           <div className="overflow-hidden rounded-2xl">
             <img

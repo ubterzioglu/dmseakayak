@@ -25,7 +25,7 @@ export function Hero() {
       <div className="hero-gradient absolute inset-0" />
 
       {/* Content */}
-      <div className="relative z-10 flex min-h-[90vh] flex-col items-center justify-start px-4 pt-16 text-center md:pt-20">
+      <div className="relative z-10 flex min-h-[90vh] flex-col items-center justify-start px-4 pb-28 pt-16 text-center md:pb-24 md:pt-20">
         {/* Floating transparent logo */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
