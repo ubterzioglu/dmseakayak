@@ -45,45 +45,39 @@ export function AdminSidebar<T extends string>({
         className,
       )}
     >
-      <div className="border-b border-teal/8 px-1.5 pb-3">
+      <div className="flex flex-col items-center border-b border-teal/8 px-1.5 pb-3 text-center">
         <img
           src="/tekrardene.png"
           alt="Dragoman Admin"
-          className="h-32 w-auto object-contain"
+          className="h-28 w-auto object-contain"
         />
-        <div className="mt-3 inline-flex rounded-full border border-orange/20 bg-orange/5 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-orange">
-          Yönetim Paneli
+        <div className="mt-2 inline-flex rounded-full border border-orange/20 bg-orange/5 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-orange">
+          Admin Yönetim Paneli
         </div>
-        <div className="mt-2.5 font-serif text-[1.5rem] leading-none text-teal-deep">Admin</div>
-        {userEmail && (
-          <div className="mt-3 rounded-xl border border-teal/10 bg-foam/55 px-3 py-2">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal/45">
-              Oturum
-            </div>
-            <div className="mt-0.5 break-all text-xs font-medium text-teal-deep">{userEmail}</div>
-            {(onChangePassword || onLogout) && (
-              <div className="mt-2 flex gap-1.5">
-                {onChangePassword && (
-                  <button
-                    type="button"
-                    onClick={onChangePassword}
-                    className="inline-flex flex-1 items-center justify-center gap-1 rounded-lg border border-teal/15 bg-white px-2 py-1.5 text-[11px] font-semibold text-teal-deep transition hover:bg-foam"
-                  >
-                    <KeyRound className="h-3 w-3" />
-                    Şifre
-                  </button>
-                )}
-                {onLogout && (
-                  <button
-                    type="button"
-                    onClick={onLogout}
-                    className="inline-flex flex-1 items-center justify-center gap-1 rounded-lg bg-teal-deep px-2 py-1.5 text-[11px] font-semibold text-white transition hover:bg-teal"
-                  >
-                    <LogOut className="h-3 w-3" />
-                    Çıkış
-                  </button>
-                )}
-              </div>
+        {(userEmail || onChangePassword || onLogout) && (
+          <div className="mt-3 flex w-full flex-wrap items-center justify-center gap-1.5 xl:hidden">
+            {userEmail && (
+              <span className="break-all text-[11px] font-medium text-teal/60">{userEmail}</span>
+            )}
+            {onChangePassword && (
+              <button
+                type="button"
+                onClick={onChangePassword}
+                className="inline-flex items-center gap-1 rounded-lg border border-teal/15 bg-white px-2 py-1.5 text-[11px] font-semibold text-teal-deep transition hover:bg-foam"
+              >
+                <KeyRound className="h-3 w-3" />
+                Şifre
+              </button>
+            )}
+            {onLogout && (
+              <button
+                type="button"
+                onClick={onLogout}
+                className="inline-flex items-center gap-1 rounded-lg bg-teal-deep px-2 py-1.5 text-[11px] font-semibold text-white transition hover:bg-teal"
+              >
+                <LogOut className="h-3 w-3" />
+                Çıkış
+              </button>
             )}
           </div>
         )}

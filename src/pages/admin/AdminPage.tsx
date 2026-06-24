@@ -9,7 +9,9 @@ import {
   FolderOpen,
   GalleryVerticalEnd,
   Images,
+  KeyRound,
   LayoutGrid,
+  LogOut,
   Menu,
   MessageSquareQuote,
   NotebookPen,
@@ -524,6 +526,31 @@ export default function AdminPage() {
                       </a>
                     );
                   })}
+                </div>
+              }
+              actions={
+                <div className="hidden items-center gap-2 xl:flex">
+                  {user?.email && (
+                    <span className="hidden max-w-[200px] truncate text-[12px] font-medium text-teal/55 2xl:inline">
+                      {user.email}
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setShowChangePassword(true)}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-teal/15 bg-white px-3 py-1.5 text-[12px] font-semibold text-teal-deep transition hover:bg-foam"
+                  >
+                    <KeyRound className="h-3.5 w-3.5" />
+                    Şifre
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void handleLogout()}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-teal-deep px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-teal"
+                  >
+                    <LogOut className="h-3.5 w-3.5" />
+                    Çıkış
+                  </button>
                 </div>
               }
             />
