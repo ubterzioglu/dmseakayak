@@ -125,6 +125,7 @@ export const TOURS: Tour[] = [
         "Küçük grup deneyimi — İngilizce konuşan lisanslı rehberler.",
         "Nefes kesen manzara — berrak sular, saklı koylar.",
         "Macera ve kültürün mükemmel uyumu.",
+        "Manzaralı öğle yemeği — Simena'da deniz kenarında lezzetli bir mola.",
       ],
       en: [
         "Explore ancient history — paddle over a sunken Lycian city and visit a castle.",
@@ -132,6 +133,7 @@ export const TOURS: Tour[] = [
         "Small-group experience with licensed English-speaking guides.",
         "Breathtaking scenery — crystal-clear waters and hidden coves.",
         "A perfect blend of adventure and culture.",
+        "Lunch with a view — a delicious waterfront break in Simena.",
       ],
       fr: [
         "Explorez l'histoire ancienne — pagayez au-dessus d'une cité lycienne engloutie et visitez un château.",
@@ -139,6 +141,7 @@ export const TOURS: Tour[] = [
         "Expérience en petit groupe avec des guides diplômés anglophones.",
         "Paysages à couper le souffle — eaux cristallines et criques cachées.",
         "Un mélange parfait d'aventure et de culture.",
+        "Déjeuner avec vue — une délicieuse pause en bord de mer à Simena.",
       ],
       ru: [
         "Исследуйте древнюю историю — гребите над затонувшим ликийским городом и посетите крепость.",
@@ -146,6 +149,7 @@ export const TOURS: Tour[] = [
         "Опыт в малой группе с лицензированными англоговорящими гидами.",
         "Захватывающие пейзажи — кристально чистая вода и скрытые бухты.",
         "Идеальное сочетание приключения и культуры.",
+        "Обед с видом — вкусная остановка у воды в Симене.",
       ],
     },
     itinerary: {

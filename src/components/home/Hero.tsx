@@ -8,7 +8,7 @@ export function Hero() {
   const { t, localePath } = useLang();
 
   return (
-    <div className="hero-gradient relative min-h-[90vh] overflow-hidden">
+    <div className="hero-gradient relative min-h-[52vh] overflow-hidden">
       {/* Background video — loads silently; if /videos/hero.mp4 404s the poster/gradient shows.
           No overlay on top so the footage stays fully visible. */}
       <video
@@ -23,47 +23,34 @@ export function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex min-h-[90vh] flex-col items-center justify-center px-4 pb-28 pt-16 text-center [text-shadow:0_2px_10px_rgba(0,0,0,0.55)] md:pb-24 md:pt-20">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-base"
-        >
-          Dragoman Diving &amp; Outdoors · SeaKayak
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="max-w-3xl text-4xl font-extrabold leading-tight text-white md:text-5xl lg:text-6xl"
-        >
-          {t("hero.title").split(" ").slice(0, -2).join(" ")}{" "}
-          <span className="text-orange-soft">{t("hero.title").split(" ").slice(-2).join(" ")}</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.28 }}
-          className="mt-5 max-w-xl text-base text-white/85 md:text-lg"
-        >
-          {t("hero.subtitle")}
-        </motion.p>
-
+      <div className="relative z-10 flex min-h-[52vh] flex-col items-center justify-center px-4 py-14 text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-4"
+          transition={{ duration: 0.7 }}
+          className="w-full max-w-2xl rounded-[2rem] border border-white/25 bg-teal-deep/35 px-6 py-8 shadow-[0_20px_60px_rgba(1,68,57,0.35),inset_0_1px_0_rgba(255,255,255,0.25)] ring-1 ring-white/10 backdrop-blur-md backdrop-saturate-150 sm:px-10 sm:py-10 [text-shadow:0_2px_10px_rgba(0,0,0,0.45)]"
         >
-          <Button asChild size="lg" variant="primary">
-            <Link to={localePath(SEG.tours)}>{t("hero.ctaTours")}</Link>
-          </Button>
-          <Button asChild size="lg" variant="ghost">
-            <Link to={localePath(SEG.contact)}>{t("hero.ctaBook")}</Link>
-          </Button>
+          <div className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-base">
+            Dragoman Diving &amp; Outdoors · SeaKayak
+          </div>
+
+          <h1 className="text-4xl font-extrabold leading-tight text-white md:text-5xl">
+            {t("hero.title").split(" ").slice(0, -2).join(" ")}{" "}
+            <span className="text-orange-soft">{t("hero.title").split(" ").slice(-2).join(" ")}</span>
+          </h1>
+
+          <p className="mx-auto mt-4 max-w-xl text-base text-white/90 md:text-lg">
+            {t("hero.subtitle")}
+          </p>
+
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+            <Button asChild size="lg" variant="primary">
+              <Link to={localePath(SEG.tours)}>{t("hero.ctaTours")}</Link>
+            </Button>
+            <Button asChild size="lg" variant="ghost">
+              <Link to={localePath(SEG.contact)}>{t("hero.ctaBook")}</Link>
+            </Button>
+          </div>
         </motion.div>
       </div>
 

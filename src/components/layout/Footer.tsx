@@ -33,12 +33,14 @@ export function Footer() {
       />
 
       <div className="container flex flex-col items-center space-y-4 py-10 text-center [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]">
-        <img
-          src="/transparanlogo.png"
-          alt="Dragoman SeaKayak"
-          className="h-28 w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)] md:h-36"
-          onError={(e) => (e.currentTarget.style.display = "none")}
-        />
+        <div className="inline-flex items-center justify-center rounded-[1.5rem] border border-white/25 bg-white/85 px-7 py-5 shadow-[0_16px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.6)] ring-1 ring-white/20 backdrop-blur-md">
+          <img
+            src="/transparanlogo.png"
+            alt="Dragoman SeaKayak"
+            className="h-24 w-auto object-contain md:h-28"
+            onError={(e) => (e.currentTarget.style.display = "none")}
+          />
+        </div>
 
         <div className="flex flex-col items-center">
           <span className="text-xl font-semibold text-white">{SITE.name}</span>

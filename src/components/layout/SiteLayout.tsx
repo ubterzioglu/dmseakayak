@@ -3,6 +3,7 @@ import { BASE_PATH, DEFAULT_LOCALE, isLocale } from "@/lib/site";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { WhatsappFab } from "./WhatsappFab";
+import { ScrollToTop } from "./ScrollToTop";
 
 /** Shell for all localized pages. Guards the :lang segment. */
 export function SiteLayout() {
@@ -16,6 +17,7 @@ export function SiteLayout() {
         <Outlet />
       </main>
       <Footer />
+      <ScrollToTop />
       <WhatsappFab />
     </div>
   );
