@@ -50,7 +50,7 @@ export default function TrakExperience() {
           </div>
           <div className="overflow-hidden rounded-2xl">
             <img
-              src="/seakayakog.jpg"
+              src="/images/tours/trak/trakexperience.jpg"
               alt="TRAK Experience"
               className="h-72 w-full object-cover md:h-96"
             />

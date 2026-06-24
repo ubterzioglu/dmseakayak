@@ -12,7 +12,7 @@ export const SITE = {
   // WhatsApp number in international digits, no "+" or spaces.
   // Mobile WhatsApp line: 0533 290 1463.
   whatsapp: "905332901463",
-  email: "info@dragomanseakayak.com",
+  email: "info@dragoman-turkey.com",
   address: "Uzunçarşı Cad. No:15, Kaş 07580, Antalya, Türkiye",
   instagram: "https://instagram.com/dragomanseakayak",
   facebook: "https://facebook.com/dragomanseakayak",

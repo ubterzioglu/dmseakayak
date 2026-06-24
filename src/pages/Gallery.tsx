@@ -3,84 +3,15 @@ import useEmblaCarousel from "embla-carousel-react";
 import { Seo } from "@/components/seo/Seo";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { useLang } from "@/hooks/useLang";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { fetchPublishedGallery } from "@/hooks/useAdminContent";
+import { Lightbox, type LightboxImage } from "@/components/gallery/Lightbox";
+import { GALLERY_IMAGES } from "@/content/galleryImages";
 
-interface GalleryImage {
-  src: string;
-  alt: string;
-  caption: string;
-}
+type GalleryImage = LightboxImage;
 
 // Shown when the admin gallery (Supabase) is empty, so the page is never blank.
-const FALLBACK_IMAGES: GalleryImage[] = [
-  { src: "/seakayakog.jpg", alt: "Kekova sea kayaking", caption: "Kekova Batık Şehir" },
-  { src: "/seakayakog.jpg", alt: "Lycian coast kayak", caption: "Likya kıyısı" },
-  { src: "/seakayakog.jpg", alt: "Simena castle view", caption: "Simena Kalesi" },
-  { src: "/seakayakog.jpg", alt: "Tersane Bay", caption: "Tersane Koyu" },
-  { src: "/seakayakog.jpg", alt: "Kekova island paddle", caption: "Kekova Adası" },
-  { src: "/seakayakog.jpg", alt: "Hidden cove swimming", caption: "Saklı Koy" },
-  { src: "/seakayakog.jpg", alt: "Sunrise over Kekova", caption: "Kekova'da Gün Doğumu" },
-  { src: "/seakayakog.jpg", alt: "Group kayaking tour", caption: "Grup Turu" },
-];
-
-interface LightboxProps {
-  images: GalleryImage[];
-  index: number;
-  onClose: () => void;
-  onPrev: () => void;
-  onNext: () => void;
-}
-
-function Lightbox({ images, index, onClose, onPrev, onNext }: LightboxProps) {
-  const img = images[index];
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-label={img.caption}
-    >
-      <button
-        onClick={(e) => { e.stopPropagation(); onClose(); }}
-        className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
-        aria-label="Close"
-      >
-        <X className="h-6 w-6" />
-      </button>
-
-      <button
-        onClick={(e) => { e.stopPropagation(); onPrev(); }}
-        className="absolute left-4 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
-        aria-label="Previous"
-      >
-        <ChevronLeft className="h-6 w-6" />
-      </button>
-
-      <div
-        className="relative max-h-[85vh] max-w-4xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <img
-          src={img.src}
-          alt={img.alt}
-          className="max-h-[80vh] rounded-xl object-contain shadow-2xl"
-        />
-        <p className="mt-3 text-center text-sm text-white/70">{img.caption}</p>
-      </div>
-
-      <button
-        onClick={(e) => { e.stopPropagation(); onNext(); }}
-        className="absolute right-4 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
-        aria-label="Next"
-      >
-        <ChevronRight className="h-6 w-6" />
-      </button>
-    </div>
-  );
-}
+const FALLBACK_IMAGES: GalleryImage[] = GALLERY_IMAGES;
 
 export default function Gallery() {
   const { t, locale } = useLang();

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CheckCircle2, MapPin, Clock, Waves, TrendingUp, Euro, Calendar, XCircle } from "lucide-react";
 import { Seo } from "@/components/seo/Seo";
 import { Itinerary } from "@/components/tours/Itinerary";
+import { Lightbox } from "@/components/gallery/Lightbox";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { getTour } from "@/content/tours";
@@ -12,6 +14,7 @@ import { buildWhatsappLink } from "@/lib/whatsapp";
 export default function TourDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { t, pick, localePath } = useLang();
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const tour = getTour(slug ?? "");
 
@@ -38,6 +41,19 @@ export default function TourDetail() {
   const contactPath = `${localePath(SEG.contact)}?tour=${tour.slug}`;
   const whatsappHref = buildWhatsappLink({ tourTitle: title });
 
+  const galleryImages = tour.gallery.map((src, i) => ({
+    src,
+    alt: `${title} ${i + 1}`,
+    caption: title,
+  }));
+  const closeLightbox = () => setLightboxIndex(null);
+  const prevImage = () =>
+    setLightboxIndex((i) =>
+      i === null ? null : (i - 1 + galleryImages.length) % galleryImages.length,
+    );
+  const nextImage = () =>
+    setLightboxIndex((i) => (i === null ? null : (i + 1) % galleryImages.length));
+
   const price = md ? md.pricePerPersonEur : tour.priceEur;
   const jsonLd = {
     "@context": "https://schema.org",
@@ -52,6 +68,16 @@ export default function TourDetail() {
   return (
     <>
       <Seo title={title} description={tagline} jsonLd={jsonLd} />
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={galleryImages}
+          index={lightboxIndex}
+          onClose={closeLightbox}
+          onPrev={prevImage}
+          onNext={nextImage}
+        />
+      )}
 
       {/* Hero band */}
       <div className="hero-gradient relative overflow-hidden pb-12 pt-16">
@@ -240,6 +266,29 @@ export default function TourDetail() {
               </li>
             ))}
           </ul>
+        </Section>
+      )}
+
+      {/* Gallery */}
+      {galleryImages.length > 0 && (
+        <Section className="bg-foam/40">
+          <SectionHeading title={t("gallery.title")} />
+          <div className="columns-2 gap-4 sm:columns-3 lg:columns-4">
+            {galleryImages.map((img, i) => (
+              <div
+                key={img.src}
+                className="mb-4 block w-full cursor-pointer overflow-hidden rounded-xl"
+                onClick={() => setLightboxIndex(i)}
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  className="w-full object-cover transition-transform duration-300 hover:scale-105"
+                />
+              </div>
+            ))}
+          </div>
         </Section>
       )}
 

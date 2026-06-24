@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/site";
 import { MULTI_DAY_TOURS } from "@/content/multiDayTours";
+import { TOUR_IMAGES } from "@/content/tourImages";
 
 export { MULTI_DAY_TOURS };
 
@@ -102,7 +103,7 @@ export const TOURS: Tour[] = [
     arrival: "14:30 / 15:00",
     routeStops: ["Üçağız (Theimussa)", "Kekova Island", "Tersane Bay", "Sunken City", "Simena"],
     heroImage: "/images/tours/kekova-classic.jpg",
-    gallery: [],
+    gallery: TOUR_IMAGES["kekova-classic"] ?? [],
     title: { tr: "Kekova Classic", en: "Kekova Classic", fr: "Kekova Classic", ru: "Кекова Классик" },
     tagline: {
       tr: "Kekova'nın ünlü Batık Şehir kıyısında deniz kayağı — her seviyeye uygun.",
@@ -208,7 +209,7 @@ export const TOURS: Tour[] = [
     arrival: "16:30 / 17:00",
     routeStops: ["Üçağız (Theimussa)", "Kekova Sound & Islands", "Polemos", "Sıcak", "Aperlai"],
     heroImage: "/images/tours/kekova-west.jpg",
-    gallery: [],
+    gallery: TOUR_IMAGES["kekova-west"] ?? [],
     title: { tr: "Kekova West", en: "Kekova West", fr: "Kekova West", ru: "Кекова Запад" },
     tagline: {
       tr: "Aperlai ve ıssız kıyı şeridiyle daha uzun bir Kekova rotası.",
@@ -313,7 +314,7 @@ export const TOURS: Tour[] = [
     arrival: "17:00 / 17:30",
     routeStops: ["Üçağız", "Simena", "Hamidiye Bay", "Aşırlı Island", "Çayağzı (Andriake)"],
     heroImage: "/images/tours/kekova-east.jpg",
-    gallery: [],
+    gallery: TOUR_IMAGES["kekova-east"] ?? [],
     title: { tr: "Kekova East", en: "Kekova East", fr: "Kekova East", ru: "Кекова Восток" },
     tagline: {
       tr: "Çayağzı ve Demre'ye doğru tam gün doğu Kekova rotası.",

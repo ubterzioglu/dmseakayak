@@ -1,0 +1,87 @@
+import type { TourSlug } from "@/content/tours";
+
+/**
+ * Per-tour photo galleries served from public/images/tours/<slug>/.
+ * Generated from docs/GORSEL/Images via scripts/import-gallery-images.mjs
+ * (optimized + web-safe filenames). Each list is ordered with the chosen
+ * cover ("-bunukullan") image first. Single source of truth for both the tour
+ * detail galleries (src/content/tours.ts) and the public gallery page
+ * (src/content/galleryImages.ts).
+ */
+export const TOUR_IMAGES: Partial<Record<TourSlug, string[]>> = {
+  "kekova-classic": [
+    "/images/tours/kekova-classic/tomb1-kekovaklasik-bunukullan.jpg",
+    "/images/tours/kekova-classic/classic1.jpg",
+    "/images/tours/kekova-classic/classic3.jpg",
+    "/images/tours/kekova-classic/classic4.jpg",
+    "/images/tours/kekova-classic/classic5.jpg",
+    "/images/tours/kekova-classic/classic5-1.jpg",
+    "/images/tours/kekova-classic/classic6.jpg",
+    "/images/tours/kekova-classic/classic7.jpg",
+    "/images/tours/kekova-classic/classic8.jpg",
+    "/images/tours/kekova-classic/classichamam1.jpg",
+    "/images/tours/kekova-classic/hamamclassic.jpg",
+    "/images/tours/kekova-classic/happypaddlers1.jpg",
+    "/images/tours/kekova-classic/harbourwallclassic.jpg",
+    "/images/tours/kekova-classic/kaledrone.jpg",
+    "/images/tours/kekova-classic/kaleview.jpg",
+    "/images/tours/kekova-classic/kaleview2.jpg",
+    "/images/tours/kekova-classic/klasikafis.jpg",
+    "/images/tours/kekova-classic/klasikharita.jpg",
+    "/images/tours/kekova-classic/shipyard1.jpg",
+    "/images/tours/kekova-classic/simena1.jpg",
+    "/images/tours/kekova-classic/simena2.jpg",
+    "/images/tours/kekova-classic/simenapano.jpg",
+    "/images/tours/kekova-classic/simenatomb2.jpg",
+    "/images/tours/kekova-classic/sunkencity1.jpg",
+    "/images/tours/kekova-classic/sunkencity2.jpg",
+    "/images/tours/kekova-classic/sunkencity3.jpg",
+    "/images/tours/kekova-classic/tersane1.jpg",
+    "/images/tours/kekova-classic/tersane2.jpg",
+    "/images/tours/kekova-classic/tersane4.jpg",
+    "/images/tours/kekova-classic/tersane5.jpg",
+    "/images/tours/kekova-classic/tersane5-2.jpg",
+    "/images/tours/kekova-classic/tersane7.jpg",
+    "/images/tours/kekova-classic/tersanearka1.jpg",
+    "/images/tours/kekova-classic/tersanedrone2.jpg",
+    "/images/tours/kekova-classic/tersanekilise.jpg",
+    "/images/tours/kekova-classic/theimussatombs1.jpg",
+    "/images/tours/kekova-classic/tomb2.jpg",
+    "/images/tours/kekova-classic/tomb3.jpg",
+    "/images/tours/kekova-classic/tomb3-2.jpg",
+    "/images/tours/kekova-classic/tomb5.jpg",
+    "/images/tours/kekova-classic/tomb5classic.jpg",
+  ],
+  "kekova-east": [
+    "/images/tours/kekova-east/east2kilise-kekovaeast-bunukullan.jpg",
+    "/images/tours/kekova-east/andriake.jpg",
+    "/images/tours/kekova-east/cagilplajieast.jpg",
+    "/images/tours/kekova-east/cave2.jpg",
+    "/images/tours/kekova-east/cave3.jpg",
+    "/images/tours/kekova-east/east1burcbay.jpg",
+    "/images/tours/kekova-east/eastcave3.jpg",
+    "/images/tours/kekova-east/eastkeci1.jpg",
+    "/images/tours/kekova-east/eastview1.jpg",
+    "/images/tours/kekova-east/eastview3.jpg",
+    "/images/tours/kekova-east/hamidyeeast.jpg",
+  ],
+  "kekova-west": [
+    "/images/tours/kekova-west/aperlai5-kekovawest-bunukullan.jpg",
+    "/images/tours/kekova-west/aperlai1.jpg",
+    "/images/tours/kekova-west/aperlai10.jpg",
+    "/images/tours/kekova-west/aperlai2.jpg",
+    "/images/tours/kekova-west/aperlai3.jpg",
+    "/images/tours/kekova-west/aperlai4.jpg",
+    "/images/tours/kekova-west/aperlai6.jpg",
+    "/images/tours/kekova-west/aperlai8.jpg",
+    "/images/tours/kekova-west/aperlai9.jpg",
+    "/images/tours/kekova-west/aperlaihike.jpg",
+    "/images/tours/kekova-west/aperlaitomb.jpg",
+    "/images/tours/kekova-west/westsail1.jpg",
+    "/images/tours/kekova-west/yoruk1.jpg",
+    "/images/tours/kekova-west/yoruk2.jpg",
+  ],
+  "trak-signature": [
+    "/images/tours/trak/trakexperience.jpg",
+  ],
+};
