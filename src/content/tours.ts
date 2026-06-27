@@ -80,23 +80,23 @@ export interface Tour {
 
 // Shared "included" lines reused across tours (content is identical in source).
 const INCLUDED_RESTAURANT: Localized<string[]> = {
-  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği", "Atıştırmalıklar"],
-  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "From/to Kaş transfers", "Lunch at restaurant", "Snacks"],
-  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant", "Collations"],
-  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Трансфер из/до Каша", "Обед в ресторане", "Закуски"],
+  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Maske ve şnorkel", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği", "Atıştırmalıklar"],
+  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "Mask and snorkel", "From/to Kaş transfers", "Lunch at restaurant", "Snacks"],
+  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Masque et tuba", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant", "Collations"],
+  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Маска и трубка", "Трансфер из/до Каша", "Обед в ресторане", "Закуски"],
 };
 const INCLUDED_LUNCHBOX: Localized<string[]> = {
-  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Kaş'tan gidiş-dönüş transfer", "Öğle yemeği kutusu", "Atıştırmalıklar"],
-  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "From/to Kaş transfers", "Lunch box", "Snacks"],
-  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Transferts aller-retour depuis Kaş", "Panier-repas", "Collations"],
-  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Трансфер из/до Каша", "Ланч-бокс", "Закуски"],
+  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Maske ve şnorkel", "Kaş'tan gidiş-dönüş transfer", "Öğle yemeği kutusu", "Atıştırmalıklar"],
+  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "Mask and snorkel", "From/to Kaş transfers", "Lunch box", "Snacks"],
+  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Masque et tuba", "Transferts aller-retour depuis Kaş", "Panier-repas", "Collations"],
+  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Маска и трубка", "Трансфер из/до Каша", "Ланч-бокс", "Закуски"],
 };
 
 export const TOURS: Tour[] = [
   {
     slug: "kekova-classic",
     level: "beginner",
-    priceEur: 60,
+    priceEur: 45,
     priceFromKalkanEur: 70,
     distanceKm: 8,
     departure: "07:30",
@@ -118,10 +118,10 @@ export const TOURS: Tour[] = [
       ru: ["Побережье Затонувшего города", "Купание в бухте Терсане", "Деревня Симена и вид на крепость", "Маршрут для начинающих"],
     },
     included: {
-      tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği (optional)", "Atıştırmalıklar"],
-      en: ["Kayak federation licensed guide", "Kayaks and full equipment", "From/to Kaş transfers", "Lunch at restaurant (optional)", "Snacks"],
-      fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant (optional)", "Collations"],
-      ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Трансфер из/до Каша", "Обед в ресторане (optional)", "Закуски"],
+      tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Maske ve şnorkel", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği (optional)", "Atıştırmalıklar"],
+      en: ["Kayak federation licensed guide", "Kayaks and full equipment", "Mask and snorkel", "From/to Kaş transfers", "Lunch at restaurant (optional)", "Snacks"],
+      fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Masque et tuba", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant (optional)", "Collations"],
+      ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Маска и трубка", "Трансфер из/до Каша", "Обед в ресторане (optional)", "Закуски"],
     },
     whyChoose: {
       tr: [
@@ -211,7 +211,7 @@ export const TOURS: Tour[] = [
   {
     slug: "kekova-west",
     level: "intermediate-advanced",
-    priceEur: 70,
+    priceEur: 80,
     distanceKm: 15,
     hikingKm: 1.5,
     departure: "07:30",
@@ -317,7 +317,7 @@ export const TOURS: Tour[] = [
   {
     slug: "kekova-east",
     level: "intermediate-advanced",
-    priceEur: 70,
+    priceEur: 80,
     distanceKm: 17,
     departure: "07:30",
     arrival: "17:00 / 17:30",
@@ -332,10 +332,10 @@ export const TOURS: Tour[] = [
       ru: "Морское каякинг и снорклинг-приключение на целый день в Кекова Чаягзы и Демре!",
     },
     highlights: {
-      tr: ["Theimussa ve Simena", "Hamidiye Koyu", "Aşırlı Adası korsan mağarası", "Andriake limanında bitiş"],
-      en: ["Theimussa and Simena", "Hamidiye Bay", "Aşırlı Island pirate cave", "Finish at Andriake harbor"],
-      fr: ["Theimussa et Simena", "Baie de Hamidiye", "Grotte des pirates de l'île d'Aşırlı", "Fin au port d'Andriake"],
-      ru: ["Теймусса и Симена", "Бухта Хамидие", "Пиратская пещера острова Аширлы", "Финиш в гавани Андриаке"],
+      tr: ["Theimussa ve Simena", "Hamidiye Koyu", "Aşırlı Adası korsan mağarası", "Andriake deresi", "Deniz kaplumbağası gözlemi", "Andriake limanında bitiş"],
+      en: ["Theimussa and Simena", "Hamidiye Bay", "Aşırlı Island pirate cave", "Andriake stream", "Sea turtle spotting", "Finish at Andriake harbor"],
+      fr: ["Theimussa et Simena", "Baie de Hamidiye", "Grotte des pirates de l'île d'Aşırlı", "Ruisseau d'Andriake", "Observation des tortues de mer", "Fin au port d'Andriake"],
+      ru: ["Теймусса и Симена", "Бухта Хамидие", "Пиратская пещера острова Аширлы", "Ручей Андриаке", "Наблюдение за морскими черепахами", "Финиш в гавани Андриаке"],
     },
     included: INCLUDED_LUNCHBOX,
     whyChoose: {

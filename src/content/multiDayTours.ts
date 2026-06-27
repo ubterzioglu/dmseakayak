@@ -262,10 +262,10 @@ const TRAK_HIGHLIGHTS: Localized<string[]> = {
 };
 
 const TRAK_INCLUDED: Localized<string[]> = {
-  en: ["TRAK kayak & paddle", "Safety gear", "Instruction & coaching", "Photos & short videos", "Snacks & lunch", "Transportation"],
-  tr: ["TRAK kayak ve kürek", "Güvenlik ekipmanı", "Eğitim ve koçluk", "Fotoğraf ve kısa videolar", "Atıştırmalık ve öğle yemeği", "Ulaşım"],
-  fr: ["Kayak & pagaie TRAK", "Équipement de sécurité", "Instruction & coaching", "Photos & courtes vidéos", "Collations & déjeuner", "Transport"],
-  ru: ["Каяк и весло TRAK", "Снаряжение безопасности", "Инструктаж и коучинг", "Фото и короткие видео", "Закуски и обед", "Транспорт"],
+  en: ["TRAK kayak & paddle", "Safety gear", "Mask and snorkel", "Instruction & coaching", "Photos & short videos", "Snacks & lunch", "Transportation"],
+  tr: ["TRAK kayak ve kürek", "Güvenlik ekipmanı", "Maske ve şnorkel", "Eğitim ve koçluk", "Fotoğraf ve kısa videolar", "Atıştırmalık ve öğle yemeği", "Ulaşım"],
+  fr: ["Kayak & pagaie TRAK", "Équipement de sécurité", "Masque et tuba", "Instruction & coaching", "Photos & courtes vidéos", "Collations & déjeuner", "Transport"],
+  ru: ["Каяк и весло TRAK", "Снаряжение безопасности", "Маска и трубка", "Инструктаж и коучинг", "Фото и короткие видео", "Закуски и обед", "Транспорт"],
 };
 
 export const MULTI_DAY_TOURS: Tour[] = [
@@ -363,10 +363,10 @@ export const MULTI_DAY_TOURS: Tour[] = [
     heroImage: "/images/tours/coast-of-light.jpg",
     gallery: [],
     title: {
-      tr: "Işık Kıyısı — 4 Gün",
-      en: "Coast of Light — 4 Days",
-      fr: "Côte de Lumière — 4 Jours",
-      ru: "Берег света — 4 дня",
+      tr: "Camping & Kayaking Tour-COAST OF Light 4 Days",
+      en: "Camping & Kayaking Tour-COAST OF Light 4 Days",
+      fr: "Camping & Kayaking Tour-COAST OF Light 4 Days",
+      ru: "Camping & Kayaking Tour-COAST OF Light 4 Days",
     },
     tagline: {
       tr: "Antik Likya boyunca kayak ve şnorkel macerası.",
@@ -399,16 +399,16 @@ export const MULTI_DAY_TOURS: Tour[] = [
     heroImage: "/images/tours/kekova-sound.jpg",
     gallery: [],
     title: {
-      tr: "Kekova Boğazı — 2 Gün",
+      tr: "Kekova Körfezi — 2 Gün",
       en: "Kekova Sound — 2 Days",
       fr: "Détroit de Kekova — 2 Jours",
       ru: "Пролив Кекова — 2 дня",
     },
     tagline: {
-      tr: "Kekova ve Aperlai boyunca konaklamalı iki günlük kayak yolculuğu.",
-      en: "A two-day kayaking journey through Kekova & Aperlai with an overnight stay.",
-      fr: "Un voyage de kayak de deux jours à travers Kekova & Aperlai, avec une nuit sur place.",
-      ru: "Двухдневное каякинг-путешествие по Кекове и Аперлаи с ночёвкой.",
+      tr: "Büyüleyici Simena Köyü'nde konaklamalı, Kekova ve Aperlai boyunca iki günlük kayak yolculuğu.",
+      en: "A two-day kayaking journey through Kekova & Aperlai with an overnight stay at stunning Simena Village.",
+      fr: "Un voyage de kayak de deux jours à travers Kekova & Aperlai, avec une nuit au superbe village de Simena.",
+      ru: "Двухдневное каякинг-путешествие по Кекове и Аперлаи с ночёвкой в очаровательной деревне Симена.",
     },
     description: {
       tr: "Kekova ve Aperlai bölgelerinde unutulmaz iki günlük bir deniz kayağı yolculuğu. Batık kalıntılar üzerinde kürek çekin, berrak sularda şnorkel yapın, hava uygunsa kayakla yelken açın, doğal ortamında yaban hayatını gözlemleyin. Sahil köyünde bir gece konaklamayla, orta-ileri seviye kürekçiler için tasarlandı. (Bu rota taslak aşamasındadır.)",

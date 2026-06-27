@@ -25,7 +25,7 @@ export function Hero() {
       {/* Thin white veil — softens compression artifacts without hiding the video */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-white/15 backdrop-blur-[1px]"
+        className="absolute inset-0 bg-white/5"
       />
 
       {/* Content */}
@@ -34,31 +34,22 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="w-full max-w-2xl rounded-[2rem] border border-white/25 bg-teal-deep/35 px-6 py-8 shadow-[0_20px_60px_rgba(1,68,57,0.35),inset_0_1px_0_rgba(255,255,255,0.25)] ring-1 ring-white/10 backdrop-blur-md backdrop-saturate-150 sm:px-10 sm:py-10 [text-shadow:0_2px_10px_rgba(0,0,0,0.45)]"
+          className="w-full max-w-xl rounded-[1.75rem] border border-white/20 bg-teal-deep/20 px-5 py-6 shadow-[0_16px_48px_rgba(1,68,57,0.25),inset_0_1px_0_rgba(255,255,255,0.2)] ring-1 ring-white/10 backdrop-blur-sm backdrop-saturate-150 sm:px-8 sm:py-7 [text-shadow:0_2px_10px_rgba(0,0,0,0.45)]"
         >
-          <div className="mb-4 flex justify-center">
-            <img
-              src="/kenarliklilogo.png"
-              alt="Dragoman SeaKayak"
-              className="h-28 w-auto object-contain drop-shadow-[0_6px_20px_rgba(0,0,0,0.45)] md:h-32"
-              onError={(e) => (e.currentTarget.style.display = "none")}
-            />
-          </div>
-
           <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-xs">
             Dragoman Diving &amp; Outdoors · SeaKayak
           </div>
 
-          <h1 className="text-2xl font-extrabold leading-tight text-white md:text-3xl">
+          <h1 className="text-xl font-extrabold leading-tight text-white md:text-2xl">
             {t("hero.title").split(" ").slice(0, -2).join(" ")}{" "}
             <span className="text-orange-soft">{t("hero.title").split(" ").slice(-2).join(" ")}</span>
           </h1>
 
-          <p className="mx-auto mt-3 max-w-xl text-sm text-white/90 md:text-base">
+          <p className="mx-auto mt-2 max-w-xl text-xs text-white/90 md:text-sm">
             {t("hero.subtitle")}
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <Button asChild variant="primary">
               <Link to={localePath(SEG.tours)}>{t("hero.ctaTours")}</Link>
             </Button>
