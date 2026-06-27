@@ -80,16 +80,16 @@ export interface Tour {
 
 // Shared "included" lines reused across tours (content is identical in source).
 const INCLUDED_RESTAURANT: Localized<string[]> = {
-  tr: ["Rehber", "Kayak ve tüm ekipman", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği", "Atıştırmalıklar"],
-  en: ["Guide", "Kayaks and full equipment", "From/to Kaş transfers", "Lunch at restaurant", "Snacks"],
-  fr: ["Guide", "Kayaks et équipement complet", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant", "Collations"],
-  ru: ["Гид", "Каяки и всё снаряжение", "Трансфер из/до Каша", "Обед в ресторане", "Закуски"],
+  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği", "Atıştırmalıklar"],
+  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "From/to Kaş transfers", "Lunch at restaurant", "Snacks"],
+  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant", "Collations"],
+  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Трансфер из/до Каша", "Обед в ресторане", "Закуски"],
 };
 const INCLUDED_LUNCHBOX: Localized<string[]> = {
-  tr: ["Rehber", "Kayak ve tüm ekipman", "Kaş'tan gidiş-dönüş transfer", "Öğle yemeği kutusu", "Atıştırmalıklar"],
-  en: ["Guide", "Kayaks and full equipment", "From/to Kaş transfers", "Lunch box", "Snacks"],
-  fr: ["Guide", "Kayaks et équipement complet", "Transferts aller-retour depuis Kaş", "Panier-repas", "Collations"],
-  ru: ["Гид", "Каяки и всё снаряжение", "Трансфер из/до Каша", "Ланч-бокс", "Закуски"],
+  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Kaş'tan gidiş-dönüş transfer", "Öğle yemeği kutusu", "Atıştırmalıklar"],
+  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "From/to Kaş transfers", "Lunch box", "Snacks"],
+  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Transferts aller-retour depuis Kaş", "Panier-repas", "Collations"],
+  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Трансфер из/до Каша", "Ланч-бокс", "Закуски"],
 };
 
 export const TOURS: Tour[] = [
