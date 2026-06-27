@@ -117,7 +117,12 @@ export const TOURS: Tour[] = [
       fr: ["Côte de la Cité engloutie", "Pause baignade à la baie de Tersane", "Village de Simena et vue sur le château", "Itinéraire pour débutants"],
       ru: ["Побережье Затонувшего города", "Купание в бухте Терсане", "Деревня Симена и вид на крепость", "Маршрут для начинающих"],
     },
-    included: INCLUDED_RESTAURANT,
+    included: {
+      tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği (optional)", "Atıştırmalıklar"],
+      en: ["Kayak federation licensed guide", "Kayaks and full equipment", "From/to Kaş transfers", "Lunch at restaurant (optional)", "Snacks"],
+      fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant (optional)", "Collations"],
+      ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Трансфер из/до Каша", "Обед в ресторане (optional)", "Закуски"],
+    },
     whyChoose: {
       tr: [
         "Antik tarihi keşfet — batık Likya şehri üzerinde kürek çek, kaleyi ziyaret et.",
