@@ -302,8 +302,6 @@ export const MULTI_DAY_TOURS: Tour[] = [
     multiDay: {
       durationDays: 7,
       nights: 6,
-      pricePerPersonEur: 2090,
-      singleSupplementEur: 500,
       status: "final",
       groupSize: { tr: "min 6, max 12 kişi", en: "min 6, max 12 people", fr: "min 6, max 12 personnes", ru: "мин 6, макс 12 человек" },
       dates: [
