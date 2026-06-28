@@ -1,31 +1,66 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRightLeft } from "lucide-react";
 import { useLang } from "@/hooks/useLang";
 
 /**
- * Lightweight currency converter for tour prices. Rates are PLACEHOLDER static
- * values (base = EUR); replace `RATES` with a live FX feed later. Tour prices on
- * the site are in EUR, so this helps guests see a rough local equivalent.
+ * Lightweight currency converter for tour prices (base = EUR). Live rates are
+ * fetched once on mount from open.er-api.com (free, no API key required); the
+ * static `RATES` below are the offline fallback used until the fetch resolves or
+ * if it fails. Tour prices on the site are in EUR, so this helps guests see a
+ * rough local equivalent.
  */
 const RATES: Record<string, { label: string; perEur: number }> = {
   EUR: { label: "€ EUR", perEur: 1 },
-  TRY: { label: "₺ TRY", perEur: 35 },
-  USD: { label: "$ USD", perEur: 1.08 },
-  GBP: { label: "£ GBP", perEur: 0.85 },
-  RUB: { label: "₽ RUB", perEur: 98 },
+  TRY: { label: "₺ TRY", perEur: 47 },
+  USD: { label: "$ USD", perEur: 1.13 },
+  GBP: { label: "£ GBP", perEur: 0.86 },
+  RUB: { label: "₽ RUB", perEur: 90 },
 };
 
 const CURRENCIES = Object.keys(RATES);
+
+// Free, no-key FX feed (base EUR). Returns `{ result, rates: { TRY, USD, ... } }`.
+const FX_URL = "https://open.er-api.com/v6/latest/EUR";
 
 export function CurrencyConverter() {
   const { t } = useLang();
   const [amount, setAmount] = useState(60); // Kekova Classic base price
   const [from, setFrom] = useState("EUR");
   const [to, setTo] = useState("TRY");
+  // perEur rates, seeded with the static fallback and overwritten by the live feed.
+  const [rates, setRates] = useState<Record<string, number>>(() =>
+    Object.fromEntries(CURRENCIES.map((c) => [c, RATES[c].perEur])),
+  );
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadRates() {
+      try {
+        const res = await fetch(FX_URL, { signal: controller.signal });
+        if (!res.ok) throw new Error(`FX feed returned ${res.status}`);
+        const data: { result?: string; rates?: Record<string, number> } = await res.json();
+        if (data.result !== "success" || !data.rates) {
+          throw new Error("FX feed payload malformed");
+        }
+        // Keep only the currencies we display, falling back to static per-currency.
+        const next = Object.fromEntries(
+          CURRENCIES.map((c) => [c, data.rates?.[c] ?? RATES[c].perEur]),
+        );
+        setRates(next);
+      } catch (error: unknown) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        // Non-fatal: the static fallback rates remain in state.
+      }
+    }
+
+    void loadRates();
+    return () => controller.abort();
+  }, []);
 
   // Convert via EUR as the pivot.
-  const inEur = amount / RATES[from].perEur;
-  const result = inEur * RATES[to].perEur;
+  const inEur = amount / rates[from];
+  const result = inEur * rates[to];
   const formatted = result.toLocaleString("tr-TR", { maximumFractionDigits: 2 });
 
   const swap = () => {
