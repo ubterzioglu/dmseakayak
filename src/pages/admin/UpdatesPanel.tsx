@@ -13,6 +13,14 @@ interface UpdateGroup {
 
 const ENTRIES: UpdateGroup[] = [
   {
+    date: "28 Haziran 2026",
+    title: "Küçük metin düzeltmeleri (Kekova tur adı ve Hakkımızda başlığı)",
+    items: [
+      "Kekova turunun Türkçe adı 'Kekova Classic' yerine 'Kekova Klasik' olarak düzeltildi (diğer dillerde 'Classic' olarak kaldı).",
+      "Hakkımızda sayfasındaki 'Kim Biz?' başlığı, doğru Türkçe kullanımı olan 'Biz Kimiz?' şeklinde güncellendi.",
+    ],
+  },
+  {
     date: "24 Haziran 2026",
     title: "Fotoğraflar, Hakkımızda, 404 sayfası ve revizyon yorumları",
     items: [
