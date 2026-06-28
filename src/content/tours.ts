@@ -104,7 +104,7 @@ export const TOURS: Tour[] = [
     routeStops: ["Üçağız (Theimussa)", "Kekova Island", "Tersane Bay", "Sunken City", "Simena"],
     heroImage: "/images/tours/kekova-classic/tomb1-kekovaklasik-bunukullan.jpg",
     gallery: TOUR_IMAGES["kekova-classic"] ?? [],
-    title: { tr: "Kekova Classic", en: "Kekova Classic", fr: "Kekova Classic", ru: "Кекова Классик" },
+    title: { tr: "Kekova Klasik", en: "Kekova Classic", fr: "Kekova Classic", ru: "Кекова Классик" },
     tagline: {
       tr: "Kekova'nın eşsiz güzelliğini bu unutulmaz deniz kayağı macerasında keşfedin!",
       en: "Discover the breathtaking beauty of Kekova on this unforgettable sea kayaking adventure!",
