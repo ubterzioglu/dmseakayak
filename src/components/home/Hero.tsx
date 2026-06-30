@@ -9,10 +9,10 @@ export function Hero() {
 
   return (
     <div className="hero-gradient relative min-h-[52vh] overflow-hidden">
-      {/* Background video — loads silently; if /videos/hero.mp4 404s the poster/gradient shows.
-          No overlay on top so the footage stays fully visible. */}
+      {/* Background video — loads silently; if /videos/heronew.mp4 404s the poster/gradient shows.
+          No overlay on top so the footage stays fully visible at its native quality. */}
       <video
-        src="/videos/hero.mp4"
+        src="/videos/heronew.mp4"
         poster="/seakayakog.jpg"
         autoPlay
         muted
@@ -20,12 +20,6 @@ export function Hero() {
         playsInline
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover"
-      />
-
-      {/* Thin white veil — softens compression artifacts without hiding the video */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-white/5"
       />
 
       {/* Content */}
