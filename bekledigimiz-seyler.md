@@ -26,18 +26,6 @@ Sen metni at, biz siteye girelim. (Sen "nasıl değiştiririm bilmiyorum" demiş
 Yeni "Kekova Sea Kayak & Gulet" turunun yazısını ekledik ✅ (4 dilde de hazır). Ama **fotoğrafları** bekliyoruz — içerik klasörüne atacağını söylemiştin. Şu an geçici olarak başka bir Kekova fotosu kapak yaptık.
 - Bir de: turun **kaç gün / kaç gece** olduğunu kesinleştirir misin? Şimdilik 7 gün / 6 gece yazdık ama bu tahmini.
 
-### 4. Drone videosu (kısa ve net hali)
-İki şey var burada:
-- **Video kalitesi:** Daha **kısa ve yüksek kaliteli** bir kesit gönderebilir misin? Uzun/büyük video sayfayı yavaşlatıyor — onun için kısa bir kesit istemiştin, biz de "olur ayarlarız" demiştik. Sen kısa kesiti at, biz koyalım.
-- **Hero kutusu:** Videonun üzerindeki kutudan rezervasyon formunu kaldırdık. Ama hâlâ yarı-şeffaf bir kutu + "Turları keşfet" / "Hemen rezervasyon" butonları duruyor. **Bunları da tamamen kaldıralım mı, yoksa kalsın mı?** Bir "evet kaldır" / "kalsın" de, ona göre yapalım.
-
-### 5. Kekova Klasik fiyatı — küçük bir onay
-Yemek "isteğe bağlı" olsun ve fiyat şöyle net görünsün dedin:
-- **45€** (yemeksiz)
-- **60€** (yemekli)
-
-Şu an sadece 45€ görünüyor ve yanında İngilizce "(optional)" yazıyor. Sen "evet böyle olsun" dersen 5 dakikalık iş, hemen düzeltiriz. (Türkçede "isteğe bağlı" yazacağız, İngilizce "optional" kalmayacak.)
-
 ---
 
 ## 🟢 Elif'ten beklediğimiz
@@ -59,8 +47,6 @@ Sende bu hesap var mı? Varsa bir ara konuşalım — Perşembe seninle halledeb
 | **Osi** | "Neden Bizi Seçmelisiniz" yeni metni |
 | **Osi** | Kekova Klasik için 3 fotoğraf |
 | **Osi** | Kekova Gulet turu fotoğrafları + kaç gün/gece bilgisi |
-| **Osi** | Kısa & kaliteli drone video + "kutuyu kaldıralım mı?" cevabı |
-| **Osi** | Kekova Klasik fiyat gösterimi onayı (45€ / 60€) |
 | **Elif** | Google işletme hesabı erişimi (yorumlar için) |
 
 Bunlar gelince geri kalan her şeyi kapatıyoruz. Eline ne zaman geçerse, acele yok 🙂

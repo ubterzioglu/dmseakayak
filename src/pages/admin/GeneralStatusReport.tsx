@@ -71,47 +71,6 @@ const OSI_ITEMS: WaitingItem[] = [
       </>
     ),
   },
-  {
-    topic: "osi-4",
-    title: "Drone videosu (kısa ve net hali)",
-    body: (
-      <>
-        <p>
-          <strong>Video kalitesi:</strong> Daha <strong>kısa ve yüksek kaliteli</strong> bir
-          kesit gönderebilir misin? Uzun/büyük video sayfayı yavaşlatıyor — sen kısa kesiti
-          at, biz koyalım.
-        </p>
-        <p className="mt-2">
-          <strong>Hero kutusu:</strong> Videonun üzerindeki kutudan rezervasyon formunu
-          kaldırdık. Ama hâlâ yarı-şeffaf bir kutu + "Turları keşfet" / "Hemen rezervasyon"
-          butonları duruyor. <strong>Bunları tamamen kaldıralım mı, yoksa kalsın mı?</strong>{" "}
-          Bir "evet kaldır" / "kalsın" de, ona göre yapalım.
-        </p>
-      </>
-    ),
-  },
-  {
-    topic: "osi-5",
-    title: "Kekova Klasik fiyatı — küçük bir onay",
-    body: (
-      <>
-        Yemek "isteğe bağlı" olsun ve fiyat şöyle net görünsün dedin:
-        <ul className="mt-2 list-disc space-y-1 pl-5">
-          <li>
-            <strong>45€</strong> (yemeksiz)
-          </li>
-          <li>
-            <strong>60€</strong> (yemekli)
-          </li>
-        </ul>
-        <p className="mt-2">
-          Şu an sadece 45€ görünüyor ve yanında İngilizce "(optional)" yazıyor. Sen "evet
-          böyle olsun" dersen 5 dakikalık iş, hemen düzeltiriz. (Türkçede "isteğe bağlı"
-          yazacağız.)
-        </p>
-      </>
-    ),
-  },
 ];
 
 const ELIF_ITEMS: WaitingItem[] = [
@@ -139,8 +98,6 @@ const SUMMARY: { who: string; what: string }[] = [
   { who: "Osi", what: '"Neden Bizi Seçmelisiniz" yeni metni' },
   { who: "Osi", what: "Kekova Klasik için 3 fotoğraf" },
   { who: "Osi", what: "Kekova Gulet turu fotoğrafları + kaç gün/gece bilgisi" },
-  { who: "Osi", what: 'Kısa & kaliteli drone video + "kutuyu kaldıralım mı?" cevabı' },
-  { who: "Osi", what: "Kekova Klasik fiyat gösterimi onayı (45€ / 60€)" },
   { who: "Elif", what: "Google işletme hesabı erişimi (yorumlar için)" },
 ];
 
