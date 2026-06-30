@@ -80,16 +80,16 @@ export interface Tour {
 
 // Shared "included" lines reused across tours (content is identical in source).
 const INCLUDED_RESTAURANT: Localized<string[]> = {
-  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Maske ve şnorkel", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği", "Atıştırmalıklar"],
-  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "Mask and snorkel", "From/to Kaş transfers", "Lunch at restaurant", "Snacks"],
-  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Masque et tuba", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant", "Collations"],
-  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Маска и трубка", "Трансфер из/до Каша", "Обед в ресторане", "Закуски"],
+  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Maske ve şnorkel", "Kuru çanta (dry bag)", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği", "Atıştırmalıklar"],
+  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "Mask and snorkel", "Dry bags", "From/to Kaş transfers", "Lunch at restaurant", "Snacks"],
+  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Masque et tuba", "Sacs étanches (dry bags)", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant", "Collations"],
+  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Маска и трубка", "Гермомешки (dry bags)", "Трансфер из/до Каша", "Обед в ресторане", "Закуски"],
 };
 const INCLUDED_LUNCHBOX: Localized<string[]> = {
-  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Maske ve şnorkel", "Kaş'tan gidiş-dönüş transfer", "Öğle yemeği kutusu", "Atıştırmalıklar"],
-  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "Mask and snorkel", "From/to Kaş transfers", "Lunch box", "Snacks"],
-  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Masque et tuba", "Transferts aller-retour depuis Kaş", "Panier-repas", "Collations"],
-  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Маска и трубка", "Трансфер из/до Каша", "Ланч-бокс", "Закуски"],
+  tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Maske ve şnorkel", "Kuru çanta (dry bag)", "Kaş'tan gidiş-dönüş transfer", "Öğle yemeği kutusu", "Atıştırmalıklar"],
+  en: ["Kayak federation licensed guide", "Kayaks and full equipment", "Mask and snorkel", "Dry bags", "From/to Kaş transfers", "Lunch box", "Snacks"],
+  fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Masque et tuba", "Sacs étanches (dry bags)", "Transferts aller-retour depuis Kaş", "Panier-repas", "Collations"],
+  ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Маска и трубка", "Гермомешки (dry bags)", "Трансфер из/до Каша", "Ланч-бокс", "Закуски"],
 };
 
 export const TOURS: Tour[] = [
@@ -118,10 +118,10 @@ export const TOURS: Tour[] = [
       ru: ["Побережье Затонувшего города", "Купание в бухте Терсане", "Деревня Симена и вид на крепость", "Маршрут для начинающих"],
     },
     included: {
-      tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Maske ve şnorkel", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği (optional)", "Atıştırmalıklar"],
-      en: ["Kayak federation licensed guide", "Kayaks and full equipment", "Mask and snorkel", "From/to Kaş transfers", "Lunch at restaurant (optional)", "Snacks"],
-      fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Masque et tuba", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant (optional)", "Collations"],
-      ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Маска и трубка", "Трансфер из/до Каша", "Обед в ресторане (optional)", "Закуски"],
+      tr: ["Kayak federasyonu lisanslı rehber", "Kayak ve tüm ekipman", "Maske ve şnorkel", "Kuru çanta (dry bag)", "Kaş'tan gidiş-dönüş transfer", "Restoranda öğle yemeği (optional)", "Atıştırmalıklar"],
+      en: ["Kayak federation licensed guide", "Kayaks and full equipment", "Mask and snorkel", "Dry bags", "From/to Kaş transfers", "Lunch at restaurant (optional)", "Snacks"],
+      fr: ["Guide agréé par la fédération de kayak", "Kayaks et équipement complet", "Masque et tuba", "Sacs étanches (dry bags)", "Transferts aller-retour depuis Kaş", "Déjeuner au restaurant (optional)", "Collations"],
+      ru: ["Гид с лицензией федерации каякинга", "Каяки и всё снаряжение", "Маска и трубка", "Гермомешки (dry bags)", "Трансфер из/до Каша", "Обед в ресторане (optional)", "Закуски"],
     },
     whyChoose: {
       tr: [

@@ -262,10 +262,10 @@ const TRAK_HIGHLIGHTS: Localized<string[]> = {
 };
 
 const TRAK_INCLUDED: Localized<string[]> = {
-  en: ["TRAK kayak & paddle", "Safety gear", "Mask and snorkel", "Instruction & coaching", "Photos & short videos", "Snacks & lunch", "Transportation"],
-  tr: ["TRAK kayak ve kürek", "Güvenlik ekipmanı", "Maske ve şnorkel", "Eğitim ve koçluk", "Fotoğraf ve kısa videolar", "Atıştırmalık ve öğle yemeği", "Ulaşım"],
-  fr: ["Kayak & pagaie TRAK", "Équipement de sécurité", "Masque et tuba", "Instruction & coaching", "Photos & courtes vidéos", "Collations & déjeuner", "Transport"],
-  ru: ["Каяк и весло TRAK", "Снаряжение безопасности", "Маска и трубка", "Инструктаж и коучинг", "Фото и короткие видео", "Закуски и обед", "Транспорт"],
+  en: ["TRAK kayak & paddle", "Safety gear", "Mask and snorkel", "Dry bags", "Instruction & coaching", "Photos & short videos", "Snacks & lunch", "Transportation"],
+  tr: ["TRAK kayak ve kürek", "Güvenlik ekipmanı", "Maske ve şnorkel", "Kuru çanta (dry bag)", "Eğitim ve koçluk", "Fotoğraf ve kısa videolar", "Atıştırmalık ve öğle yemeği", "Ulaşım"],
+  fr: ["Kayak & pagaie TRAK", "Équipement de sécurité", "Masque et tuba", "Sacs étanches (dry bags)", "Instruction & coaching", "Photos & courtes vidéos", "Collations & déjeuner", "Transport"],
+  ru: ["Каяк и весло TRAK", "Снаряжение безопасности", "Маска и трубка", "Гермомешки (dry bags)", "Инструктаж и коучинг", "Фото и короткие видео", "Закуски и обед", "Транспорт"],
 };
 
 export const MULTI_DAY_TOURS: Tour[] = [
