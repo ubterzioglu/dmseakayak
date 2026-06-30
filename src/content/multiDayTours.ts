@@ -361,7 +361,7 @@ export const MULTI_DAY_TOURS: Tour[] = [
     heroImage: "/images/tours/coast-of-light.jpg",
     gallery: [],
     title: {
-      tr: "Camping & Kayaking Tour-COAST OF Light 4 Days",
+      tr: "Işık Kıyısı — Kano & Kamp Turu (4 Gün)",
       en: "Camping & Kayaking Tour-COAST OF Light 4 Days",
       fr: "Camping & Kayaking Tour-COAST OF Light 4 Days",
       ru: "Camping & Kayaking Tour-COAST OF Light 4 Days",
