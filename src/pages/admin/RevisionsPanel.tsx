@@ -20,6 +20,7 @@ import {
   AdminEmptyState,
   AdminSurface,
 } from "./admin-ui";
+import { GeneralStatusReport } from "./GeneralStatusReport";
 
 const STATUS_LABELS: Record<RevisionStatus, string> = {
   open: "Açık",
@@ -396,6 +397,14 @@ export default function RevisionsPanel({ infoSlot }: AdminPanelProps) {
             {submitting ? "Ekleniyor..." : "İsteği Kaydet"}
           </button>
         </form>
+      </AdminCollapsible>
+
+      <AdminCollapsible
+        defaultOpen={false}
+        title="Genel Durum Raporu 30.06.26"
+        description="Osi ve Elif'ten beklediğimiz içerik ve onayların özeti — siz gönderince geri kalan revizyonları kapatıyoruz."
+      >
+        <GeneralStatusReport />
       </AdminCollapsible>
 
       {infoSlot}
