@@ -1,4 +1,5 @@
 import type { Tour, Localized, DayPlan } from "@/content/tours";
+import { TOUR_IMAGES } from "@/content/tourImages";
 
 // ---------------------------------------------------------------------------
 // Multi-day expeditions + the TRAK private session.
@@ -93,47 +94,6 @@ const NOT_INCLUDED_LYCIAN: Localized<string[]> = {
     "Проживание в отеле до и после дат тура",
     "Опциональные экскурсии в свободные дни",
     "Туристическая страховка",
-  ],
-};
-
-// --- 7-Day Mediterranean Kayaking Adventure --------------------------------
-
-const SEVEN_DAY_DAYS: Localized<DayPlan[]> = {
-  en: [
-    { day: 1, title: "Arrival in Kaş", body: "Welcome to Kaş — a laid-back coastal town with turquoise waters and mountain views. Settle into the campsite, wander the narrow streets and grab a sunset drink before the adventure begins." },
-    { day: 2, title: "Kaş to Üzümlü Beach", body: "Paddle west along the Kaş coastline past rocky cliffs, hidden coves and crystal-clear swimming spots to the peaceful, uncrowded bay of Üzümlü Beach.", distance: "15 km" },
-    { day: 3, title: "Kalkan to Patara", body: "Transfer to the postcard harbor town of Kalkan, then paddle rugged coastline to Patara — famous for its vast sandy beach and ancient ruins. Visit the ancient city with its parliament building and theater before transferring to Üçağız for the evening.", distance: "14 km" },
-    { day: 4, title: "Kekova Classic Route", body: "A laid-back, beginner-friendly day packed with history. Glide over the Sunken City of Kekova, stop at the castle village of Simena, and maybe try the homemade ice cream before paddling back to Üçağız.", distance: "8 km" },
-    { day: 5, title: "Kekova West Route", body: "A full day of paddling from Üçağız toward the wild western side of Kekova, reaching the lesser-known ancient city of Aperlai. A short hike on the Lycian Way, snorkeling over sunken ruins, and — wind permitting — kayak sailing.", distance: "14 km" },
-    { day: 6, title: "Kekova East Route", body: "Glide over ruins in the shallows, paddle past islands toward Andriake (the ancient port of Myra), and follow the freshwater stream to spot sea turtles. Overnight at the Andriake campsite on the sandy beach.", distance: "15 km" },
-    { day: 7, title: "Andriake to Taşdibi Beach", body: "The final leg — cruise along the coast, enjoy your last swims and wrap up at the wide pebbly bay of Taşdibi Beach, a chilled-out finish to an epic week.", distance: "14 km" },
-  ],
-  tr: [
-    { day: 1, title: "Kaş'a Varış", body: "Kaş'a hoş geldiniz — turkuaz suları ve dağ manzaralı, sakin bir sahil kasabası. Kamp alanına yerleşin, dar sokaklarda dolaşın ve macera başlamadan gün batımında bir şeyler için." },
-    { day: 2, title: "Kaş'tan Üzümlü Plajı'na", body: "Kaş kıyısı boyunca batıya; kayalık falezler, saklı koylar ve berrak yüzme noktaları arasından sakin ve tenha Üzümlü Plajı'na kürek çekin.", distance: "15 km" },
-    { day: 3, title: "Kalkan'dan Patara'ya", body: "Kartpostal gibi Kalkan limanına transfer, ardından engebeli kıyı boyunca Patara'ya kürek. Geniş kumsalı ve antik kalıntılarıyla ünlü Patara'da meclis binası ve tiyatroyu gezin, akşam için Üçağız'a transfer olun.", distance: "14 km" },
-    { day: 4, title: "Kekova Classic Rotası", body: "Tarihle dolu, sakin ve başlangıç dostu bir gün. Kekova Batık Şehri üzerinde kürek çekin, kale köyü Simena'da durun, ev yapımı dondurmayı tadıp Üçağız'a geri dönün.", distance: "8 km" },
-    { day: 5, title: "Kekova West Rotası", body: "Üçağız'dan Kekova'nın vahşi batı yakasına, az bilinen antik Aperlai kentine kadar tam gün kürek. Likya Yolu'nda kısa yürüyüş, batık kalıntılar üzerinde şnorkel ve rüzgar uygunsa kayak yelkeni.", distance: "14 km" },
-    { day: 6, title: "Kekova East Rotası", body: "Sığ sulardaki kalıntıların üzerinden geçin, adalar boyunca Andriake'ye (Myra'nın antik limanı) kürek çekin ve tatlı su deresini izleyerek deniz kaplumbağalarını görün. Geceyi Andriake kamp alanında, kumsalda geçirin.", distance: "15 km" },
-    { day: 7, title: "Andriake'den Taşdibi Plajı'na", body: "Son etap — kıyı boyunca ilerleyin, son yüzmelerinizin tadını çıkarın ve geniş çakıllı Taşdibi koyunda turu tamamlayın; muhteşem bir haftaya keyifli bir final.", distance: "14 km" },
-  ],
-  fr: [
-    { day: 1, title: "Arrivée à Kaş", body: "Bienvenue à Kaş — une ville côtière paisible aux eaux turquoise et aux vues sur les montagnes. Installez-vous au campement, flânez dans les ruelles et prenez un verre au coucher du soleil avant le départ." },
-    { day: 2, title: "Kaş à la plage d'Üzümlü", body: "Pagayez vers l'ouest le long de la côte de Kaş, entre falaises rocheuses, criques cachées et eaux cristallines, jusqu'à la baie paisible d'Üzümlü.", distance: "15 km" },
-    { day: 3, title: "Kalkan à Patara", body: "Transfert vers le port pittoresque de Kalkan, puis pagaie le long d'une côte sauvage jusqu'à Patara, célèbre pour son immense plage de sable et ses ruines antiques. Visite de la cité antique (parlement et théâtre) avant le transfert à Üçağız.", distance: "14 km" },
-    { day: 4, title: "Route Kekova Classic", body: "Une journée détendue, accessible aux débutants et riche en histoire. Glissez au-dessus de la Cité engloutie de Kekova, arrêtez-vous au village-château de Simena et goûtez la glace maison avant le retour à Üçağız.", distance: "8 km" },
-    { day: 5, title: "Route Kekova Ouest", body: "Une journée complète de pagaie d'Üçağız vers la côte ouest sauvage de Kekova jusqu'à l'antique Aperlai. Courte randonnée sur la Voie lycienne, snorkeling au-dessus des ruines englouties et, si le vent le permet, voile en kayak.", distance: "14 km" },
-    { day: 6, title: "Route Kekova Est", body: "Glissez au-dessus des ruines dans les hauts-fonds, pagayez entre les îles vers Andriake (l'ancien port de Myra) et suivez le ruisseau d'eau douce pour observer les tortues de mer. Nuit au campement d'Andriake sur la plage.", distance: "15 km" },
-    { day: 7, title: "Andriake à la plage de Taşdibi", body: "Dernière étape — longez la côte, profitez de vos dernières baignades et terminez dans la large baie de galets de Taşdibi, une fin tout en douceur d'une semaine épique.", distance: "14 km" },
-  ],
-  ru: [
-    { day: 1, title: "Прибытие в Каш", body: "Добро пожаловать в Каш — спокойный прибрежный городок с бирюзовой водой и видами на горы. Разместитесь в кемпинге, прогуляйтесь по узким улочкам и встретите закат за бокалом перед началом приключения." },
-    { day: 2, title: "Каш — пляж Üzümlü", body: "Гребите на запад вдоль побережья Каша мимо скалистых утёсов, скрытых бухт и кристально чистых мест для купания к тихой, безлюдной бухте Üzümlü.", distance: "15 км" },
-    { day: 3, title: "Калкан — Патара", body: "Трансфер в живописный портовый Калкан, затем гребля вдоль сурового побережья к Патаре, знаменитой огромным песчаным пляжем и древними руинами. Осмотр античного города с зданием парламента и театром, затем трансфер в Üçağız.", distance: "14 км" },
-    { day: 4, title: "Маршрут Kekova Classic", body: "Спокойный день для начинающих, насыщенный историей. Пройдите над Затонувшим городом Кекова, остановитесь в деревне-крепости Симена, попробуйте домашнее мороженое и вернитесь в Üçağız.", distance: "8 км" },
-    { day: 5, title: "Маршрут Kekova West", body: "Полный день гребли от Üçağız к дикой западной стороне Кековы и малоизвестному древнему городу Аперлаи. Короткий поход по Ликийской тропе, снорклинг над затонувшими руинами и, если позволит ветер, парус на каяке.", distance: "14 км" },
-    { day: 6, title: "Маршрут Kekova East", body: "Пройдите над руинами на мелководье, гребите мимо островов к Андриаке (древний порт Миры) и вдоль пресноводного ручья, чтобы увидеть морских черепах. Ночёвка в кемпинге Андриаке на песчаном пляже.", distance: "15 км" },
-    { day: 7, title: "Андриаке — пляж Taşdibi", body: "Финальный этап — пройдите вдоль побережья, насладитесь последними купаниями и завершите путь в широкой галечной бухте Taşdibi — спокойный финал эпической недели.", distance: "14 км" },
   ],
 };
 
@@ -320,39 +280,43 @@ export const MULTI_DAY_TOURS: Tour[] = [
     },
   },
   {
-    slug: "7day-mediterranean",
+    slug: "kekova-gulet",
     level: "intermediate-advanced",
-    heroImage: "/images/tours/7day-mediterranean.jpg",
-    gallery: [],
+    // TODO: photos pending. Drop originals into docs/GORSEL/Images/kekova-gulet/,
+    // run scripts/import-gallery-images.mjs, then add the manifest list to
+    // TOUR_IMAGES["kekova-gulet"] and point heroImage at the "-bunukullan" cover.
+    // Temporary cover reuses an existing Kekova photo so the card/hero aren't broken.
+    heroImage: "/images/tours/kekova-classic/tomb1-kekovaklasik-bunukullan.jpg",
+    gallery: TOUR_IMAGES["kekova-gulet"] ?? [],
     title: {
-      tr: "7 Günlük Akdeniz Kayak Macerası",
-      en: "7-Day Mediterranean Kayaking Adventure",
-      fr: "Aventure Kayak Méditerranée 7 Jours",
-      ru: "7-дневное средиземноморское каякинг-приключение",
+      tr: "Kekova Deniz Kayağı & Gulet Turu",
+      en: "Kekova Sea Kayak & Gulet",
+      fr: "Kekova Kayak de Mer & Goélette",
+      ru: "Кекова: морской каякинг и гулет",
     },
     tagline: {
-      tr: "Deniz, güneş, antik kalıntılar ve saklı plajlar — hepsi kayakla!",
-      en: "A mix of sea, sunshine, ancient ruins and hidden beaches — all by kayak!",
-      fr: "Mer, soleil, ruines antiques et plages cachées — le tout en kayak !",
-      ru: "Море, солнце, древние руины и скрытые пляжи — всё на каяке!",
+      tr: "Deniz kayağının macerasını geleneksel bir Türk guletinin konforuyla birleştiren eşsiz bir yolculuk.",
+      en: "A unique journey combining sea kayaking with the comfort of a traditional Turkish gulet.",
+      fr: "Un voyage unique mêlant le kayak de mer au confort d'une goélette turque traditionnelle.",
+      ru: "Уникальное путешествие, сочетающее морской каякинг с комфортом традиционного турецкого гулета.",
     },
     description: {
-      tr: "Kaş'tan Andriake'ye kadar Likya kıyısı boyunca yedi gün boyunca kürek çekin: kayalık koylar, batık şehirler, antik kentler ve kamp geceleri. Bol yüzme molası ve yaban hayatı gözlemiyle küçük grup, rehber eşliğinde bir macera.",
-      en: "Paddle the Lycian coast from Kaş to Andriake over seven days: rocky coves, sunken cities, ancient sites and nights under canvas. A small-group, guide-led adventure with plenty of swim breaks and wildlife spotting.",
-      fr: "Pagayez la côte lycienne de Kaş à Andriake en sept jours : criques rocheuses, cités englouties, sites antiques et nuits sous tente. Une aventure en petit groupe encadrée, avec de nombreuses pauses baignade et observation de la faune.",
-      ru: "Семь дней гребли по Ликийскому побережью от Каша до Андриаке: скалистые бухты, затонувшие города, древние памятники и ночёвки в палатках. Приключение в малой группе с гидом, с множеством купаний и наблюдением за дикой природой.",
+      tr: "Akdeniz'in en görkemli kıyı şeritlerinden birini, deniz kayağını geleneksel bir Türk guletinin konforuyla birleştiren eşsiz bir yolculukta deneyimleyin. Konfordan ödün vermeden macerayı sevenler için tasarlanan bu çok günlü keşif gezisi, Türkiye'nin en dikkat çekici korunan kıyı bölgelerinden biri olan Kekova'nın saklı koylarını, antik Likya kentlerini ve berrak sularını keşfeder. Her gün el yapımı guletimizde başlar; ardından tenha plajları, sarp kayalıkları, gizli mağaraları ve ünlü Kekova Batık Şehri'ni keşfetmek için deniz kayaklarıyla yola çıkarsınız. Yol boyunca sakin turkuaz sularda kürek çeker, Aperlai ve Simena gibi antik yerleşimleri ziyaret eder, ferahlatıcı yüzme molaları verir ve bu olağanüstü kıyının zengin tarihi ile doğal güzelliğini öğrenirsiniz. Suda geçen ödüllendirici bir günün ardından, gulet ekibimizin taze hazırladığı nefis ev yapımı Türk yemeklerinin sizi beklediği tekneye dönersiniz. Akşamlarınızı yüzerek, unutulmaz gün batımlarını izleyerek, yol arkadaşlarınızla sohbet ederek ya da yıldızlarla dolu bir gökyüzünün altında güvertede dinlenerek geçirin. Deneyimli rehberlerimiz her günün rotasını hava ve deniz koşullarına göre özenle uyarlayarak her yolculuğun hem güvenli hem keyifli olmasını sağlar. Bu esneklik, kıyıdan en iyi şekilde yararlanmamızı sağlarken maceracı, rahat ve doğayla derinden bağlı, otantik bir keşif deneyimi yaratır. İster deneyimli bir kürekçi olun ister ilk çok günlü deniz kayağı maceranıza çıkıyor olun, bu gezi keşif, konfor, kültür ve içten Türk misafirperverliğinin mükemmel dengesini sunar. Kekova'nın zamansız sularında, her kürek darbesinin Akdeniz'in bir başka saklı köşesini ortaya çıkardığı unutulmaz bir yolculuk için bize katılın.",
+      en: "Experience one of the Mediterranean's most spectacular coastlines on a unique journey that combines sea kayaking with the comfort of a traditional Turkish gulet. Designed for those who love adventure without sacrificing comfort, this multi-day expedition explores the hidden bays, ancient Lycian cities and crystal-clear waters of the Kekova region—one of Turkey's most remarkable protected coastal landscapes. Each day begins aboard our handcrafted gulet before setting out by sea kayak to discover secluded beaches, dramatic cliffs, hidden caves and the famous Sunken City of Kekova. Along the way you'll paddle through calm turquoise waters, visit ancient settlements such as Aperlai and Simena, enjoy refreshing swim stops, and learn about the rich history and natural beauty of this extraordinary coastline. After a rewarding day on the water, return to the boat where delicious home-cooked Turkish meals await, prepared fresh by our onboard crew. Spend your evenings swimming, watching unforgettable sunsets, sharing stories with fellow travellers, or simply relaxing on deck beneath a sky full of stars. Our experienced guides carefully adapt each day's route according to weather and sea conditions, ensuring every journey is both safe and enjoyable. This flexibility allows us to make the most of the coastline while creating an authentic expedition experience that feels adventurous, relaxed and deeply connected to nature. Whether you're an experienced paddler or looking for your first multi-day sea kayaking adventure, this expedition offers the perfect balance of exploration, comfort, culture and genuine Turkish hospitality. Join us for an unforgettable journey through the timeless waters of Kekova, where every paddle stroke reveals another hidden corner of the Mediterranean.",
+      fr: "Découvrez l'une des côtes les plus spectaculaires de la Méditerranée lors d'un voyage unique qui associe le kayak de mer au confort d'une goélette turque traditionnelle. Conçue pour celles et ceux qui aiment l'aventure sans renoncer au confort, cette expédition de plusieurs jours explore les baies cachées, les cités lyciennes antiques et les eaux cristallines de la région de Kekova — l'un des paysages côtiers protégés les plus remarquables de Turquie. Chaque journée commence à bord de notre goélette artisanale avant de partir en kayak de mer à la découverte de plages isolées, de falaises spectaculaires, de grottes cachées et de la célèbre Cité engloutie de Kekova. En chemin, vous pagayerez dans des eaux turquoise paisibles, visiterez des sites antiques comme Aperlai et Simena, profiterez de rafraîchissantes pauses baignade et découvrirez la riche histoire et la beauté naturelle de cette côte extraordinaire. Après une journée enrichissante sur l'eau, regagnez le bateau où vous attendent de délicieux plats turcs faits maison, préparés frais par notre équipage. Passez vos soirées à nager, à admirer d'inoubliables couchers de soleil, à partager des histoires avec vos compagnons de voyage ou simplement à vous détendre sur le pont sous un ciel étoilé. Nos guides expérimentés adaptent soigneusement l'itinéraire de chaque journée selon la météo et l'état de la mer, garantissant un voyage à la fois sûr et agréable. Cette flexibilité nous permet de profiter pleinement de la côte tout en créant une expérience d'expédition authentique, aventureuse, détendue et profondément liée à la nature. Que vous soyez un pagayeur expérimenté ou à la recherche de votre première aventure de kayak de mer de plusieurs jours, cette expédition offre l'équilibre parfait entre exploration, confort, culture et hospitalité turque authentique. Rejoignez-nous pour un voyage inoubliable à travers les eaux intemporelles de Kekova, où chaque coup de pagaie révèle un nouveau recoin caché de la Méditerranée.",
+      ru: "Откройте для себя одно из самых впечатляющих побережий Средиземного моря в уникальном путешествии, которое сочетает морской каякинг с комфортом традиционного турецкого гулета. Эта многодневная экспедиция, созданная для тех, кто любит приключения, не жертвуя комфортом, исследует скрытые бухты, древние ликийские города и кристально чистые воды региона Кекова — одного из самых примечательных охраняемых прибрежных ландшафтов Турции. Каждый день начинается на борту нашего гулета ручной работы, после чего вы отправляетесь на морских каяках открывать уединённые пляжи, впечатляющие скалы, скрытые пещеры и знаменитый Затонувший город Кекова. По пути вы будете грести по спокойной бирюзовой воде, посещать древние поселения, такие как Аперлаи и Симена, делать освежающие остановки для купания и узнавать о богатой истории и природной красоте этого необыкновенного побережья. После насыщенного дня на воде вы возвращаетесь на судно, где вас ждут вкусные домашние турецкие блюда, свежеприготовленные нашим экипажем. Проводите вечера за купанием, любуясь незабываемыми закатами, делясь историями с попутчиками или просто отдыхая на палубе под звёздным небом. Наши опытные гиды тщательно адаптируют маршрут каждого дня к погоде и состоянию моря, обеспечивая безопасное и приятное путешествие. Эта гибкость позволяет максимально использовать побережье, создавая аутентичный опыт экспедиции — авантюрный, расслабленный и глубоко связанный с природой. Независимо от того, опытный ли вы гребец или ищете своё первое многодневное приключение на морском каяке, эта экспедиция предлагает идеальный баланс исследования, комфорта, культуры и подлинного турецкого гостеприимства. Присоединяйтесь к нам в незабываемом путешествии по вечным водам Кековы, где каждый гребок открывает ещё один скрытый уголок Средиземноморья.",
     },
     highlights: {
-      tr: ["Saklı koylar, plajlar ve antik kalıntılar", "Batık şehirler üzerinde şnorkel", "Likya Yolu'nda yürüyüş", "Yaban hayatı: kaplumbağa, yaban keçisi, belki fok", "Kale köyü molaları ve taze yerel öğle yemekleri", "Bol yüzme molalı küçük grup macerası"],
-      en: ["Hidden bays, beaches & ancient ruins", "Snorkel over sunken cities", "Hike along the Lycian Way", "Wildlife: sea turtles, wild goats, maybe monk seals", "Castle-village stops & fresh local lunches", "Small-group adventure with plenty of swim breaks"],
-      fr: ["Baies cachées, plages & ruines antiques", "Snorkeling au-dessus des cités englouties", "Randonnée sur la Voie lycienne", "Faune : tortues, chèvres sauvages, peut-être phoques moines", "Arrêts dans des villages-châteaux & déjeuners locaux frais", "Aventure en petit groupe avec de nombreuses baignades"],
-      ru: ["Скрытые бухты, пляжи и древние руины", "Снорклинг над затонувшими городами", "Поход по Ликийской тропе", "Дикая природа: черепахи, дикие козы, возможно тюлени-монахи", "Остановки в деревнях-крепостях и свежие местные обеды", "Приключение в малой группе с множеством купаний"],
+      tr: ["Geleneksel Türk guletinde konaklama", "Kekova Batık Şehri'nde deniz kayağı", "Antik Aperlai ve Simena kentleri", "Saklı koylar, mağaralar ve tenha plajlar", "Teknede taze ev yapımı Türk yemekleri", "Güvertede gün batımları ve yıldızlı geceler"],
+      en: ["Stay aboard a traditional Turkish gulet", "Sea kayak over the Sunken City of Kekova", "Ancient cities of Aperlai & Simena", "Hidden bays, caves & secluded beaches", "Fresh home-cooked Turkish meals on board", "Sunsets and starry nights on deck"],
+      fr: ["Séjour à bord d'une goélette turque traditionnelle", "Kayak de mer au-dessus de la Cité engloutie de Kekova", "Cités antiques d'Aperlai & Simena", "Baies cachées, grottes & plages isolées", "Plats turcs faits maison à bord", "Couchers de soleil et nuits étoilées sur le pont"],
+      ru: ["Проживание на борту традиционного турецкого гулета", "Каякинг над Затонувшим городом Кекова", "Древние города Аперлаи и Симена", "Скрытые бухты, пещеры и уединённые пляжи", "Свежие домашние турецкие блюда на борту", "Закаты и звёздные ночи на палубе"],
     },
     multiDay: {
+      // TODO: confirm real duration with operator — placeholder 7/6 for now.
       durationDays: 7,
       nights: 6,
       status: "draft",
-      dayByDay: SEVEN_DAY_DAYS,
     },
   },
   {

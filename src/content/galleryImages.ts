@@ -17,6 +17,7 @@ const TOUR_CAPTIONS: Record<string, string> = {
   "kekova-classic": "Kekova Classic",
   "kekova-east": "Kekova East",
   "kekova-west": "Kekova West",
+  "kekova-gulet": "Kekova Sea Kayak & Gulet",
   "trak-signature": "TRAK Experience",
 };
 

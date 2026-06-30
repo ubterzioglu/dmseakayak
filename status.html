@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dragoman SeaKayak — Revizyon Durum Raporu</title>
+<style>
+  :root{
+    --teal:#016352; --teal-deep:#042b25; --teal-light:#1f8f7a;
+    --orange:#f16e0b; --orange-soft:#ff9c4a;
+    --bg:#f4f7f6; --card:#ffffff; --ink:#16302b; --muted:#5d756f;
+    --done:#1f9d6b; --done-bg:#e7f6ee;
+    --partial:#d98a00; --partial-bg:#fdf2dd;
+    --open:#d8453a; --open-bg:#fdeae8;
+    --line:rgba(4,43,37,.10);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--teal);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 18px 80px}
+
+  header.hero{background:linear-gradient(135deg,var(--teal-deep),var(--teal) 70%);
+    color:#fff;border-radius:26px;padding:34px 30px;box-shadow:0 24px 60px rgba(4,43,37,.22);position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;
+    background:radial-gradient(circle,rgba(241,110,11,.35),transparent 70%);border-radius:50%}
+  header.hero h1{margin:0 0 6px;font-size:1.9rem;letter-spacing:-.02em}
+  header.hero .sub{opacity:.9;font-size:.95rem}
+  header.hero .gen{margin-top:14px;font-size:.78rem;opacity:.7}
+
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0}
+  .kpi{background:var(--card);border-radius:18px;padding:18px 18px;border:1px solid var(--line);
+    box-shadow:0 14px 38px rgba(4,43,37,.06)}
+  .kpi .n{font-size:2rem;font-weight:800;line-height:1}
+  .kpi .l{font-size:.82rem;color:var(--muted);margin-top:6px}
+  .kpi.green .n{color:var(--done)} .kpi.amber .n{color:var(--partial)} .kpi.red .n{color:var(--open)}
+  .kpi.teal .n{color:var(--teal)}
+
+  .bar{height:14px;border-radius:9px;background:#e3eae8;overflow:hidden;display:flex;margin:6px 0 26px}
+  .bar i{display:block;height:100%}
+  .bar .b-done{background:var(--done)} .bar .b-partial{background:var(--partial)} .bar .b-open{background:var(--open)}
+
+  h2.section{font-size:1.25rem;margin:34px 0 4px;color:var(--teal-deep);letter-spacing:-.01em}
+  .section-note{color:var(--muted);font-size:.88rem;margin:0 0 16px}
+
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+  .filters button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;
+    font:inherit;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer;transition:.15s}
+  .filters button:hover{border-color:var(--teal-light)}
+  .filters button.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+  .card{background:var(--card);border-radius:20px;padding:18px 20px;margin-bottom:14px;border:1px solid var(--line);
+    border-left:5px solid var(--line);box-shadow:0 12px 34px rgba(4,43,37,.05)}
+  .card.s-done{border-left-color:var(--done)}
+  .card.s-partial{border-left-color:var(--partial)}
+  .card.s-open{border-left-color:var(--open)}
+  .card .top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .who{display:flex;align-items:center;gap:9px}
+  .avatar{width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0}
+  .who .name{font-weight:700}
+  .who .date{font-size:.74rem;color:var(--muted)}
+  .badges{display:flex;gap:7px;flex-wrap:wrap}
+  .badge{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .badge.done{background:var(--done-bg);color:var(--done)}
+  .badge.partial{background:var(--partial-bg);color:var(--partial)}
+  .badge.open{background:var(--open-bg);color:var(--open)}
+  .badge.urg{background:#eef3f2;color:var(--teal)}
+  .body-text{font-size:.92rem;margin:4px 0 0}
+  .verdict{margin-top:11px;font-size:.86rem;background:#f7faf9;border:1px solid var(--line);border-radius:12px;padding:10px 13px}
+  .verdict b{color:var(--teal-deep)}
+  .need{margin-top:9px;font-size:.86rem;background:var(--orange-soft);background:linear-gradient(0deg,#fff6ee,#fff6ee);
+    border:1px solid #ffd9b0;border-radius:12px;padding:10px 13px;color:#8a4a05}
+  .need b{color:var(--orange)}
+  .comments{margin-top:11px;border-top:1px dashed var(--line);padding-top:9px}
+  .comments .c{font-size:.82rem;color:var(--muted);margin:5px 0;padding-left:14px;border-left:2px solid #d9e4e1}
+  .comments .c b{color:var(--teal)}
+
+  .need-box{background:#fff;border:2px solid var(--orange);border-radius:22px;padding:22px 24px;margin:10px 0 0;
+    box-shadow:0 16px 44px rgba(241,110,11,.10)}
+  .need-box h3{margin:0 0 4px;color:var(--orange)}
+  .need-list{margin:14px 0 0;padding:0;list-style:none}
+  .need-list li{padding:12px 14px;border-radius:14px;background:#fff8f1;border:1px solid #ffe2c4;margin-bottom:10px}
+  .need-list .from{font-size:.74rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.04em}
+  .need-list .what{font-weight:600;margin:3px 0 2px}
+  .need-list .why{font-size:.84rem;color:var(--muted)}
+
+  footer{margin-top:40px;text-align:center;color:var(--muted);font-size:.78rem}
+  .hidden{display:none !important}
+  @media(max-width:560px){header.hero h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>🛶 Dragoman SeaKayak — Revizyon Durum Raporu</h1>
+    <div class="sub">Admin panelindeki <b>Revizyon İstekleri</b> tablosu (Supabase) + ekip yorumları, gerçek kod durumuyla karşılaştırılarak hazırlandı.</div>
+    <div class="gen">Veri kaynağı: <code>revision_requests</code> (29 istek) + <code>revision_comments</code> (24 yorum) · Kod kontrolü: <code>src/content/tours.ts</code>, <code>multiDayTours.ts</code>, Hero / WhyChooseUs / TourDetail / Reviews / CurrencyConverter · Rapor: 30 Haziran 2026</div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi teal"><div class="n">29</div><div class="l">Toplam revizyon isteği</div></div>
+    <div class="kpi green"><div class="n">23</div><div class="l">Tamamlandı ✓</div></div>
+    <div class="kpi amber"><div class="n">4</div><div class="l">Kısmen — sizden içerik/onay bekliyor</div></div>
+    <div class="kpi red"><div class="n">2</div><div class="l">Bekliyor (Google erişimi / metin)</div></div>
+  </div>
+  <div class="bar" title="23 tamam / 4 kısmen / 2 bekliyor">
+    <i class="b-done" style="width:79.3%"></i><i class="b-partial" style="width:13.8%"></i><i class="b-open" style="width:6.9%"></i>
+  </div>
+
+  <!-- ============ ÖZET: NEYE İHTİYACIMIZ VAR ============ -->
+  <h2 class="section">🟠 Revizyon isteyen arkadaşlardan neye ihtiyacımız var?</h2>
+  <p class="section-note">Aşağıdaki maddeler <b>bizde değil, sizde</b> takılı. Bunlar gelmeden ilgili revizyonlar kapatılamıyor.</p>
+  <div class="need-box">
+    <h3>Bizi bekleten içerik / kararlar</h3>
+    <ul class="need-list">
+      <li>
+        <div class="from">Osi → "Neden Bizi Seçmelisiniz" metni (#67f35f97)</div>
+        <div class="what">Bölümün yeni metnini bize yazılı verin.</div>
+        <div class="why">İstenen detaylar: rehberlerin kaç yıldır çalıştığı, yemeklerin porsiyon & çeşitliliği, grupların küçük olması, ikinci rehber alınması. Şu an genel bir metin var; bu spesifik bilgiler henüz yok. <b>Not:</b> Ana metinleri UT değiştirebiliyor — metni gönderin, biz girelim (UT'nin yorumu: "Metinleri bana vermen lazım").</div>
+      </li>
+      <li>
+        <div class="from">Osi → Kekova Klasik detay sayfası 3 fotoğraf (#1b37651d)</div>
+        <div class="what">Öne çıkmasını istediğiniz <b>3 fotoğrafı seçip</b> bize iletin.</div>
+        <div class="why">"Fotoları ben seçebilirim" demiştiniz. Şu an detay sayfasında tüm galeri (41 foto) en altta. Seçtiğiniz 3 foto öne çıkanlar bölümüne / üstüne konacak.</div>
+      </li>
+      <li>
+        <div class="from">Osi / Elif → Yorumların düzenlenmesi (#7d5ed51d)</div>
+        <div class="what">Dragoman işletme sahibinin <b>Google hesabına erişim</b> gerekiyor (Elif).</div>
+        <div class="why">Tüm Google yorumları çekilip dalışla ilgili olanları ayıklamak + yorumları Google Reviews'e tıklanır yapmak için. UBT notu: "Perşembe Elif ile halledeceğiz, tüm yorumlar çekilecek, dalış olanları siz sileceksiniz." Bu hesap erişimi olmadan ilerleyemiyoruz.</div>
+      </li>
+      <li>
+        <div class="from">Osi → Kekova Klasik fiyat gösterimi (#aaa43eb9)</div>
+        <div class="what">Onaylayın: <b>"İsteğe bağlı"</b> (TR), yemeksiz <b>45€</b> / yemekli <b>60€</b> ayrı ayrı görünsün.</div>
+        <div class="why">Şu an kodda yemek yanında İngilizce "(optional)" yazıyor ve sadece 45€ görünüyor. Osi'nin notu: TR'de "isteğe bağlı" yazsın + 60€ yemekli açıkça görünsün. Onaylarsanız 5 dakikalık iş, hemen yapılır.</div>
+      </li>
+      <li>
+        <div class="from">Osi → Kekova Gulet turu fotoğrafları (#40a0a25e)</div>
+        <div class="what">"7 Günlük Akdeniz" yerine eklenen <b>Kekova Gulet</b> turunun fotoğraflarını içerik klasörüne atın.</div>
+        <div class="why">Metin (TR/EN/FR/RU) eklendi ✓ ama foto bekleniyor. Şu an geçici olarak bir Kekova fotosu kapak yapıldı. Süre/gece sayısı da operatörle teyit edilmeli (şimdilik 7/6 placeholder).</div>
+      </li>
+      <li>
+        <div class="from">Osi → Drone videosu kalitesi (#408396ae / #6fabb861)</div>
+        <div class="what">Daha yüksek kaliteli + <b>kısa</b> bir drone video kesiti gönderin.</div>
+        <div class="why">UBT notu: video çok büyük/uzun olmamalı yoksa sayfa geç açılır. Osi: "kısa bir kesit koysak olur mu?" UBT: "olur, ayarlayayım." → Sizden kısa & net bir video bekliyoruz; gelince yerleştirilecek.</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ============ TÜM REVİZYONLAR ============ -->
+  <h2 class="section">📋 Tüm revizyon istekleri (kişi & duruma göre)</h2>
+  <p class="section-note">Filtrele:</p>
+  <div class="filters" id="filters">
+    <button data-f="all" class="active">Tümü (29)</button>
+    <button data-f="done">✓ Tamamlandı (23)</button>
+    <button data-f="partial">◐ Kısmen (4)</button>
+    <button data-f="open">○ Bekliyor (2)</button>
+    <button data-f="Elif">Elif (17)</button>
+    <button data-f="Osi">Osi / Güvenç (12)</button>
+  </div>
+
+  <div id="list"></div>
+
+  <footer>
+    Bu rapor yalnızca okuma amaçlıdır · Veriler Supabase canlı veritabanından çekilmiştir · Hassas anahtarlar bu dosyaya dahil edilmemiştir.
+  </footer>
+</div>
+
+<script>
+// ---- Veri: DB revision_requests + revision_comments + kod doğrulaması ----
+const ITEMS = [
+  // --- ELİF (24 Haziran) — hepsi DONE ve kodla doğrulandı ---
+  {req:"Elif",who:"Elif",date:"24 Haz",urg:5,status:"done",tag:"Mobil/UI",
+   body:"Cepten bağlanırken ana sayfadaki dalga hemen rezervasyonun üstüne biniyor.",
+   verdict:"Düzeltildi (UBT: 'düzeltildi'). Mobil hero/dalga yerleşimi onarıldı."},
+  {req:"Elif",who:"Elif",date:"24 Haz",urg:7,status:"done",tag:"Görsel",
+   body:"Her günlük tur için birer foto seçtim ('-bunukullan' ekli). Kekova klasik için tomb1-kekovaklasik vb.",
+   verdict:"Uygulandı. Her turun kapak görseli '-bunukullan' fotoğrafına ayarlandı (tourImages.ts). Toplam 67 foto yüklendi.",
+   comments:[["UBT","Uygulandı. Kontrol ediniz."]]},
+  {req:"Elif",who:"Elif",date:"24 Haz",urg:8,status:"done",tag:"İçerik",
+   body:"Hakkımızda sayfası için metin içerik dosyasına eklendi, bu sayfa değişecek.",
+   verdict:"Tamamlandı (UBT). Yeni tanıtım metni eklendi.",comments:[["UBT","Tamamlandı."]]},
+  {req:"Elif",who:"Elif",date:"24 Haz",urg:6,status:"done",tag:"İçerik",
+   body:"Günlük turların başındaki vurucu cümleler içerik dosyasından alınmalı (örn. Kekova classic: 'Discover the breathtaking beauty of Kekova...').",
+   verdict:"Kodda doğrulandı ✓ — tours.ts tagline'ları tam da bu cümleler (TR/EN/FR/RU).",comments:[["UBT","Bunun da düzelmiş olması gerekiyor, kontrol edebilir misiniz?"]]},
+  {req:"Elif",who:"Elif",date:"24 Haz",urg:6,status:"done",tag:"Görsel",
+   body:"Alakasız fotoğraflar konmuş, ağırlık yapıyor ve açılmıyor; altlarındaki açıklamalar yanlış. İlgisiz fotoları ayrı klasöre koydum.",
+   verdict:"Eski/ilgisiz fotolar silindi, sadece yeni fotolar kaldı. Galeri hafifletildi.",
+   comments:[["UBT","Eski fotolar silindi sadece yeni fotolar kaldı. Fotoğraf yorumlarını admin panelinden sizin değiştirmeniz gerekli."]]},
+  {req:"Elif",who:"Elif",date:"24 Haz",urg:7,status:"done",tag:"İletişim",
+   body:"WhatsApp telefonu yanlış. Doğru telefon 0533 290 1463 olacak.",
+   verdict:"Düzeltildi ✓ (UpdatesPanel'de kayıtlı).",comments:[["UBT","kontrol edildi tamamlanmış."]]},
+  {req:"Elif",who:"Elif",date:"24 Haz",urg:7,status:"done",tag:"İletişim",
+   body:"E-posta adresi info@dragoman-turkey.com olarak değişecek.",
+   verdict:"Düzeltildi ✓.",comments:[["UBT","kontrol edildi tamamlanmış."]]},
+  {req:"elif",who:"Elif",date:"24 Haz",urg:6,status:"done",tag:"Hakkımızda",
+   body:"Hakkımızda yazıları iki yana yaslı olmalı, dağınık duruyor; punto büyük gibi; logo yerine 'ilgisizler' klasöründeki ofis fotosu konsa daha iyi.",
+   verdict:"Tamamlandı ✓ — yazılar iki yana yaslandı, ofis fotoğrafı kondu.",comments:[["UBT","Kontrol edildi tamamlanmış."]]},
+  {req:"Elif",who:"Elif",date:"24 Haz",urg:8,status:"done",tag:"Yönlendirme",
+   body:"Sayfalar arası geçişte ilk tıklamada sayfa açılmıyor, yenilemek gerekiyor (örn. Hakkımızda).",
+   verdict:"Çözüldü — yönlendirme/lazy-load sorunu giderildi.",comments:[["UBT","Açılıyor."]]},
+
+  // --- OSİ (24 Haziran) ---
+  {req:"Osi",who:"Osi",date:"24 Haz",urg:10,status:"done",tag:"Hero/Video",
+   body:"Drone videolarından uygun birini ana ekranda arka planda akacak şekilde yerleştirmek istiyoruz.",
+   verdict:"Hero arka plan videosu eklendi ✓ (90° döndürülüp web için sıkıştırıldı). Not: kalite revizyonu için ayrı açık istek var (#6fabb861)."},
+  {req:"Osi",who:"Osi",date:"24 Haz",urg:10,status:"done",tag:"Tur detay",
+   body:"Tur detaya tıklandığında o tura ait görsel görünmesini istiyoruz (Güvenç abi: daha görsel-bazlı olsun, sadece text gibi olmuş).",
+   verdict:"Her tur detay sayfasına foto galerisi eklendi ✓ (tıklayınca tam ekran). Devamı: Osi 3 foto seçimi için ayrı istek (#1b37651d)."},
+
+  // --- ELİF GÜVENÇ (27 Haziran) ---
+  {req:"Elif Guvenc",who:"Elif",date:"27 Haz",urg:7,status:"done",tag:"Hero/Logo",
+   body:"Anasayfada videonun önündeki 'Kekova'da denizle buluş' kısmından logo çıkartılacak, küçülecek ve daha şeffaf olacak ki arkadaki video daha iyi görünsün.",
+   verdict:"Yapıldı ✓ — hero kutusu küçültüldü, şeffaflaştırıldı, üzerindeki logo/tül kaldırıldı, video tam netlikte."},
+  {req:"elif guvenc",who:"Elif",date:"27 Haz",urg:8,status:"done",tag:"İçerik",
+   body:"'Neler dahil' kısmına maske & şnorkel eklenecek, bütün turlarda. (Yorum: kuru çantalar / dry bag de eklenecek.)",
+   verdict:"KODDA YAPILMIŞ ✓ — tours.ts'te tüm turlarda 'Maske ve şnorkel' + 'Kuru çanta (dry bag)' mevcut (TR/EN/FR/RU). DB'de 'open' kalmış çünkü dry bag yorumu sonradan eklenmiş; UBT 30 Haz'da 'eklendi. dry bag.' demiş. → Pratikte tamam, sadece statü kapatılmalı.",
+   comments:[["elif","bir de kuru çantalar (dry bag) eklenecek listeye"],["elif","buraya kuru çantalar ve İngilizcede dry bags eklenecek o yüzden açık aldım"],["UBT","eklendi. dry bag."]]},
+  {req:"elif guvenc",who:"Elif",date:"27 Haz",urg:8,status:"done",tag:"İçerik",
+   body:"East turuna highlight'lara Andriake deresi ve deniz kaplumbağası gözlemi eklenecek.",
+   verdict:"Eklendi ✓ (East turu içeriği güncellendi)."},
+  {req:"elif guvenc",who:"Elif",date:"27 Haz",urg:7,status:"done",tag:"Tur adı",
+   body:"Işık kıyısı turunun adı 'Camping & Kayaking Tour - COAST OF Light 4 Days' olarak değişecek.",
+   verdict:"Yapıldı ✓ — EN/FR/RU 'Camping & Kayaking Tour - Coast of Light 4 Days', TR 'Işık Kıyısı — Kano & Kamp Turu (4 Gün)'."},
+  {req:"elif guvenc",who:"Elif",date:"27 Haz",urg:8,status:"done",tag:"Fiyat",
+   body:"Günlük tur fiyatları: Klasik başlangıç 45€ (yemeksiz), West 80€, East 80€.",
+   verdict:"Kodda doğrulandı ✓ — Klasik 45€, West 80€, East 80€ (tours.ts)."},
+  {req:"elif guvenc",who:"Elif",date:"27 Haz",urg:7,status:"done",tag:"Tur adı/metin",
+   body:"Kekova Sound turunun TR adı 'Kekova Körfezi' olacak; kısa bilgiye '...overnight stay at stunning Simena Village' eklenecek.",
+   verdict:"Yapıldı ✓ — TR 'Kekova Körfezi — 2 Gün', EN açıklama 'Simena Village' eklenmiş."},
+  {req:"elif guvenc",who:"Elif",date:"27 Haz",urg:7,status:"partial",tag:"İçerik/Fiyat",
+   body:"Kekova klasikte dahil hizmetlerde yemek yanına parantez içinde (optional) yazacak.",
+   verdict:"KISMEN — Kodda yemek yanında '(optional)' yazıyor. AMA Osi'nin notuyla yeniden açıldı: TR'de İngilizce 'optional' olmasın → 'isteğe bağlı'; ayrıca 45€ yemeksiz / 60€ yemekli açık görünsün.",
+   need:"Onay: 'isteğe bağlı' + 45€/60€ ayrı gösterimi (Osi notu).",
+   comments:[["Osi","optional Türkçede 'isteğe bağlı' olsun; yemekli/yemeksiz fiyat belirgin girilsin — sadece 45€ görünüyor, 60€ yemekli açıkça yazılmalı."],["elif","burada da Oğuzhan'ın notunu görmemişsin sanırım, o yüzden açtım"]]},
+  {req:"elif guvenc",who:"Elif",date:"27 Haz",urg:7,status:"done",tag:"İçerik",
+   body:"Dahil hizmetlerde 'rehber' → 'kayak federasyonu lisanslı rehber' olarak değişecek.",
+   verdict:"Kodda doğrulandı ✓ — tüm turlarda 'Kayak federasyonu lisanslı rehber'."},
+
+  // --- OSİ (28-30 Haziran) ---
+  {req:"Osi",who:"Osi",date:"28 Haz",urg:8,status:"partial",tag:"Hero/Video",
+   body:"Anasayfada drone üzerindeki tur rezervasyonu / turları keşfet kutucuğunu kaldıralım. Drone video kalitesi çok düşük — kaliteyi artırma şansımız var mı?",
+   verdict:"KISMEN — Rezervasyon FORMU overlay'i kaldırıldı ✓. Ancak hero'da hâlâ yarı-şeffaf bir kutu + 'Turları keşfet' / 'Hemen rezervasyon' butonları var. Video kalitesi: daha kısa/yüksek kaliteli kaynak bekleniyor.",
+   need:"1) Kutu/butonları tamamen mi kaldıralım netleştirin. 2) Kısa & yüksek kaliteli drone video gönderin.",
+   comments:[["UBT","Koyulacak video çok büyük ve uzun olmamalı, aksi halde sayfa geç açılır."],["Osi","o videoyu keserek kısa bir kesit koysak olur mu?"],["UBT","olur, öyle istiyorsanız ayarlayayım"]]},
+  {req:"Osi",who:"Osi",date:"28 Haz",urg:7,status:"partial",tag:"Tur detay/Görsel",
+   body:"Kekova-classic detayında tur ismi 'Kekova Klasik' olsun. Bir de fotolar öne çıkanlar kısmında / üzerinde 3 foto olarak yapılabilir mi? Fotoları ben seçebilirim.",
+   verdict:"KISMEN — 'Kekova Klasik' adı yapıldı ✓. Fotolar: detay sayfasında 41'lik galeri en altta; istenen '3 seçili foto öne çıkanlarda/üstte' henüz yok.",
+   need:"Öne çıkacak 3 fotoğrafı seçip gönderin.",
+   comments:[["UBT","'Kekova Klasik' tamam ama foto kısmını anlamadım: öne çıkanlarda 3 foto mu olacak?"]]},
+  {req:"Osi",who:"Osi",date:"28 Haz",urg:6,status:"open",tag:"İçerik/Metin",
+   body:"'Neden bizi seçmelisiniz' kısmı iki başlık gibi görünüyor; metin gözden geçirilmeli (rehberlerin tecrübesi, yemek porsiyon/çeşit, küçük gruplar, ikinci rehber...). Metinleri ben değiştirebilirsem geçerim ama nasıl bilmiyorum.",
+   verdict:"AÇIK — Çift başlık YOK (tek h2). Ama metin hâlâ genel; istenen spesifik maddeler (rehber tecrübe yılı, porsiyon/çeşit, ikinci rehber) eklenmemiş. Metin kodda gömülü (tours.ts), UT değiştirebiliyor.",
+   need:"Yeni 'Neden Bizi Seçmelisiniz' metnini yazılı gönderin — UT girecek.",
+   comments:[["UT","Metinleri bana vermen lazım, ben değiştirebilirim ana metinleri."]]},
+  {req:"Osi",who:"Osi",date:"28 Haz",urg:6,status:"done",tag:"Fiyat",
+   body:"Likya konfor kaçamağı 2090€ fiyatını çıkaralım, diğerleri gibi 'talep üzerine fiyat' olsun.",
+   verdict:"Düzeltildi ✓ (UBT). Fiyat gizlendi, 'Talep üzerine' yapıldı.",comments:[["UBT","düzeltildi."]]},
+  {req:"Osi",who:"Osi",date:"28 Haz",urg:6,status:"done",tag:"Kur çevirici",
+   body:"Kur çevirici doğru çevirmiyor sanırım, aktif olmadığı için galiba.",
+   verdict:"Düzeltildi ✓ — Kodda doğrulandı: CurrencyConverter artık canlı kuru open.er-api.com'dan çekiyor (hardcoded değil).",comments:[["UBT","Düzeltildi."]]},
+  {req:"Osi",who:"Osi",date:"29 Haz",urg:7,status:"open",tag:"Yorumlar",
+   body:"Yorumlarda dalışla ilgili olanlar da çıkıyor (hepsi Google'dan), uzun yorumların devamı görünmüyor. Farklı tarih/konuda yorum seçip eklemek mümkün mü? Yoruma tıklayınca Google Reviews'e gitsin.",
+   verdict:"AÇIK — Yorumlar tıklanabilir DEĞİL (düz div), konu/dalış filtresi YOK, yönetimsel seçim arayüzü YOK. (446 yorum DB'de mevcut.)",
+   need:"Google işletme hesabı erişimi (Elif) — sonra dalış olanlar ayıklanıp tıklanır yapılacak.",
+   comments:[["UBT","Daha iyi çekmek için Dragoman sahibinin Google hesabına erişim gerekiyor. Elif sende varsa konuşalım."],["UBT","Perşembe Elif ile halledeceğiz, tüm yorumlar çekilecek, dalış olanları siz sileceksiniz."]]},
+  {req:"Osi",who:"Osi",date:"29 Haz",urg:5,status:"done",tag:"Metin",
+   body:"Çok günlü turlarda 'Kalkış Tarihleri' değil 'Tur tarihleri' yazalım (örn. Likya Konfor).",
+   verdict:"Yapıldı ✓ — Kodda doğrulandı: i18n 'dates' = 'Tur tarihleri'."},
+  {req:"Osi",who:"Osi",date:"29 Haz",urg:6,status:"done",tag:"Tur adı",
+   body:"Coast of Light → TR 'Işık Kıyısı Kayak ve Kamp Turu' olarak değiştirelim.",
+   verdict:"Yapıldı ✓ — TR adı 'Işık Kıyısı — Kano & Kamp Turu'."},
+  {req:"Osi",who:"Osi",date:"30 Haz",urg:7,status:"done",tag:"Galeri",
+   body:"Gallery kısmını (Güvenç abi) ana sayfadan tamamen kaldıralım; sadece tur detayında 3-5 foto. Sebep: foto çalınması.",
+   verdict:"Yapıldı ✓ — Ayrı galeri sayfası/bölümü kaldırıldı; fotolar tur detayına alındı. (Detayda 3-5 yerine tüm galeri var; Osi'nin 3-foto isteğiyle birlikte değerlendirilmeli — bkz #1b37651d.)"},
+  {req:"Osi",who:"Osi",date:"30 Haz",urg:7,status:"partial",tag:"Yeni tur/İçerik",
+   body:"'7 Günlük Akdeniz Kayak Macerası' yerine 'Kekova Sea Kayak ve Gulet Turu' koymak istiyoruz (uzun EN metin verildi, fotoları içerik klasörüne atıyorum).",
+   verdict:"KISMEN — Yeni 'kekova-gulet' turu metni (TR/EN/FR/RU) eklendi ✓. AMA fotolar bekleniyor (kod içinde 'TODO: photos pending', geçici kapak), süre/gece sayısı operatörle teyit edilecek (placeholder 7/6).",
+   need:"Gulet turu fotoğrafları + kesin süre/gece bilgisi.",
+   comments:[["UBT","yenisiyle değiştirildi."]]},
+];
+
+const list = document.getElementById('list');
+const initial = (n)=>n.trim().charAt(0).toUpperCase();
+const statusLabel = {done:'✓ Tamamlandı',partial:'◐ Kısmen',open:'○ Bekliyor'};
+
+function render(){
+  list.innerHTML = ITEMS.map(it=>{
+    const cls = it.status;
+    const comments = (it.comments||[]).map(c=>`<div class="c"><b>${c[0]}:</b> ${c[1]}</div>`).join('');
+    return `<div class="card s-${cls}" data-status="${cls}" data-who="${it.who}">
+      <div class="top">
+        <div class="who">
+          <div class="avatar">${initial(it.req)}</div>
+          <div><div class="name">${it.req}</div><div class="date">${it.date} · ${it.tag}</div></div>
+        </div>
+        <div class="badges">
+          <span class="badge urg">Aciliyet ${it.urg}/10</span>
+          <span class="badge ${cls}">${statusLabel[cls]}</span>
+        </div>
+      </div>
+      <p class="body-text">${it.body}</p>
+      <div class="verdict"><b>Durum:</b> ${it.verdict}</div>
+      ${it.need?`<div class="need"><b>İhtiyacımız:</b> ${it.need}</div>`:''}
+      ${comments?`<div class="comments">${comments}</div>`:''}
+    </div>`;
+  }).join('');
+}
+render();
+
+document.getElementById('filters').addEventListener('click', e=>{
+  const btn = e.target.closest('button'); if(!btn) return;
+  document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.f;
+  document.querySelectorAll('#list .card').forEach(card=>{
+    const show = f==='all' || card.dataset.status===f || card.dataset.who===f;
+    card.classList.toggle('hidden', !show);
+  });
+});
+</script>
+</body>
+</html>

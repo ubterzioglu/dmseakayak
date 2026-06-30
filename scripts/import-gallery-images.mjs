@@ -23,7 +23,7 @@ const SRC_ROOT = resolve(ROOT, "docs", "GORSEL", "Images");
 const DST_ROOT = resolve(ROOT, "public", "images", "tours");
 const MANIFEST = resolve(__dirname, "output", "gallery-manifest.json");
 
-const FOLDERS = ["kekova-classic", "kekova-east", "kekova-west", "trak"];
+const FOLDERS = ["kekova-classic", "kekova-east", "kekova-west", "kekova-gulet", "trak"];
 const IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]);
 const MAX_DIM = 2000;
 const QUALITY = 82;

@@ -9,7 +9,7 @@ export type TourSlug =
   | "kekova-classic"
   | "kekova-west"
   | "kekova-east"
-  | "7day-mediterranean"
+  | "kekova-gulet"
   | "coast-of-light"
   | "kekova-sound"
   | "lycian-comfort-escape"

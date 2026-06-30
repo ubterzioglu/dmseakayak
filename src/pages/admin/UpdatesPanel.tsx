@@ -13,6 +13,16 @@ interface UpdateGroup {
 
 const ENTRIES: UpdateGroup[] = [
   {
+    date: "30 Haziran 2026",
+    title: "Hero videosu, tur içeriği güncellemeleri ve metin düzeltmeleri",
+    items: [
+      "Ana sayfadaki hero (kahraman) videosu yenisiyle değiştirildi; doğru yönde döndürülüp web için sıkıştırıldı, üzerindeki hafif beyaz tül kaldırıldı — görüntü artık tam netlikte.",
+      "Tüm günlük tur ve TRAK turunun 'Dahil olanlar' listesine 'Kuru çanta (dry bag)' eklendi (TR / EN / FR / RU).",
+      "'Işık Kıyısı — Kano & Kamp Turu (4 Gün)' turunun başlığı her dilde düzgün çevrildi (önceden 4 dilde de İngilizce görünüyordu).",
+      "Tur detayındaki tarih başlığı 'Kalkış tarihleri' yerine 'Tur tarihleri' olarak güncellendi.",
+    ],
+  },
+  {
     date: "28 Haziran 2026",
     title: "Küçük metin düzeltmeleri (Kekova tur adı ve Hakkımızda başlığı)",
     items: [
