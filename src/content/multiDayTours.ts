@@ -362,9 +362,9 @@ export const MULTI_DAY_TOURS: Tour[] = [
     gallery: [],
     title: {
       tr: "Işık Kıyısı — Kano & Kamp Turu (4 Gün)",
-      en: "Camping & Kayaking Tour-COAST OF Light 4 Days",
-      fr: "Camping & Kayaking Tour-COAST OF Light 4 Days",
-      ru: "Camping & Kayaking Tour-COAST OF Light 4 Days",
+      en: "Camping & Kayaking Tour - Coast of Light 4 Days",
+      fr: "Camping & Kayaking Tour - Côte de Lumière 4 Jours",
+      ru: "Camping & Kayaking Tour - Берег Света 4 дня",
     },
     tagline: {
       tr: "Antik Likya boyunca kayak ve şnorkel macerası.",
