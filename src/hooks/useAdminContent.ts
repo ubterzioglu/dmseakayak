@@ -101,6 +101,52 @@ export async function deleteRevisionComment(id: string): Promise<void> {
   if (error) throw new Error(error.message);
 }
 
+// ─── Report comments ──────────────────────────────────────────────────────────
+// Threaded comments under the static "Genel Durum Raporu" items. The items are
+// hardcoded (not DB rows), so comments hang off a stable text `topic` key
+// (e.g. "osi-1") instead of a foreign key. See migration 0007_report_comments.
+
+export interface ReportCommentRow {
+  id: string;
+  topic: string;
+  author: string;
+  body: string;
+  created_at: string;
+}
+
+/** Fetches comments for the given report topics, oldest first. */
+export async function fetchReportComments(topics: string[]): Promise<ReportCommentRow[]> {
+  if (!supabase || !topics.length) return [];
+  const { data, error } = await supabase
+    .from("report_comments")
+    .select("*")
+    .in("topic", topics)
+    .order("created_at", { ascending: true });
+  if (error) throw new Error(error.message);
+  return (data ?? []) as ReportCommentRow[];
+}
+
+export async function addReportComment(
+  topic: string,
+  author: string,
+  body: string,
+): Promise<ReportCommentRow> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  const { data, error } = await supabase
+    .from("report_comments")
+    .insert({ topic, author, body })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return data as ReportCommentRow;
+}
+
+export async function deleteReportComment(id: string): Promise<void> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  const { error } = await supabase.from("report_comments").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
 // ─── Blog posts ───────────────────────────────────────────────────────────────
 
 export interface BlogPostRow {
