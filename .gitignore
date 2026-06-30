@@ -22,6 +22,11 @@ docs/herovideo.*
 # Footer source video (compressed copy lives in public/videos/)
 newfooter.mp4
 
+# Hero source video (rotated + compressed copy lives in public/videos/heronew.mp4)
+hero.MOV
+hero.mov
+heronew.MP4
+
 # Root-level logo sources (optimized copies live in public/)
 /kenarliklilogo.png
 /maskotbig.png
