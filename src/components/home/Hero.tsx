@@ -8,22 +8,39 @@ export function Hero() {
   const { t, localePath } = useLang();
 
   return (
-    <div className="hero-gradient relative min-h-[52vh] overflow-hidden">
-      {/* Background video — loads silently; if /videos/heronew.mp4 404s the poster/gradient shows.
-          No overlay on top so the footage stays fully visible at its native quality. */}
-      <video
-        src="/videos/heronew.mp4"
-        poster="/seakayakog.jpg"
-        autoPlay
-        muted
-        loop
-        playsInline
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+    <div className="hero-gradient relative overflow-hidden">
+      {/* Background video — loads silently; if /videos/heronew.mp4 404s the poster/gradient shows. */}
+      <div className="relative min-h-[52vh] w-full overflow-hidden">
+        <video
+          src="/videos/heronew.mp4"
+          poster="/seakayakog.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+
+        {/* Waves SVG divider */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+          <svg
+            viewBox="0 0 1440 64"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+            className="block h-16 w-full"
+            aria-hidden="true"
+          >
+            <path
+              d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 L1440,64 L0,64 Z"
+              fill="#e8f5f2"
+            />
+          </svg>
+        </div>
+      </div>
 
       {/* Content */}
-      <div className="relative z-10 flex min-h-[52vh] flex-col items-center justify-center px-4 py-14 text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center px-4 py-10 text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -52,22 +69,6 @@ export function Hero() {
             </Button>
           </div>
         </motion.div>
-      </div>
-
-      {/* Waves SVG divider */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
-        <svg
-          viewBox="0 0 1440 64"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          className="block h-16 w-full"
-          aria-hidden="true"
-        >
-          <path
-            d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 L1440,64 L0,64 Z"
-            fill="#e8f5f2"
-          />
-        </svg>
       </div>
     </div>
   );
