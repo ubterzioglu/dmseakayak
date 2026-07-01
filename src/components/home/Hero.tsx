@@ -8,7 +8,7 @@ export function Hero() {
   const { t, localePath } = useLang();
 
   return (
-    <div className="hero-gradient relative overflow-hidden">
+    <div className="relative overflow-hidden">
       {/* Background video — loads silently; if /videos/heronew.mp4 404s the poster/gradient shows. */}
       <div className="relative min-h-[52vh] w-full overflow-hidden">
         <video
@@ -21,42 +21,26 @@ export function Hero() {
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
         />
-
-        {/* Waves SVG divider */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
-          <svg
-            viewBox="0 0 1440 64"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            className="block h-16 w-full"
-            aria-hidden="true"
-          >
-            <path
-              d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 L1440,64 L0,64 Z"
-              fill="#e8f5f2"
-            />
-          </svg>
-        </div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-4 py-10 text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center border-t border-teal-deep/10 bg-white px-4 py-10 text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="w-full max-w-xl rounded-[1.75rem] border border-white/20 bg-teal-deep/20 px-5 py-6 shadow-[0_16px_48px_rgba(1,68,57,0.25),inset_0_1px_0_rgba(255,255,255,0.2)] ring-1 ring-white/10 backdrop-blur-sm backdrop-saturate-150 sm:px-8 sm:py-7 [text-shadow:0_2px_10px_rgba(0,0,0,0.45)]"
+          className="w-full max-w-xl px-5 py-6 sm:px-8 sm:py-7"
         >
           <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-xs">
             Dragoman Diving &amp; Outdoors · SeaKayak
           </div>
 
-          <h1 className="text-xl font-extrabold leading-tight text-white md:text-2xl">
+          <h1 className="text-xl font-extrabold leading-tight text-teal-deep md:text-2xl">
             {t("hero.title").split(" ").slice(0, -2).join(" ")}{" "}
             <span className="text-orange-soft">{t("hero.title").split(" ").slice(-2).join(" ")}</span>
           </h1>
 
-          <p className="mx-auto mt-2 max-w-xl text-xs text-white/90 md:text-sm">
+          <p className="mx-auto mt-2 max-w-xl text-xs text-teal-deep/80 md:text-sm">
             {t("hero.subtitle")}
           </p>
 
@@ -64,7 +48,7 @@ export function Hero() {
             <Button asChild variant="primary">
               <Link to={localePath(SEG.tours)}>{t("hero.ctaTours")}</Link>
             </Button>
-            <Button asChild variant="ghost">
+            <Button asChild variant="outline">
               <Link to={localePath(SEG.contact)}>{t("hero.ctaBook")}</Link>
             </Button>
           </div>
