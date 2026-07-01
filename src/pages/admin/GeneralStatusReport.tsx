@@ -45,17 +45,6 @@ const OSI_ITEMS: WaitingItem[] = [
       </>
     ),
   },
-  {
-    topic: "osi-2",
-    title: "Kekova Klasik için 3 fotoğraf",
-    body: (
-      <>
-        "Fotoları ben seçerim" demiştin. Tur detay sayfasında öne çıkacak{" "}
-        <strong>3 fotoğrafı</strong> seç ve gönder. Şu an tüm galeri (41 foto) sayfanın en
-        altında duruyor; senin seçtiğin 3 tanesini yukarı, göze çarpan yere koyacağız.
-      </>
-    ),
-  },
 ];
 
 const ELIF_ITEMS: WaitingItem[] = [
@@ -81,7 +70,6 @@ const ELIF_ITEMS: WaitingItem[] = [
 
 const SUMMARY: { who: string; what: string }[] = [
   { who: "Osi", what: '"Neden Bizi Seçmelisiniz" yeni metni' },
-  { who: "Osi", what: "Kekova Klasik için 3 fotoğraf" },
   { who: "Elif", what: "Google işletme hesabı erişimi (yorumlar için)" },
 ];
 

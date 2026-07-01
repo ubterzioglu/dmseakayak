@@ -13,6 +13,16 @@ interface UpdateGroup {
 
 const ENTRIES: UpdateGroup[] = [
   {
+    date: "1 Temmuz 2026",
+    title: "Kekova Gulet fotoğrafları, hero video paneli ve anasayfa başlık tasarımı",
+    items: [
+      "Kekova Sea Kayak & Gulet turunun fotoğrafları siteye yüklendi (10 fotoğraf); tur kapağı ve galerisi artık kendi fotoğraflarını gösteriyor (önceden geçici olarak başka bir Kekova fotosu kapak olarak kullanılıyordu).",
+      "Anasayfadaki hero (kahraman) bölümünün üst kısmı yeniden tasarlandı: 'Dragoman Diving & Outdoors · SeaKayak' etiketi yerine daha büyük, ortalanmış bir logo/başlık alanı eklendi.",
+      "Yönetim paneline hero arka plan videosunu değiştirme ekranı eklendi (Supabase depolama sınırları ve dosya boyutu uyarısıyla).",
+      "Genel Durum Raporu'ndan 'Kekova Klasik için 3 fotoğraf' maddesi kaldırıldı (fotoğraflar teslim edildiği için tamamlandı).",
+    ],
+  },
+  {
     date: "30 Haziran 2026",
     title: "Hero videosu, tur içeriği güncellemeleri ve metin düzeltmeleri",
     items: [

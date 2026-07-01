@@ -81,6 +81,18 @@ export const TOUR_IMAGES: Partial<Record<TourSlug, string[]>> = {
     "/images/tours/kekova-west/yoruk1.jpg",
     "/images/tours/kekova-west/yoruk2.jpg",
   ],
+  "kekova-gulet": [
+    "/images/tours/kekova-gulet/naos1-kekovagulet-bunukullan.jpg",
+    "/images/tours/kekova-gulet/gulet-gunbatimi.jpg",
+    "/images/tours/kekova-gulet/naos-alicia2.jpg",
+    "/images/tours/kekova-gulet/naos-grup.jpg",
+    "/images/tours/kekova-gulet/naos2.jpg",
+    "/images/tours/kekova-gulet/naos3.jpg",
+    "/images/tours/kekova-gulet/naos4.jpg",
+    "/images/tours/kekova-gulet/naos5.jpg",
+    "/images/tours/kekova-gulet/naos6.jpg",
+    "/images/tours/kekova-gulet/naos8.jpg",
+  ],
   "trak-signature": [
     "/images/tours/trak/trakexperience.jpg",
   ],

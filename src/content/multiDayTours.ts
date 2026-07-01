@@ -282,11 +282,7 @@ export const MULTI_DAY_TOURS: Tour[] = [
   {
     slug: "kekova-gulet",
     level: "intermediate-advanced",
-    // TODO: photos pending. Drop originals into docs/GORSEL/Images/kekova-gulet/,
-    // run scripts/import-gallery-images.mjs, then add the manifest list to
-    // TOUR_IMAGES["kekova-gulet"] and point heroImage at the "-bunukullan" cover.
-    // Temporary cover reuses an existing Kekova photo so the card/hero aren't broken.
-    heroImage: "/images/tours/kekova-classic/tomb1-kekovaklasik-bunukullan.jpg",
+    heroImage: "/images/tours/kekova-gulet/naos1-kekovagulet-bunukullan.jpg",
     gallery: TOUR_IMAGES["kekova-gulet"] ?? [],
     title: {
       tr: "Kekova Deniz Kayağı & Gulet Turu",

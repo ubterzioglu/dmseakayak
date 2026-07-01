@@ -64,17 +64,26 @@ export function Hero() {
           transition={{ duration: 0.7 }}
           className="w-full max-w-xl px-5 py-6 sm:px-8 sm:py-7"
         >
-          <div className="mb-4 inline-block rounded-full border border-orange-soft/30 bg-orange-soft/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.22em] text-orange-soft sm:text-sm">
-            Dragoman Diving &amp; Outdoors · SeaKayak
+          <div className="mb-4">
+            <div className="text-2xl font-black uppercase leading-none tracking-[0.02em] text-teal-deep sm:text-3xl md:text-4xl">
+              Dragoman <span className="text-orange-soft">Diving</span> &amp; Outdoors
+            </div>
+            <div className="mt-2 flex items-center justify-center gap-3">
+              <span className="h-px w-8 bg-gradient-to-r from-transparent to-orange-soft/60" aria-hidden="true" />
+              <span className="text-[11px] font-bold tracking-[0.4em] text-teal-deep/60 sm:text-xs">
+                SEAKAYAK
+              </span>
+              <span className="h-px w-8 bg-gradient-to-l from-transparent to-orange-soft/60" aria-hidden="true" />
+            </div>
           </div>
 
           <div>
-            <h1 className="text-xl font-extrabold leading-tight text-teal-deep md:text-2xl">
+            <h1 className="text-sm font-semibold leading-snug text-teal-deep/70 sm:text-base">
               {t("hero.title").split(" ").slice(0, -2).join(" ")}{" "}
               <span className="text-orange-soft">{t("hero.title").split(" ").slice(-2).join(" ")}</span>
             </h1>
 
-            <p className="mx-auto mt-1.5 max-w-xl text-xs text-teal-deep/80 md:text-sm">
+            <p className="mx-auto mt-1 max-w-xl text-[11px] text-teal-deep/60 sm:text-xs">
               {t("hero.subtitle")}
             </p>
           </div>

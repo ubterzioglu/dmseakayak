@@ -19,9 +19,6 @@ Bu bölümün yazısını yeniden yazmak istiyordun ya — bize **yazılı olara
 
 Sen metni at, biz siteye girelim. (Sen "nasıl değiştiririm bilmiyorum" demiştin — hiç uğraşma, metni gönder yeter, gerisi bizde.)
 
-### 2. Kekova Klasik için 3 fotoğraf
-"Fotoları ben seçerim" demiştin. Tur detay sayfasında öne çıkacak **3 fotoğrafı** seç ve gönder. Şu an tüm galeri (41 foto) sayfanın en altında duruyor; senin seçtiğin 3 tanesini yukarı, göze çarpan yere koyacağız.
-
 ---
 
 ## 🟢 Elif'ten beklediğimiz
@@ -41,7 +38,6 @@ Sende bu hesap var mı? Varsa bir ara konuşalım — Perşembe seninle halledeb
 | Kim | Ne gönderecek / onaylayacak |
 |-----|------------------------------|
 | **Osi** | "Neden Bizi Seçmelisiniz" yeni metni |
-| **Osi** | Kekova Klasik için 3 fotoğraf |
 | **Elif** | Google işletme hesabı erişimi (yorumlar için) |
 
 Bunlar gelince geri kalan her şeyi kapatıyoruz. Eline ne zaman geçerse, acele yok 🙂
