@@ -56,21 +56,6 @@ const OSI_ITEMS: WaitingItem[] = [
       </>
     ),
   },
-  {
-    topic: "osi-3",
-    title: "Kekova Gulet turunun fotoğrafları",
-    body: (
-      <>
-        Yeni "Kekova Sea Kayak &amp; Gulet" turunun yazısını ekledik ✅ (4 dilde de hazır).
-        Ama <strong>fotoğrafları</strong> bekliyoruz — içerik klasörüne atacağını
-        söylemiştin. Şu an geçici olarak başka bir Kekova fotosu kapak yaptık.
-        <p className="mt-2">
-          Bir de: turun <strong>kaç gün / kaç gece</strong> olduğunu kesinleştirir misin?
-          Şimdilik 7 gün / 6 gece yazdık ama bu tahmini.
-        </p>
-      </>
-    ),
-  },
 ];
 
 const ELIF_ITEMS: WaitingItem[] = [
@@ -97,7 +82,6 @@ const ELIF_ITEMS: WaitingItem[] = [
 const SUMMARY: { who: string; what: string }[] = [
   { who: "Osi", what: '"Neden Bizi Seçmelisiniz" yeni metni' },
   { who: "Osi", what: "Kekova Klasik için 3 fotoğraf" },
-  { who: "Osi", what: "Kekova Gulet turu fotoğrafları + kaç gün/gece bilgisi" },
   { who: "Elif", what: "Google işletme hesabı erişimi (yorumlar için)" },
 ];
 

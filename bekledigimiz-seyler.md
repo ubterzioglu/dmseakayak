@@ -22,10 +22,6 @@ Sen metni at, biz siteye girelim. (Sen "nasıl değiştiririm bilmiyorum" demiş
 ### 2. Kekova Klasik için 3 fotoğraf
 "Fotoları ben seçerim" demiştin. Tur detay sayfasında öne çıkacak **3 fotoğrafı** seç ve gönder. Şu an tüm galeri (41 foto) sayfanın en altında duruyor; senin seçtiğin 3 tanesini yukarı, göze çarpan yere koyacağız.
 
-### 3. Kekova Gulet turunun fotoğrafları
-Yeni "Kekova Sea Kayak & Gulet" turunun yazısını ekledik ✅ (4 dilde de hazır). Ama **fotoğrafları** bekliyoruz — içerik klasörüne atacağını söylemiştin. Şu an geçici olarak başka bir Kekova fotosu kapak yaptık.
-- Bir de: turun **kaç gün / kaç gece** olduğunu kesinleştirir misin? Şimdilik 7 gün / 6 gece yazdık ama bu tahmini.
-
 ---
 
 ## 🟢 Elif'ten beklediğimiz
@@ -46,7 +42,6 @@ Sende bu hesap var mı? Varsa bir ara konuşalım — Perşembe seninle halledeb
 |-----|------------------------------|
 | **Osi** | "Neden Bizi Seçmelisiniz" yeni metni |
 | **Osi** | Kekova Klasik için 3 fotoğraf |
-| **Osi** | Kekova Gulet turu fotoğrafları + kaç gün/gece bilgisi |
 | **Elif** | Google işletme hesabı erişimi (yorumlar için) |
 
 Bunlar gelince geri kalan her şeyi kapatıyoruz. Eline ne zaman geçerse, acele yok 🙂
