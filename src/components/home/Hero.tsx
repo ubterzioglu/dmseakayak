@@ -64,17 +64,12 @@ export function Hero() {
           transition={{ duration: 0.7 }}
           className="w-full max-w-xl px-5 py-6 sm:px-8 sm:py-7"
         >
-          <div className="mb-4">
-            <div className="text-2xl font-black uppercase leading-none tracking-[0.02em] text-teal-deep sm:text-3xl md:text-4xl">
+          <div className="mb-4 flex items-center justify-center gap-2 whitespace-nowrap text-[3.4vw] font-black uppercase leading-none tracking-[0.01em] text-teal-deep sm:text-2xl md:text-3xl">
+            <span>
               Dragoman <span className="text-orange-soft">Diving</span> &amp; Outdoors
-            </div>
-            <div className="mt-2 flex items-center justify-center gap-3">
-              <span className="h-px w-8 bg-gradient-to-r from-transparent to-orange-soft/60" aria-hidden="true" />
-              <span className="text-[11px] font-bold tracking-[0.4em] text-teal-deep/60 sm:text-xs">
-                SEAKAYAK
-              </span>
-              <span className="h-px w-8 bg-gradient-to-l from-transparent to-orange-soft/60" aria-hidden="true" />
-            </div>
+            </span>
+            <span className="text-orange-soft/50">·</span>
+            <span>SeaKayak</span>
           </div>
 
           <div>
