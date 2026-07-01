@@ -6,6 +6,7 @@ import {
   BookOpenText,
   ChartColumnBig,
   ClipboardList,
+  Clapperboard,
   FolderOpen,
   GalleryVerticalEnd,
   Images,
@@ -27,6 +28,7 @@ import BlogPanel from "./BlogPanel";
 import ChangePasswordModal from "./ChangePasswordModal";
 import GalleryPanel from "./GalleryPanel";
 import GuidePanel from "./GuidePanel";
+import HeroVideoPanel from "./HeroVideoPanel";
 import ReservationsPanel from "./ReservationsPanel";
 import ReviewsPanel from "./ReviewsPanel";
 import RevisionsPanel from "./RevisionsPanel";
@@ -56,6 +58,7 @@ type TabKey =
   | "revisions"
   | "blog"
   | "gallery"
+  | "heroVideo"
   | "reviews"
   | "updates"
   | "status";
@@ -84,6 +87,12 @@ const TABS: AdminNavItem<TabKey>[] = [
     label: "Galeri",
     description: "Fotoğraf seçin, sıralayın, görünürlüğünü kontrol edin.",
     icon: Images,
+  },
+  {
+    key: "heroVideo",
+    label: "Hero Video",
+    description: "Anasayfa hero arka plan videosunu değiştirin.",
+    icon: Clapperboard,
   },
   {
     key: "reviews",
@@ -329,6 +338,8 @@ function renderPanel(item: AdminNavItem<TabKey>) {
       return <BlogPanel infoSlot={infoSlot} />;
     case "gallery":
       return <GalleryPanel infoSlot={infoSlot} />;
+    case "heroVideo":
+      return <HeroVideoPanel infoSlot={infoSlot} />;
     case "reviews":
       return <ReviewsPanel infoSlot={infoSlot} />;
     case "updates":

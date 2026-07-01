@@ -484,6 +484,72 @@ export async function fetchPublishedGallery(): Promise<GalleryRow[]> {
   return (data ?? []) as GalleryRow[];
 }
 
+// ─── Hero video ─────────────────────────────────────────────────────────────────
+// Single active row: the homepage hero background video. Admin uploads a
+// replacement; its row overwrites the previous one (see 0008_hero_video.sql).
+
+export interface HeroVideoRow {
+  id: string;
+  video_url: string;
+  updated_at: string;
+}
+
+/** Max upload size enforced client-side, matching the Supabase free plan's 50MB cap. */
+export const HERO_VIDEO_MAX_BYTES = 50 * 1024 * 1024;
+
+export async function fetchHeroVideo(): Promise<HeroVideoRow | null> {
+  if (!supabase) return null;
+  const { data, error } = await supabase.from("hero_video").select("*").maybeSingle();
+  if (error) throw new Error(error.message);
+  return (data as HeroVideoRow | null) ?? null;
+}
+
+/** Uploads a video to the hero-video bucket and returns its public URL. */
+export async function uploadHeroVideo(file: File): Promise<string> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  const ext = (file.name.split(".").pop() || "mp4").toLowerCase();
+  const path = `hero/${crypto.randomUUID()}.${ext}`;
+  const { error } = await supabase.storage.from("hero-video").upload(path, file, { upsert: false });
+  if (error) throw new Error(error.message);
+  return supabase.storage.from("hero-video").getPublicUrl(path).data.publicUrl;
+}
+
+/** Saves the active hero video row (updates the existing row if one exists). */
+export async function saveHeroVideo(videoUrl: string, existingId?: string): Promise<void> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  const payload = { video_url: videoUrl, updated_at: new Date().toISOString() };
+  const { error } = existingId
+    ? await supabase.from("hero_video").update(payload).eq("id", existingId)
+    : await supabase.from("hero_video").insert(payload);
+  if (error) throw new Error(error.message);
+}
+
+/**
+ * Deletes a previously uploaded hero video file from storage. Best-effort:
+ * failures are logged, not thrown, since the active row has already been
+ * switched to the new video by the time this runs.
+ */
+export async function deleteHeroVideoFile(videoUrl: string): Promise<void> {
+  if (!supabase) return;
+  const marker = "/hero-video/";
+  const idx = videoUrl.indexOf(marker);
+  if (idx === -1) return;
+  const path = videoUrl.slice(idx + marker.length);
+  const { error } = await supabase.storage.from("hero-video").remove([path]);
+  if (error) console.error("deleteHeroVideoFile:", error.message);
+}
+
+/** Public-facing: the active hero video URL, or null if none is configured / on error. */
+export async function fetchActiveHeroVideoUrl(): Promise<string | null> {
+  if (!supabase) return null;
+  const { data, error } = await supabase.from("hero_video").select("video_url").maybeSingle();
+  if (error) {
+    console.error("fetchActiveHeroVideoUrl:", error.message);
+    return null;
+  }
+  return (data as { video_url: string } | null)?.video_url ?? null;
+}
+
 // ─── Image upload (blog-images bucket) ──────────────────────────────────────────
 
 /** Uploads an image to the blog-images bucket and returns its public URL. */
