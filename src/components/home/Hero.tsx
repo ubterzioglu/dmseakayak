@@ -57,19 +57,21 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center bg-white px-4 py-10 text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center bg-white px-4 py-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="w-full max-w-xl px-5 py-6 sm:px-8 sm:py-7"
+          className="w-full max-w-xl px-5 py-2 sm:px-8 sm:py-3"
         >
-          <div className="mb-4 flex items-center justify-center gap-2 whitespace-nowrap text-[3.4vw] font-black uppercase leading-none tracking-[0.01em] text-teal-deep sm:text-2xl md:text-3xl">
+          {/* Literal caps instead of CSS `uppercase`: with <html lang="tr"> the browser
+              would uppercase "i" to dotted "İ" (DİVİNG). */}
+          <div className="mb-3 flex items-center justify-center gap-2 whitespace-nowrap text-[3vw] font-black leading-none tracking-[0.01em] text-teal-deep sm:text-xl md:text-2xl">
             <span>
-              Dragoman <span className="text-orange-soft">Diving</span> &amp; Outdoors
+              DRAGOMAN <span className="text-orange-soft">DIVING</span> &amp; OUTDOORS
             </span>
             <span className="text-orange-soft/50">·</span>
-            <span>SeaKayak</span>
+            <span>SEAKAYAK</span>
           </div>
 
           <div>
@@ -83,16 +85,8 @@ export function Hero() {
             </p>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-5 flex justify-center">
             <Button asChild variant="primary" size="lg" className="w-full max-w-[220px] sm:w-auto">
-              <Link to={localePath(SEG.tours)}>{t("hero.ctaTours")}</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="w-full max-w-[220px] border-teal-deep/30 text-teal-deep hover:bg-teal-deep/5 sm:w-auto"
-            >
               <Link to={localePath(SEG.contact)}>{t("hero.ctaBook")}</Link>
             </Button>
           </div>

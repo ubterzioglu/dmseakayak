@@ -5,7 +5,6 @@
     "customTours": "Özel Turlar",
     "trak": "TRAK Experience",
     "about": "Hakkımızda",
-    "gallery": "Galeri",
     "reviews": "Yorumlar",
     "contact": "İletişim",
     "faq": "S.S.S.",
@@ -20,6 +19,8 @@
   "common": {
     "from": "başlangıç",
     "perPerson": "kişi başı",
+    "withoutMeal": "yemek hariç",
+    "withMeal": "yemek dahil",
     "duration": "Süre",
     "distance": "Mesafe",
     "departure": "Kalkış",
@@ -53,12 +54,12 @@
   },
   "whyChoose": {
     "title": "Neden Bizi Seçmelisiniz?",
-    "subtitle": "Lisanslı rehberler eşliğinde küçük gruplarla, güvenli ve unutulmaz bir deneyim."
+    "subtitle": "Türkiye Kano Federasyonu lisanslı rehberler eşliğinde küçük gruplarla, güvenli ve unutulmaz bir deneyim."
   },
   "tours": {
     "title": "Turlar & Maceralar",
     "subtitle": "Sakin koylardan açık deniz rotalarına kadar her seviyeye uygun seçenekler.",
-    "multiDayTitle": "Çok Günlü Expedisyonlar",
+    "multiDayTitle": "Çok Günlü Ekspedisyonlar",
     "multiDaySubtitle": "Likya kıyısı boyunca daha uzun yolculuklar — birkaç gün boyunca kürek çek, kamp yap ve keşfet."
   },
   "reservation": {
@@ -127,9 +128,7 @@
     "eyebrow": "SSS"
   },
   "gallery": {
-    "title": "Galeri",
-    "subtitle": "Kekova'nın büyüleyici sularında çekilen anlar.",
-    "eyebrow": "Fotoğraflar"
+    "title": "Galeri"
   },
   "reviews": {
     "title": "Misafir Yorumları",

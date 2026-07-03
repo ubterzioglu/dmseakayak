@@ -53,10 +53,13 @@ export interface MultiDayMeta {
 }
 
 export interface Tour {
-  slug: TourSlug;
+  /** Static tours use the TourSlug union; admin-created tours are free-form. */
+  slug: string;
   level: "beginner" | "intermediate-advanced";
   /** Per-person day-tour price. Optional for multi-day tours (use multiDay.pricePerPersonEur). */
   priceEur?: number;
+  /** When set, priceEur is the without-meal price and this the with-meal price. */
+  priceWithMealEur?: number;
   priceFromKalkanEur?: number;
   distanceKm?: number;
   hikingKm?: number;
@@ -97,6 +100,7 @@ export const TOURS: Tour[] = [
     slug: "kekova-classic",
     level: "beginner",
     priceEur: 45,
+    priceWithMealEur: 60,
     priceFromKalkanEur: 70,
     distanceKm: 8,
     departure: "07:30",

@@ -29,7 +29,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
           onClick={() => switchTo(l)}
           aria-current={l === current}
           className={cn(
-            "rounded-full px-2.5 py-1 text-sm font-semibold transition-colors",
+            "rounded-full px-1.5 py-1 text-xs font-semibold transition-colors sm:px-2.5 sm:text-sm",
             l === current ? "bg-orange text-white" : "text-teal hover:bg-foam",
           )}
         >

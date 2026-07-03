@@ -55,6 +55,22 @@ export function TourCard({ tour }: { tour: Tour }) {
     if (price == null) {
       return <div className="text-lg font-extrabold text-orange">{t("common.onRequest")}</div>;
     }
+    if (!md && tour.priceWithMealEur != null) {
+      return (
+        <div className="text-lg font-extrabold text-orange">
+          <div>
+            {t("common.from")} €{price}
+            <span className="ml-1 text-xs font-medium text-ink/60">{t("common.withoutMeal")}</span>
+          </div>
+          <div>
+            €{tour.priceWithMealEur}
+            <span className="ml-1 text-xs font-medium text-ink/60">
+              {t("common.withMeal")} / {t("common.perPerson")}
+            </span>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="text-lg font-extrabold text-orange">
         {t("common.from")} €{price}

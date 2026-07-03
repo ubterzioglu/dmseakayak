@@ -199,7 +199,7 @@ const TRAK_HIGHLIGHTS: Localized<string[]> = {
     "One-on-one coaching for all levels",
   ],
   tr: [
-    "Gerçek bir expedisyon seviyesi katlanır kayak kurun",
+    "Gerçek bir ekspedisyon seviyesi katlanır kayak kurun",
     "TRAK 2.0 için performans ayarını öğrenin",
     "Berrak Akdeniz'de kürek çekip Kekova batık şehrinin yanından geçin",
     "Bonus: Simena kale köyünde öğle yemeği",

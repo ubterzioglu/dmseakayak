@@ -16,7 +16,6 @@ export function Header() {
     { to: localePath(SEG.customTours), label: t("nav.customTours") },
     { to: localePath(SEG.trak), label: t("nav.trak") },
     { to: localePath(SEG.about), label: t("nav.about") },
-    { to: localePath(SEG.gallery), label: t("nav.gallery") },
     { to: localePath(SEG.reviews), label: t("nav.reviews") },
     { to: localePath(SEG.contact), label: t("nav.contact") },
   ];
@@ -45,7 +44,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <LanguageSwitcher className="hidden sm:flex" />
+          <LanguageSwitcher />
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link to={localePath(SEG.contact)}>{t("nav.book")}</Link>
           </Button>

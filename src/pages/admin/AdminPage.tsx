@@ -9,10 +9,10 @@ import {
   Clapperboard,
   FolderOpen,
   GalleryVerticalEnd,
-  Images,
   KeyRound,
   LayoutGrid,
   LogOut,
+  Map,
   Menu,
   MessageSquareQuote,
   NotebookPen,
@@ -26,13 +26,13 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { cn } from "@/lib/utils";
 import BlogPanel from "./BlogPanel";
 import ChangePasswordModal from "./ChangePasswordModal";
-import GalleryPanel from "./GalleryPanel";
 import GuidePanel from "./GuidePanel";
 import HeroVideoPanel from "./HeroVideoPanel";
 import ReservationsPanel from "./ReservationsPanel";
 import ReviewsPanel from "./ReviewsPanel";
 import RevisionsPanel from "./RevisionsPanel";
 import StatusReportPanel from "./StatusReportPanel";
+import ToursPanel from "./tours/ToursPanel";
 import UpdatesPanel from "./UpdatesPanel";
 import {
   type AdminNavItem,
@@ -57,7 +57,7 @@ type TabKey =
   | "reservations"
   | "revisions"
   | "blog"
-  | "gallery"
+  | "tours"
   | "heroVideo"
   | "reviews"
   | "updates"
@@ -83,10 +83,10 @@ const TABS: AdminNavItem<TabKey>[] = [
     icon: LayoutGrid,
   },
   {
-    key: "gallery",
-    label: "Galeri",
-    description: "Fotoğraf seçin, sıralayın, görünürlüğünü kontrol edin.",
-    icon: Images,
+    key: "tours",
+    label: "Turlar",
+    description: "Turları ekleyin, düzenleyin, sıralayın ve yayınlayın.",
+    icon: Map,
   },
   {
     key: "heroVideo",
@@ -336,8 +336,8 @@ function renderPanel(item: AdminNavItem<TabKey>) {
       return <RevisionsPanel infoSlot={infoSlot} />;
     case "blog":
       return <BlogPanel infoSlot={infoSlot} />;
-    case "gallery":
-      return <GalleryPanel infoSlot={infoSlot} />;
+    case "tours":
+      return <ToursPanel infoSlot={infoSlot} />;
     case "heroVideo":
       return <HeroVideoPanel infoSlot={infoSlot} />;
     case "reviews":

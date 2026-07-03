@@ -2,13 +2,15 @@ import { Seo } from "@/components/seo/Seo";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { useLang } from "@/hooks/useLang";
 import { TOURS } from "@/content/tours";
+import { useToursData } from "@/hooks/useTours";
 import { ShieldCheck, Users, Award } from "lucide-react";
 
 export default function About() {
   const { t, pick } = useLang();
+  const { dayTours } = useToursData();
 
-  // Day tours always define whyChoose; the widened Tour type makes it optional.
-  const whyChoose = pick(TOURS[0].whyChoose!);
+  // First day tour that defines whyChoose; bundled kekova-classic as fallback.
+  const whyChoose = pick(dayTours.find((tour) => tour.whyChoose)?.whyChoose ?? TOURS[0].whyChoose!);
 
   return (
     <>

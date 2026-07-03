@@ -115,11 +115,11 @@ export default function GuidePanel({ infoSlot }: AdminPanelProps) {
           <li>
             <span className="font-semibold text-teal-deep">Bir şeyi yanlışlıkla sildim, geri alabilir miyim?</span>{" "}
             Silme işlemleri kalıcıdır. Bu yüzden silmeden önce onay sorulur. Emin değilseniz
-            yayından kaldırmayı (Galeri/Yorumlar için 'Gizli' / 'Arşiv') tercih edin.
+            yayından kaldırmayı (Yorumlar için 'Arşiv', turlarda 'Yayınla' işaretini kaldırma) tercih edin.
           </li>
           <li>
             <span className="font-semibold text-teal-deep">Yaptığım değişiklik sitede neden görünmüyor?</span>{" "}
-            Blog ve galeride içerik 'Taslak' / 'Gizli' ise ziyaretçilere gösterilmez. 'Yayınla'
+            Blog yazısı 'Taslak', tur 'Yayında değil' ise ziyaretçilere gösterilmez. 'Yayınla'
             kutusunu işaretlediğinizden emin olun.
           </li>
           <li>

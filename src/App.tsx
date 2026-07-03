@@ -11,7 +11,6 @@ const TourDetail = lazy(() => import("@/pages/TourDetail"));
 const CustomTours = lazy(() => import("@/pages/CustomTours"));
 const TrakExperience = lazy(() => import("@/pages/TrakExperience"));
 const About = lazy(() => import("@/pages/About"));
-const Gallery = lazy(() => import("@/pages/Gallery"));
 const Reviews = lazy(() => import("@/pages/Reviews"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const Faq = lazy(() => import("@/pages/Faq"));
@@ -41,7 +40,6 @@ export default function App() {
           <Route path={SEG.customTours} element={<CustomTours />} />
           <Route path={SEG.trak} element={<TrakExperience />} />
           <Route path={SEG.about} element={<About />} />
-          <Route path={SEG.gallery} element={<Gallery />} />
           <Route path={SEG.reviews} element={<Reviews />} />
           <Route path={SEG.contact} element={<Contact />} />
           <Route path={SEG.faq} element={<Faq />} />

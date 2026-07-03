@@ -24,7 +24,6 @@ const SEG = {
   customTours: "ozel-turlar",
   trak: "trak-experience",
   about: "hakkimizda",
-  gallery: "galeri",
   reviews: "yorumlar",
   contact: "iletisim",
   faq: "sss",

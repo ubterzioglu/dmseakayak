@@ -6,7 +6,7 @@ import { Itinerary } from "@/components/tours/Itinerary";
 import { Lightbox } from "@/components/gallery/Lightbox";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeading } from "@/components/ui/section";
-import { getTour } from "@/content/tours";
+import { useTour } from "@/hooks/useTours";
 import { useLang } from "@/hooks/useLang";
 import { SEG } from "@/lib/routes";
 import { SITE } from "@/lib/site";
@@ -17,9 +17,16 @@ export default function TourDetail() {
   const { t, pick, localePath } = useLang();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const tour = getTour(slug ?? "");
+  const { tour, loading } = useTour(slug);
 
   if (!tour) {
+    if (loading) {
+      return (
+        <Section>
+          <p className="text-lg text-ink/70">{t("common.loading")}</p>
+        </Section>
+      );
+    }
     return (
       <Section>
         <p className="text-lg text-ink/70">Tour not found.</p>
@@ -172,6 +179,11 @@ export default function TourDetail() {
                   <span className="inline-flex items-center gap-2 font-bold text-orange-soft">
                     <Euro className="h-4 w-4" />
                     {t("common.from")} €{tour.priceEur}
+                    {tour.priceWithMealEur != null && (
+                      <span className="font-normal text-white/80">
+                        {t("common.withoutMeal")} · €{tour.priceWithMealEur} {t("common.withMeal")}
+                      </span>
+                    )}
                     {tour.priceFromKalkanEur && (
                       <span className="ml-1 font-normal text-white/70">
                         (Kalkan: €{tour.priceFromKalkanEur})

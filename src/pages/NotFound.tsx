@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Compass, Home, Images, Phone, HelpCircle } from "lucide-react";
+import { Compass, Home, Phone, HelpCircle } from "lucide-react";
 import { Seo } from "@/components/seo/Seo";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/hooks/useLang";
@@ -10,7 +10,6 @@ export default function NotFound() {
 
   const popular = [
     { to: localePath(SEG.tours), label: t("nav.tours"), icon: Compass },
-    { to: localePath(SEG.gallery), label: t("nav.gallery"), icon: Images },
     { to: localePath(SEG.contact), label: t("nav.contact"), icon: Phone },
     { to: localePath(SEG.faq), label: t("nav.faq"), icon: HelpCircle },
   ];

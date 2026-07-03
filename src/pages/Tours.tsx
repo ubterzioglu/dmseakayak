@@ -2,11 +2,12 @@ import { Seo } from "@/components/seo/Seo";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { TourGrid } from "@/components/tours/TourGrid";
 import { CurrencyConverter } from "@/components/tours/CurrencyConverter";
-import { TOURS, MULTI_DAY_TOURS } from "@/content/tours";
+import { useToursData } from "@/hooks/useTours";
 import { useLang } from "@/hooks/useLang";
 
 export default function Tours() {
   const { t } = useLang();
+  const { dayTours, multiDayTours } = useToursData();
 
   return (
     <>
@@ -16,14 +17,14 @@ export default function Tours() {
           title={t("tours.title")}
           subtitle={t("tours.subtitle")}
         />
-        <TourGrid tours={TOURS} />
+        <TourGrid tours={dayTours} />
       </Section>
       <Section className="bg-foam/40">
         <SectionHeading
           title={t("tours.multiDayTitle")}
           subtitle={t("tours.multiDaySubtitle")}
         />
-        <TourGrid tours={MULTI_DAY_TOURS} />
+        <TourGrid tours={multiDayTours} />
       </Section>
       <Section>
         <CurrencyConverter />

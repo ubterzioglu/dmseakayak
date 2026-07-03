@@ -5,7 +5,6 @@
     "customTours": "Excursions privées",
     "trak": "TRAK Experience",
     "about": "À propos",
-    "gallery": "Galerie",
     "reviews": "Avis",
     "contact": "Contact",
     "faq": "FAQ",
@@ -20,6 +19,8 @@
   "common": {
     "from": "à partir de",
     "perPerson": "par personne",
+    "withoutMeal": "sans repas",
+    "withMeal": "repas inclus",
     "duration": "Durée",
     "distance": "Distance",
     "departure": "Départ",
@@ -53,7 +54,7 @@
   },
   "whyChoose": {
     "title": "Pourquoi nous choisir ?",
-    "subtitle": "Petits groupes encadrés par des guides experts diplômés — une expérience sûre et inoubliable."
+    "subtitle": "Petits groupes encadrés par des guides licenciés de la Fédération turque de canoë — une expérience sûre et inoubliable."
   },
   "tours": {
     "title": "Excursions & Aventures",
@@ -127,9 +128,7 @@
     "eyebrow": "FAQ"
   },
   "gallery": {
-    "title": "Galerie",
-    "subtitle": "Des moments capturés sur les eaux magiques de Kekova.",
-    "eyebrow": "Photos"
+    "title": "Galerie"
   },
   "reviews": {
     "title": "Avis des clients",

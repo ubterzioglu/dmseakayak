@@ -6,7 +6,8 @@ import { reservationSchema, type ReservationInput } from "./schema";
 import { submitReservation } from "@/hooks/useReservations";
 import { buildWhatsappLink } from "@/lib/whatsapp";
 import { useLang } from "@/hooks/useLang";
-import { TOURS, getTour } from "@/content/tours";
+import { getTour } from "@/content/tours";
+import { useToursData } from "@/hooks/useTours";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 export function ReservationForm() {
   const { t, locale, pick } = useLang();
+  const { dayTours } = useToursData();
   const [params] = useSearchParams();
   const presetTour = params.get("tour") ?? "";
 
@@ -31,7 +33,9 @@ export function ReservationForm() {
     if (data.honeypot) return; // bot
     const result = await submitReservation(data, locale);
 
-    const tour = data.tourSlug ? getTour(data.tourSlug) : undefined;
+    const tour = data.tourSlug
+      ? dayTours.find((t) => t.slug === data.tourSlug) ?? getTour(data.tourSlug)
+      : undefined;
     const waLink = buildWhatsappLink({
       tourTitle: tour ? pick(tour.title) : undefined,
       date: data.date || undefined,
@@ -70,7 +74,7 @@ export function ReservationForm() {
             className="w-full rounded-xl border border-teal/15 bg-white px-4 py-2.5 text-base outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"
           >
             <option value="">{t("reservation.selectTour")}</option>
-            {TOURS.map((tour) => (
+            {dayTours.map((tour) => (
               <option key={tour.slug} value={tour.slug}>
                 {pick(tour.title)}
               </option>

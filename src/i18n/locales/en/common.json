@@ -5,7 +5,6 @@
     "customTours": "Private Tours",
     "trak": "TRAK Experience",
     "about": "About",
-    "gallery": "Gallery",
     "reviews": "Reviews",
     "contact": "Contact",
     "faq": "FAQ",
@@ -20,6 +19,8 @@
   "common": {
     "from": "from",
     "perPerson": "per person",
+    "withoutMeal": "without lunch",
+    "withMeal": "with lunch",
     "duration": "Duration",
     "distance": "Distance",
     "departure": "Departure",
@@ -53,7 +54,7 @@
   },
   "whyChoose": {
     "title": "Why Choose Us?",
-    "subtitle": "Small groups led by licensed expert guides — a safe and unforgettable experience."
+    "subtitle": "Small groups led by Turkish Canoe Federation licensed guides — a safe and unforgettable experience."
   },
   "tours": {
     "title": "Tours & Adventures",
@@ -127,9 +128,7 @@
     "eyebrow": "FAQ"
   },
   "gallery": {
-    "title": "Gallery",
-    "subtitle": "Moments captured on the magical waters of Kekova.",
-    "eyebrow": "Photos"
+    "title": "Gallery"
   },
   "reviews": {
     "title": "Guest Reviews",

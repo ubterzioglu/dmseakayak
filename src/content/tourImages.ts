@@ -4,9 +4,8 @@ import type { TourSlug } from "@/content/tours";
  * Per-tour photo galleries served from public/images/tours/<slug>/.
  * Generated from docs/GORSEL/Images via scripts/import-gallery-images.mjs
  * (optimized + web-safe filenames). Each list is ordered with the chosen
- * cover ("-bunukullan") image first. Single source of truth for both the tour
- * detail galleries (src/content/tours.ts) and the public gallery page
- * (src/content/galleryImages.ts).
+ * cover ("-bunukullan") image first. Single source of truth for the tour
+ * detail galleries (src/content/tours.ts).
  */
 export const TOUR_IMAGES: Partial<Record<TourSlug, string[]>> = {
   "kekova-classic": [

@@ -72,20 +72,21 @@ export const GUIDE_SECTIONS: GuideSection[] = [
     ],
   },
   {
-    tab: "Galeri",
+    tab: "Turlar",
     summary:
-      "Sitedeki fotoğraf galerisini yönetirsiniz — fotoğraf ekler, sıralar, gizler veya silersiniz.",
+      "Sitedeki tüm turları yönetirsiniz — tur ekler, düzenler, sıralar, yayına alır veya kaldırırsınız.",
     steps: [
-      "'Fotoğraf' alanından bilgisayarınızdan bir görsel seçin; önizleme çıkar.",
-      "'Başlık / Açıklama' fotoğrafın üzerinde görünür (örn. 'Kekova Batık Şehir').",
-      "'Alt metin' SEO ve erişilebilirlik içindir; boş bırakırsanız başlık kullanılır.",
-      "'Sıra' fotoğrafın galeride kaçıncı sırada görüneceğini belirler (küçük sayı önce gelir).",
-      "'Yayınla' işaretliyse sitede görünür; kaldırırsanız 'Gizli' olur ve ziyaretçilere gösterilmez.",
-      "'Kaydet'e basın. Var olan bir fotoğrafı değiştirmek için 'Düzenle'yi kullanın.",
+      "Yeni tur için formu boş doldurun ya da listedeki bir turda 'Düzenle'ye basın.",
+      "'Çok günlü tur' kutusu, turun sitede hangi bölümde görüneceğini belirler: günübirlik turlar mı, Çok Günlü Ekspedisyonlar mı.",
+      "Başlık, slogan ve açıklamaları dil sekmeleriyle (TR/EN/FR/RU) ayrı ayrı doldurun.",
+      "Liste alanlarında (öne çıkanlar, dahil olanlar vb.) her satır ayrı bir madde olur.",
+      "'Sıra' turun kendi bölümündeki yerini belirler (küçük sayı önce gelir).",
+      "'Yayınla' işaretli değilse tur sitede görünmez.",
+      "'Kaydet'e basın; değişiklik sitede hemen yayına girer.",
     ],
     tips: [
-      "Galeri boşsa site geçici olarak örnek görseller gösterir; siz ekledikçe gerçekleriyle değişir.",
-      "Sıralamayı değiştirmek için fotoğrafları düzenleyip 'Sıra' sayısını ayarlamanız yeterli.",
+      "Panel boşken site koddaki hazır turları gösterir; 'Statik turları içe aktar' butonu hepsini tek seferde panele taşır.",
+      "Bir turu silmek yerine 'Yayınla' işaretini kaldırmak daha güvenlidir — içerik kaybolmaz.",
     ],
   },
   {
