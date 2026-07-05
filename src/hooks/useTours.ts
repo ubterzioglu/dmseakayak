@@ -240,3 +240,28 @@ export async function importStaticTours(): Promise<number> {
   if (error) throw new Error(error.message);
   return inputs.length;
 }
+
+// ─── Admin: form-field machine translation ─────────────────────────────────────
+
+export type TourLang = "tr" | "en" | "fr" | "ru";
+
+interface TranslateTextItem {
+  text: string;
+  from: TourLang;
+  to: TourLang;
+}
+
+/**
+ * Batch-translates plain text via the translate-text Edge Function (free
+ * MyMemory API). Used by the tour form's "Otomatik çevir" buttons. Items with
+ * empty text are skipped and resolve to null in the same position.
+ */
+export async function translateTexts(items: TranslateTextItem[]): Promise<(string | null)[]> {
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
+  if (items.length === 0) return [];
+  const { data, error } = await supabase.functions.invoke("translate-text", {
+    body: { items },
+  });
+  if (error) throw new Error(error.message);
+  return (data as { translations: (string | null)[] }).translations;
+}

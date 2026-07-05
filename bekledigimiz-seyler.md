@@ -1,8 +1,9 @@
-# Sizden Beklediklerimiz 🙏
+# Sizden Beklediklerimiz 🙏 (güncellendi 05.07.26)
 
 Selam Osi & Elif!
 
-Sitedeki revizyonların çoğu bitti (29 istekten 23'ü tamam ✅). Geri kalan birkaç şey **bizde değil, sizde** takılı — yani siz şunları gönderince / onaylayınca biz hemen bitiriyoruz.
+Sitedeki revizyonların çoğu bitti. 30 Haziran'daki raporda bekleyen 2 madde hâlâ aynı — geri kalan
+her şey **bizde değil, sizde** takılı — yani siz şunları gönderince / onaylayınca biz hemen bitiriyoruz.
 
 Aşağıda tek tek yazdım, üstünden geçebilirsiniz:
 

@@ -230,7 +230,8 @@ export function GeneralStatusReport() {
         <p className="font-semibold text-teal-deep">Selam Osi &amp; Elif! 🙏</p>
         <p className="mt-2 inline-flex items-center gap-1.5">
           <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />
-          Sitedeki revizyonların çoğu bitti (29 istekten 23'ü tamam). Geri kalan birkaç şey bizde değil, sizde takılı — siz şunları gönderince / onaylayınca biz hemen bitiriyoruz.
+          Sitedeki revizyonların çoğu bitti. 30 Haziran'daki raporda bekleyen 2 madde hâlâ aynı — geri
+          kalan her şey bizde değil, sizde takılı — siz şunları gönderince / onaylayınca biz hemen bitiriyoruz.
         </p>
       </div>
 

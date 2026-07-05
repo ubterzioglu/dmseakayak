@@ -13,6 +13,18 @@ interface UpdateGroup {
 
 const ENTRIES: UpdateGroup[] = [
   {
+    date: "5 Temmuz 2026",
+    title: "Tur formuna tek tuşla otomatik çeviri, rehberin genişletilmesi ve genel durum raporu güncellendi",
+    items: [
+      "Tur ekleme/düzenleme formuna otomatik çeviri eklendi: Türkçe metni yazıp 'Türkçeden Tümünü Çevir'e basınca başlık, slogan, açıklama ve tüm liste alanları (öne çıkanlar, dahil olanlar, program vb.) tek seferde İngilizce/Fransızca/Rusça'ya çevriliyor.",
+      "Her alanın yanında ayrı bir 'TR'den çevir' butonu da var — tek bir alanı çevirmek isterseniz onu kullanabilirsiniz.",
+      "Tur programı ve gün gün program gibi 'ikon | başlık | açıklama' biçimindeki alanlarda çeviri sadece metni değiştiriyor; ikon ve gün numarası olduğu gibi kalıyor.",
+      "Çeviri günlük ücretsiz kotası dolarsa net bir uyarı gösteriliyor (panelde 'Rehber' sekmesinde de bu durum anlatılıyor).",
+      "Yönetim paneli 'Rehber' sekmesindeki tüm bölümler daha ayrıntılı adımlarla güncellendi.",
+      "Revizyonlar sekmesindeki 'Genel Durum Raporu' 30.06'dan 05.07'ye güncellendi; iki bekleyen madde (Osi'nin 'Neden Bizi Seçmelisiniz' metni, Elif'in Google işletme erişimi) incelendi ve hâlâ açık olduğu doğrulandı.",
+    ],
+  },
+  {
     date: "1 Temmuz 2026",
     title: "Kekova Gulet fotoğrafları, hero video paneli ve anasayfa başlık tasarımı",
     items: [

@@ -401,7 +401,7 @@ export default function RevisionsPanel({ infoSlot }: AdminPanelProps) {
 
       <AdminCollapsible
         defaultOpen={false}
-        title="Genel Durum Raporu 30.06.26"
+        title="Genel Durum Raporu 05.07.26"
         description="Osi ve Elif'ten beklediğimiz içerik ve onayların özeti — siz gönderince geri kalan revizyonları kapatıyoruz."
       >
         <GeneralStatusReport />

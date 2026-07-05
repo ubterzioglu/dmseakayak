@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { uploadTourImage, type TourInput, type TourRow } from "@/hooks/useTours";
-import type { Tour, TourStatus } from "@/content/tours";
+import type { Localized, Tour, TourStatus } from "@/content/tours";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { LocalizedField } from "./LocalizedFields";
+import { LocalizedField, translateFromTurkish } from "./LocalizedFields";
 import {
   emptyForm,
   formToInput,
@@ -13,6 +13,23 @@ import {
   validateForm,
   type TourFormState,
 } from "./tour-form-state";
+
+/** Localized<string> fields on TourFormState, paired with whether they hold
+ * multiline list-style text (one item per line) and, for "a | b | c" lines,
+ * which segment indices hold translatable text (icons/day numbers/distances
+ * pass through untouched). */
+const LOCALIZED_FIELDS: { key: keyof TourFormState; multiline: boolean; pipeSegments?: number[] }[] = [
+  { key: "title", multiline: false },
+  { key: "tagline", multiline: true },
+  { key: "description", multiline: true },
+  { key: "highlightsText", multiline: true },
+  { key: "includedText", multiline: true },
+  { key: "whyChooseText", multiline: true },
+  { key: "itineraryText", multiline: true, pipeSegments: [1, 2] }, // ikon | başlık | açıklama
+  { key: "groupSize", multiline: false },
+  { key: "notIncludedText", multiline: true },
+  { key: "dayByDayText", multiline: true, pipeSegments: [1, 2] }, // gün | başlık | açıklama | mesafe
+];
 
 interface TourFormProps {
   /** Row being edited; null = create form. Remount (key) on change. */
@@ -31,9 +48,41 @@ export function TourForm({ editRow, submitting, onSave, onCancelEdit }: TourForm
   );
   const [error, setError] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [translatingAll, setTranslatingAll] = useState(false);
 
   const set = <K extends keyof TourFormState>(key: K, value: TourFormState[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
+
+  /** Fills every localized field's EN/FR/RU from its Turkish text, skipping
+   * fields left empty in Turkish. Overwrites any existing translations. */
+  const handleTranslateAll = async () => {
+    if (translatingAll) return;
+    setTranslatingAll(true);
+    setError("");
+    try {
+      let updated = form;
+      let failures = 0;
+      for (const { key, multiline, pipeSegments } of LOCALIZED_FIELDS) {
+        const current = updated[key] as Localized<string>;
+        if (!current.tr.trim()) continue;
+        const result = await translateFromTurkish(current.tr, multiline, pipeSegments);
+        if (!result) {
+          failures++;
+          continue;
+        }
+        updated = { ...updated, [key]: { ...current, ...result } };
+      }
+      setForm(updated);
+      if (failures > 0) {
+        setError(
+          `${failures} alan çevrilemedi. Diğerleri güncellendi. Bu genelde günlük ücretsiz çeviri ` +
+            `kotası dolduğunda olur — bize bildirin, servisin başka bir hesapla yenilenmesi gerekebilir.`,
+        );
+      }
+    } finally {
+      setTranslatingAll(false);
+    }
+  };
 
   const handleImageUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -226,6 +275,24 @@ export function TourForm({ editRow, submitting, onSave, onCancelEdit }: TourForm
 
       {/* 4 dilli içerik */}
       <div className="space-y-5 border-t border-teal/10 pt-5">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-orange/20 bg-orange/5 px-4 py-3">
+          <div>
+            <div className="text-sm font-semibold text-teal-deep">Otomatik çeviri</div>
+            <p className="text-xs leading-5 text-teal/60">
+              Türkçe alanları tek tuşla EN/FR/RU'ya çevirir (mevcut çevirilerin üzerine yazar). Hata
+              alırsanız genelde günlük ücretsiz çeviri kotası dolmuştur — bize bildirin, servisin
+              başka bir hesapla yenilenmesi gerekebilir.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => void handleTranslateAll()}
+            disabled={translatingAll || !form.title.tr.trim()}
+            className="shrink-0 rounded-full bg-orange px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-soft disabled:opacity-50"
+          >
+            {translatingAll ? "Çevriliyor..." : "Türkçeden Tümünü Çevir"}
+          </button>
+        </div>
         <LocalizedField label="Başlık" value={form.title} onChange={(v) => set("title", v)} hint="Boş bırakılan diller Türkçe metni kullanır." />
         <LocalizedField label="Slogan" value={form.tagline} onChange={(v) => set("tagline", v)} multiline rows={2} />
         <LocalizedField label="Açıklama (uzun tanıtım, ops.)" value={form.description} onChange={(v) => set("description", v)} multiline rows={4} />
@@ -236,10 +303,10 @@ export function TourForm({ editRow, submitting, onSave, onCancelEdit }: TourForm
           <>
             <LocalizedField label="Grup büyüklüğü (ops.)" value={form.groupSize} onChange={(v) => set("groupSize", v)} hint='Örn. "min 6, max 12 kişi".' />
             <LocalizedField label="Dahil olmayanlar (ops.)" value={form.notIncludedText} onChange={(v) => set("notIncludedText", v)} multiline rows={4} hint="Her satır bir madde." />
-            <LocalizedField label="Gün gün program (ops.)" value={form.dayByDayText} onChange={(v) => set("dayByDayText", v)} multiline rows={6} hint='Her satır bir gün: "gün | başlık | açıklama | mesafe". Mesafe isteğe bağlıdır.' />
+            <LocalizedField label="Gün gün program (ops.)" value={form.dayByDayText} onChange={(v) => set("dayByDayText", v)} multiline rows={6} hint='Her satır bir gün: "gün | başlık | açıklama | mesafe". Mesafe isteğe bağlıdır.' pipeSegments={[1, 2]} />
           </>
         ) : (
-          <LocalizedField label="Tur programı (ops.)" value={form.itineraryText} onChange={(v) => set("itineraryText", v)} multiline rows={6} hint='Her satır bir adım: "ikon | başlık | açıklama". İkon için emoji kullanın (örn. 🛶).' />
+          <LocalizedField label="Tur programı (ops.)" value={form.itineraryText} onChange={(v) => set("itineraryText", v)} multiline rows={6} hint='Her satır bir adım: "ikon | başlık | açıklama". İkon için emoji kullanın (örn. 🛶).' pipeSegments={[1, 2]} />
         )}
       </div>
 
