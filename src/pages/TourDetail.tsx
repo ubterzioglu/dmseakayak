@@ -76,6 +76,11 @@ export default function TourDetail() {
       name: SITE.name,
       url: SITE.domain,
     },
+    itinerary: {
+      "@type": "Place",
+      name: "Kekova",
+      geo: { "@type": "GeoCoordinates", latitude: 36.201899, longitude: 29.638667 },
+    },
     ...(price != null
       ? {
           offers: {

@@ -4,6 +4,7 @@ import { Section, SectionHeading } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/hooks/useLang";
 import { SEG } from "@/lib/routes";
+import { SITE } from "@/lib/site";
 import { Package, Layers, Waves } from "lucide-react";
 
 /**
@@ -19,9 +20,18 @@ export default function TrakExperience() {
     { icon: Waves, title: t("trak.feature3Title"), body: t("trak.feature3Body") },
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: SITE.name, item: `${SITE.domain}${localePath()}` },
+      { "@type": "ListItem", position: 2, name: t("trak.title") },
+    ],
+  };
+
   return (
     <>
-      <Seo title={t("trak.title")} description={t("trak.subtitle")} />
+      <Seo title={t("trak.title")} description={t("trak.subtitle")} jsonLd={jsonLd} />
 
       {/* Hero band */}
       <div className="hero-gradient py-20 text-white md:py-28">

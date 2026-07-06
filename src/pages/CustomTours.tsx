@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useLang } from "@/hooks/useLang";
 import { buildWhatsappLink } from "@/lib/whatsapp";
 import { SEG } from "@/lib/routes";
+import { SITE } from "@/lib/site";
 import { Map, User, CalendarDays, Users } from "lucide-react";
 
 export default function CustomTours() {
@@ -18,9 +19,19 @@ export default function CustomTours() {
     { icon: Users, titleKey: "custom.feature4Title", bodyKey: "custom.feature4Body" },
   ] as const;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: "Custom Sea Kayaking Tour",
+    name: t("custom.title"),
+    description: t("custom.subtitle"),
+    provider: { "@type": "Organization", name: SITE.name, url: SITE.domain },
+    areaServed: ["Kekova", "Kaş", "Kalkan", "Antalya"],
+  };
+
   return (
     <>
-      <Seo title={t("custom.title")} description={t("custom.subtitle")} />
+      <Seo title={t("custom.title")} description={t("custom.subtitle")} jsonLd={jsonLd} />
 
       {/* Hero band */}
       <div className="hero-gradient py-20 text-white md:py-28">

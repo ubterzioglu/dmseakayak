@@ -196,9 +196,22 @@ export default function Faq() {
 
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((item) => ({
+      "@type": "Question",
+      name: pick(item.q),
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: pick(item.a),
+      },
+    })),
+  };
+
   return (
     <>
-      <Seo title={t("faq.title")} description={t("faq.subtitle")} />
+      <Seo title={t("faq.title")} description={t("faq.subtitle")} jsonLd={jsonLd} />
 
       <Section>
         <SectionHeading

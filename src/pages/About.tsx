@@ -3,18 +3,28 @@ import { Section, SectionHeading } from "@/components/ui/section";
 import { useLang } from "@/hooks/useLang";
 import { TOURS } from "@/content/tours";
 import { useToursData } from "@/hooks/useTours";
+import { SITE } from "@/lib/site";
 import { ShieldCheck, Users, Award } from "lucide-react";
 
 export default function About() {
-  const { t, pick } = useLang();
+  const { t, pick, localePath } = useLang();
   const { dayTours } = useToursData();
 
   // First day tour that defines whyChoose; bundled kekova-classic as fallback.
   const whyChoose = pick(dayTours.find((tour) => tour.whyChoose)?.whyChoose ?? TOURS[0].whyChoose!);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: SITE.name, item: `${SITE.domain}${localePath()}` },
+      { "@type": "ListItem", position: 2, name: t("about.title") },
+    ],
+  };
+
   return (
     <>
-      <Seo title={t("about.title")} description={t("about.subtitle")} />
+      <Seo title={t("about.title")} description={t("about.subtitle")} jsonLd={jsonLd} />
 
       {/* Hero band */}
       <div className="hero-gradient py-20 text-white md:py-28">

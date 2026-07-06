@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Seo } from "@/components/seo/Seo";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { useLang } from "@/hooks/useLang";
+import { SITE } from "@/lib/site";
 import { Star } from "lucide-react";
 import {
   fetchPublishedReviewsLocalized,
@@ -43,9 +44,33 @@ export default function Reviews() {
     };
   }, [locale]);
 
+  const jsonLd =
+    reviews.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "SportsActivityLocation",
+          name: SITE.name,
+          url: SITE.domain,
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: (
+              reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+            ).toFixed(1),
+            reviewCount: reviews.length,
+          },
+          review: reviews.slice(0, 10).map((r) => ({
+            "@type": "Review",
+            author: { "@type": "Person", name: r.author },
+            reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5 },
+            reviewBody: r.body,
+            ...(r.review_date ? { datePublished: r.review_date } : {}),
+          })),
+        }
+      : undefined;
+
   return (
     <>
-      <Seo title={t("reviews.title")} description={t("reviews.subtitle")} />
+      <Seo title={t("reviews.title")} description={t("reviews.subtitle")} jsonLd={jsonLd} />
 
       <Section>
         <SectionHeading

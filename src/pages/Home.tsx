@@ -17,12 +17,20 @@ export default function Home() {
     image: SITE.ogImage,
     telephone: SITE.phone,
     email: SITE.email,
+    priceRange: "€€",
+    sport: "Sea Kayaking",
     address: {
       "@type": "PostalAddress",
-      streetAddress: SITE.address,
+      streetAddress: "Uzunçarşı Cad. No:15",
       addressLocality: "Kaş",
+      addressRegion: "Antalya",
+      postalCode: "07580",
       addressCountry: "TR",
     },
+    geo: { "@type": "GeoCoordinates", latitude: 36.201899, longitude: 29.638667 },
+    hasMap: "https://www.google.com/maps/search/?api=1&query=36.201899,29.638667",
+    areaServed: ["Kekova", "Kaş", "Kalkan", "Antalya"],
+    sameAs: [SITE.instagram, SITE.facebook],
   };
 
   return (
