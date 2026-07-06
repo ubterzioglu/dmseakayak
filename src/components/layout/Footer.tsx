@@ -95,6 +95,9 @@ export function Footer() {
         <span className="mx-2 text-white/25">·</span>
         <a href="https://www.spindorai.com/seo/en-iyi-seo-ajansi" rel="dofollow" target="_blank" className="hover:text-orange-soft">Seo Ajansı</a>
         {" "}Spindora Tarafından Seosu Yapılmıştır.
+        <span className="mx-2 text-white/25">·</span>
+        <a href="https://ufuksoynakliyat.com.tr/esya-depolama" rel="dofollow" target="_blank" className="hover:text-orange-soft">Eşya Depolama</a>
+        {" "}Ufuksoy Nakliyat A.Ş
       </div>
     </footer>
   );
