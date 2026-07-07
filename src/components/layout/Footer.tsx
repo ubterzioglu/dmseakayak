@@ -35,7 +35,7 @@ export function Footer() {
       {/* Full-width white logo band, edge to edge */}
       <div className="flex w-full items-center justify-center border-b border-black/5 bg-white px-4 py-6 shadow-[0_8px_24px_rgba(0,0,0,0.18)]">
         <img
-          src="/transparanlogo.png"
+          src="/ensonlogo.png"
           alt="Dragoman SeaKayak"
           className="h-24 w-auto object-contain md:h-28"
           onError={(e) => (e.currentTarget.style.display = "none")}

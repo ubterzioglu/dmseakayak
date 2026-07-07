@@ -6,7 +6,7 @@
 export const SITE = {
   name: "Dragoman SeaKayak",
   domain: "https://dragomanseakayak.com",
-  ogImage: "https://dragomanseakayak.com/seakayakog.jpg",
+  ogImage: "https://dragomanseakayak.com/ensonlogo.png",
   // Contact (from the hotel-presentation PDF / business records)
   phone: "+90 242 836 3614",
   // WhatsApp number in international digits, no "+" or spaces.

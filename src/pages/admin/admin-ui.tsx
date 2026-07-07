@@ -47,7 +47,7 @@ export function AdminSidebar<T extends string>({
     >
       <div className="flex flex-col items-center border-b border-teal/8 px-1.5 pb-3 text-center">
         <img
-          src="/tekrardene.png"
+          src="/ensonlogo.png"
           alt="Dragoman Admin"
           className="h-28 w-auto object-contain"
         />

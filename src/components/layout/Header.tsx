@@ -24,7 +24,7 @@ export function Header() {
     <header className="sticky top-0 z-30 border-b border-teal/10 bg-white/90 backdrop-blur">
       <div className="container flex items-center justify-between py-3">
         <Link to={localePath()} aria-label="Dragoman SeaKayak">
-          <img src="/transparanlogo.png" alt="Dragoman SeaKayak" className="h-11 w-auto" />
+          <img src="/ensonlogo.png" alt="Dragoman SeaKayak" className="h-11 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-4 lg:flex">
