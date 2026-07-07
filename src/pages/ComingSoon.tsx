@@ -180,7 +180,7 @@ export default function ComingSoon() {
             className={`mb-8 ${reduceMotion ? "" : "animate-bob"}`}
           >
             <img
-              src="/ensonlogo.png"
+              src="/ensonlogotrans.png"
               alt={SITE.name}
               className="h-64 w-auto drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)] sm:h-80"
             />
