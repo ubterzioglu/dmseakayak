@@ -13,6 +13,16 @@ interface UpdateGroup {
 
 const ENTRIES: UpdateGroup[] = [
   {
+    date: "11 Temmuz 2026",
+    title: "Yorumlar temizlendi, hero/admin panel küçük düzeltmeler ve dosya düzeni",
+    items: [
+      "Yorumlar veritabanı temizlendi: yalnızca gerçek, doğrulanmış Google yorumları (34 adet) yayında bırakıldı; fazlalık/test kayıtları ve çevirileri kalıcı olarak silindi.",
+      "Ana sayfa hero bölümünde 'SEAKAYAK' etiketine vurgu rengi eklendi, başlık yazı boyutu küçük ekranlarda inceltildi.",
+      "Yönetim panelinden artık kullanılmayan 'Durum Raporu' sekmesi kaldırıldı.",
+      "Referans yorum ekran görüntüleri (39 adet) proje kaynak klasöründen docs/ altına taşınıp depo takibinden çıkarıldı — repo daha hafif ve düzenli.",
+    ],
+  },
+  {
     date: "5 Temmuz 2026",
     title: "Tur formuna tek tuşla otomatik çeviri, rehberin genişletilmesi ve genel durum raporu güncellendi",
     items: [
@@ -180,7 +190,6 @@ const PENDING: string[] = [
   "Drone videosu (içerik Drive'dan gelince yüklenecek).",
   "TRAK Experience sayfasının gerçek metni (şu an placeholder; fotoğrafı eklendi).",
   "Kur çeviriciyi canlı döviz kuruna bağlama (şu an yaklaşık placeholder kurlar).",
-  "Yorumların gerçek Google içerikleriyle doldurulması (admin > Yorumlar > Toplu Ekle).",
   "Google Haritalar işletme linki.",
 ];
 
