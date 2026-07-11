@@ -16,6 +16,9 @@ dist/
 # Large source archives — never commit
 docs/GORSEL/*.zip
 
+# Review screenshot backups — reference only, not needed in repo
+docs/YORUMLAR/
+
 # Footer source video (optimized copy lives in public/videos/)
 docs/footervideo.*
 docs/herovideo.*
