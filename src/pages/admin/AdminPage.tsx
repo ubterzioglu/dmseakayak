@@ -4,7 +4,6 @@ import { toast } from "sonner";
 import type { Session, User } from "@supabase/supabase-js";
 import {
   BookOpenText,
-  ChartColumnBig,
   ClipboardList,
   Clapperboard,
   FolderOpen,
@@ -31,7 +30,6 @@ import HeroVideoPanel from "./HeroVideoPanel";
 import ReservationsPanel from "./ReservationsPanel";
 import ReviewsPanel from "./ReviewsPanel";
 import RevisionsPanel from "./RevisionsPanel";
-import StatusReportPanel from "./StatusReportPanel";
 import ToursPanel from "./tours/ToursPanel";
 import UpdatesPanel from "./UpdatesPanel";
 import {
@@ -60,8 +58,7 @@ type TabKey =
   | "tours"
   | "heroVideo"
   | "reviews"
-  | "updates"
-  | "status";
+  | "updates";
 
 const TABS: AdminNavItem<TabKey>[] = [
   {
@@ -105,12 +102,6 @@ const TABS: AdminNavItem<TabKey>[] = [
     label: "Güncellemeler",
     description: "Yayınlanan geliştirmeler ve içerik bekleyen işler.",
     icon: Sparkles,
-  },
-  {
-    key: "status",
-    label: "Durum Raporu",
-    description: "Proje hedeflerini ve eksik alanları tek tabloda izleyin.",
-    icon: ChartColumnBig,
   },
   {
     key: "revisions",
@@ -344,8 +335,6 @@ function renderPanel(item: AdminNavItem<TabKey>) {
       return <ReviewsPanel infoSlot={infoSlot} />;
     case "updates":
       return <UpdatesPanel infoSlot={infoSlot} />;
-    case "status":
-      return <StatusReportPanel infoSlot={infoSlot} />;
     default:
       return null;
   }

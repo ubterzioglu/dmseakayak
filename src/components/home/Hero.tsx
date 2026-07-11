@@ -71,11 +71,11 @@ export function Hero() {
               DRAGOMAN <span className="text-orange-soft">DIVING</span> &amp; OUTDOORS
             </span>
             <span className="text-orange-soft/50">·</span>
-            <span>SEAKAYAK</span>
+            <span className="text-orange-soft">SEAKAYAK</span>
           </div>
 
           <div>
-            <h1 className="text-sm font-semibold leading-snug text-teal-deep/70 sm:text-base">
+            <h1 className="text-[11px] font-semibold leading-snug text-teal-deep/70 sm:text-xs">
               {t("hero.title").split(" ").slice(0, -2).join(" ")}{" "}
               <span className="text-orange-soft">{t("hero.title").split(" ").slice(-2).join(" ")}</span>
             </h1>
