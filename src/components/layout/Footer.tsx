@@ -88,7 +88,7 @@ export function Footer() {
         </nav>
       </div>
 
-      <div className="border-t border-white/10 py-5 text-center text-xs opacity-70">
+      <div className="border-t border-white/10 py-5 text-center text-[6px] opacity-70">
         © {year} {SITE.name} — {t("footer.rights")}
         {" · "}
         <a href="https://chatio.com.tr/" rel="dofollow" target="_blank" className="hover:text-orange-soft">Canlı Destek Yazılımı</a>
