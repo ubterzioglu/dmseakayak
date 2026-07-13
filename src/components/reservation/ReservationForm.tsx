@@ -6,7 +6,6 @@ import { reservationSchema, type ReservationInput } from "./schema";
 import { submitReservation } from "@/hooks/useReservations";
 import { buildWhatsappLink } from "@/lib/whatsapp";
 import { useLang } from "@/hooks/useLang";
-import { getTour } from "@/content/tours";
 import { useToursData } from "@/hooks/useTours";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,7 +33,7 @@ export function ReservationForm() {
     const result = await submitReservation(data, locale);
 
     const tour = data.tourSlug
-      ? dayTours.find((t) => t.slug === data.tourSlug) ?? getTour(data.tourSlug)
+      ? dayTours.find((t) => t.slug === data.tourSlug)
       : undefined;
     const waLink = buildWhatsappLink({
       tourTitle: tour ? pick(tour.title) : undefined,
