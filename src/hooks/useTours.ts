@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import {
-  TOURS,
-  MULTI_DAY_TOURS,
-  getTour,
   type Tour,
   type Localized,
   type ItineraryStep,
@@ -12,9 +9,7 @@ import {
 
 // ---------------------------------------------------------------------------
 // Admin-managed tours (public.tours, see supabase/migrations/0011_tours.sql).
-// The public site reads the DB first and silently falls back to the bundled
-// static tours when the table is empty or unreachable — same pattern as the
-// hero video and the old gallery.
+// The public site reads exclusively from the DB — no static fallback.
 // ---------------------------------------------------------------------------
 
 /** Row shape of public.tours. Localized/nested content is jsonb passthrough. */
@@ -52,11 +47,6 @@ export interface ToursData {
   dayTours: Tour[];
   multiDayTours: Tour[];
 }
-
-export const STATIC_TOURS_DATA: ToursData = {
-  dayTours: TOURS,
-  multiDayTours: MULTI_DAY_TOURS,
-};
 
 const EMPTY_LISTS: Localized<string[]> = { tr: [], en: [], fr: [], ru: [] };
 
@@ -124,62 +114,84 @@ export function splitRows(rows: TourRow[]): ToursData {
   };
 }
 
-/** Published tours ordered by sort_order; static fallback on empty/error. */
+/** Published tours ordered by sort_order. Throws on missing config or query error. */
 export async function fetchPublishedTours(): Promise<ToursData> {
-  if (!supabase) return STATIC_TOURS_DATA;
+  if (!supabase) throw new Error("Supabase yapılandırılmamış");
   const { data, error } = await supabase
     .from("tours")
     .select("*")
     .eq("published", true)
     .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
-  if (error) {
-    console.error("fetchPublishedTours:", error.message);
-    return STATIC_TOURS_DATA;
-  }
+  if (error) throw new Error(error.message);
   const rows = (data ?? []) as TourRow[];
-  if (rows.length === 0) return STATIC_TOURS_DATA;
   return splitRows(rows);
 }
 
-/** Public pages: starts with the bundled tours (instant paint), swaps in the
- * admin-managed set once loaded. */
-export function useToursData(): ToursData {
-  const [data, setData] = useState<ToursData>(STATIC_TOURS_DATA);
+export interface UseToursDataState extends ToursData {
+  loading: boolean;
+  error: string | null;
+}
+
+/** Public pages: loads tours from the DB. No static fallback — callers must
+ * handle `loading` and `error`. */
+export function useToursData(): UseToursDataState {
+  const [state, setState] = useState<UseToursDataState>({
+    dayTours: [],
+    multiDayTours: [],
+    loading: true,
+    error: null,
+  });
 
   useEffect(() => {
     let cancelled = false;
-    void fetchPublishedTours().then((d) => {
-      if (!cancelled) setData(d);
-    });
+    setState((prev) => ({ ...prev, loading: true, error: null }));
+    fetchPublishedTours()
+      .then((data) => {
+        if (cancelled) return;
+        setState({ ...data, loading: false, error: null });
+      })
+      .catch((e: unknown) => {
+        if (cancelled) return;
+        const message = e instanceof Error ? e.message : "Turlar yüklenemedi";
+        setState({ dayTours: [], multiDayTours: [], loading: false, error: message });
+      });
     return () => {
       cancelled = true;
     };
   }, []);
 
-  return data;
+  return state;
 }
 
-interface UseTourState {
+export interface UseTourState {
   tour: Tour | undefined;
   loading: boolean;
+  error: string | null;
 }
 
-/** Tour detail: resolves a slug against the DB with static fallback. */
+/** Tour detail: resolves a slug against the DB. No static fallback. */
 export function useTour(slug: string | undefined): UseTourState {
-  const [state, setState] = useState<UseTourState>(() => ({
-    tour: getTour(slug ?? ""),
+  const [state, setState] = useState<UseTourState>({
+    tour: undefined,
     loading: true,
-  }));
+    error: null,
+  });
 
   useEffect(() => {
     let cancelled = false;
-    setState({ tour: getTour(slug ?? ""), loading: true });
-    void fetchPublishedTours().then(({ dayTours, multiDayTours }) => {
-      if (cancelled) return;
-      const fromDb = [...dayTours, ...multiDayTours].find((t) => t.slug === slug);
-      setState({ tour: fromDb ?? getTour(slug ?? ""), loading: false });
-    });
+    setState({ tour: undefined, loading: true, error: null });
+    fetchPublishedTours()
+      .then(({ dayTours, multiDayTours }) => {
+        if (cancelled) return;
+        const tour = [...dayTours, ...multiDayTours].find((t) => t.slug === slug);
+        setState({ tour, loading: false, error: null });
+      })
+      .catch((e: unknown) => {
+        if (cancelled) return;
+        const message = e instanceof Error ? e.message : "Tur yüklenemedi";
+        setState({ tour: undefined, loading: false, error: message });
+      });
     return () => {
       cancelled = true;
     };
@@ -223,22 +235,6 @@ export async function uploadTourImage(file: File): Promise<string> {
   const { error } = await supabase.storage.from("tour-images").upload(path, file, { upsert: false });
   if (error) throw new Error(error.message);
   return supabase.storage.from("tour-images").getPublicUrl(path).data.publicUrl;
-}
-
-/** Inserts the bundled static tours that are missing from the DB (matched by
- * slug); existing rows are left untouched. Returns how many were added. */
-export async function importStaticTours(): Promise<number> {
-  if (!supabase) throw new Error("Supabase yapılandırılmamış");
-  const existing = await fetchAllTours();
-  const existingSlugs = new Set(existing.map((r) => r.slug));
-  const inputs = [
-    ...TOURS.map((t, i) => tourToInput(t, { sortOrder: i })),
-    ...MULTI_DAY_TOURS.map((t, i) => tourToInput(t, { sortOrder: i })),
-  ].filter((input) => !existingSlugs.has(input.slug));
-  if (inputs.length === 0) return 0;
-  const { error } = await supabase.from("tours").insert(inputs);
-  if (error) throw new Error(error.message);
-  return inputs.length;
 }
 
 // ─── Admin: form-field machine translation ─────────────────────────────────────

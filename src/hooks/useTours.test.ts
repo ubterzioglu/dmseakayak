@@ -1,11 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
-import { TOURS, MULTI_DAY_TOURS } from "@/content/tours";
 import {
-  STATIC_TOURS_DATA,
   fetchPublishedTours,
   rowToTour,
   splitRows,
   tourToInput,
+  type Tour,
   type TourInput,
   type TourRow,
 } from "./useTours";
@@ -42,74 +41,108 @@ const toRow = (input: TourInput, id = "row-1"): TourRow => ({
   created_at: "2026-01-01T00:00:00Z",
 });
 
-describe("tourToInput / rowToTour", () => {
-  it("round-trips the kekova-classic day tour", () => {
-    const original = TOURS[0];
-    const tour = rowToTour(toRow(tourToInput(original)));
+const DAY_TOUR: Tour = {
+  slug: "kekova-classic",
+  level: "beginner",
+  priceEur: 45,
+  priceWithMealEur: 60,
+  priceFromKalkanEur: 70,
+  distanceKm: 8,
+  departure: "07:30",
+  arrival: "14:30 / 15:00",
+  routeStops: ["Üçağız", "Kekova Island"],
+  heroImage: "/images/tours/kekova-classic/tomb1.jpg",
+  gallery: [],
+  title: { tr: "Kekova Klasik", en: "Kekova Classic", fr: "Kekova Classic", ru: "Кекова Классик" },
+  tagline: { tr: "Etiket", en: "Tagline", fr: "Slogan", ru: "Слоган" },
+  highlights: { tr: ["a"], en: ["a"], fr: ["a"], ru: ["a"] },
+  included: { tr: ["b"], en: ["b"], fr: ["b"], ru: ["b"] },
+  itinerary: {
+    tr: [{ icon: "🚣", title: "Başlangıç", body: "Açıklama" }],
+    en: [{ icon: "🚣", title: "Start", body: "Body" }],
+    fr: [{ icon: "🚣", title: "Départ", body: "Texte" }],
+    ru: [{ icon: "🚣", title: "Старт", body: "Текст" }],
+  },
+  whyChoose: { tr: ["c"], en: ["c"], fr: ["c"], ru: ["c"] },
+};
 
-    expect(tour.slug).toBe(original.slug);
+const MULTI_DAY_TOUR: Tour = {
+  slug: "lycian-comfort-escape",
+  level: "intermediate-advanced",
+  heroImage: "/images/tours/lycian-comfort-escape.jpg",
+  gallery: [],
+  title: { tr: "Likya Kaçamağı", en: "Lycian Escape", fr: "Escapade Lycienne", ru: "Ликийский эскейп" },
+  tagline: { tr: "Etiket", en: "Tagline", fr: "Slogan", ru: "Слоган" },
+  description: { tr: "Açıklama", en: "Description", fr: "Description", ru: "Описание" },
+  highlights: { tr: ["a"], en: ["a"], fr: ["a"], ru: ["a"] },
+  multiDay: { durationDays: 7, nights: 6, status: "final" },
+};
+
+describe("tourToInput / rowToTour", () => {
+  it("round-trips a day tour", () => {
+    const tour = rowToTour(toRow(tourToInput(DAY_TOUR)));
+
+    expect(tour.slug).toBe(DAY_TOUR.slug);
     expect(tour.priceEur).toBe(45);
     expect(tour.priceWithMealEur).toBe(60);
-    expect(tour.priceFromKalkanEur).toBe(original.priceFromKalkanEur);
-    expect(tour.title).toEqual(original.title);
-    expect(tour.highlights).toEqual(original.highlights);
-    expect(tour.included).toEqual(original.included);
-    expect(tour.itinerary).toEqual(original.itinerary);
-    expect(tour.whyChoose).toEqual(original.whyChoose);
-    expect(tour.routeStops).toEqual(original.routeStops);
-    expect(tour.gallery).toEqual(original.gallery);
+    expect(tour.priceFromKalkanEur).toBe(DAY_TOUR.priceFromKalkanEur);
+    expect(tour.title).toEqual(DAY_TOUR.title);
+    expect(tour.highlights).toEqual(DAY_TOUR.highlights);
+    expect(tour.included).toEqual(DAY_TOUR.included);
+    expect(tour.itinerary).toEqual(DAY_TOUR.itinerary);
+    expect(tour.whyChoose).toEqual(DAY_TOUR.whyChoose);
+    expect(tour.routeStops).toEqual(DAY_TOUR.routeStops);
+    expect(tour.gallery).toEqual(DAY_TOUR.gallery);
     expect(tour.multiDay).toBeUndefined();
   });
 
-  it("round-trips a multi-day tour including day-by-day plans", () => {
-    const original = MULTI_DAY_TOURS[0];
-    const input = tourToInput(original);
+  it("round-trips a multi-day tour including its multiDay block", () => {
+    const input = tourToInput(MULTI_DAY_TOUR);
     expect(input.is_multi_day).toBe(true);
 
     const tour = rowToTour(toRow(input));
-    expect(tour.multiDay).toEqual(original.multiDay);
-    expect(tour.description).toEqual(original.description);
-    expect(tour.title).toEqual(original.title);
+    expect(tour.multiDay).toEqual(MULTI_DAY_TOUR.multiDay);
+    expect(tour.description).toEqual(MULTI_DAY_TOUR.description);
+    expect(tour.title).toEqual(MULTI_DAY_TOUR.title);
   });
 });
 
 describe("splitRows", () => {
   it("splits by is_multi_day and keeps row order", () => {
     const rows = [
-      toRow(tourToInput(MULTI_DAY_TOURS[0], { sortOrder: 0 }), "m1"),
-      toRow(tourToInput(TOURS[0], { sortOrder: 0 }), "d1"),
-      toRow(tourToInput(TOURS[1], { sortOrder: 1 }), "d2"),
+      toRow(tourToInput(MULTI_DAY_TOUR, { sortOrder: 0 }), "m1"),
+      toRow(tourToInput(DAY_TOUR, { sortOrder: 0 }), "d1"),
     ];
     const { dayTours, multiDayTours } = splitRows(rows);
-    expect(dayTours.map((t) => t.slug)).toEqual([TOURS[0].slug, TOURS[1].slug]);
-    expect(multiDayTours.map((t) => t.slug)).toEqual([MULTI_DAY_TOURS[0].slug]);
+    expect(dayTours.map((t) => t.slug)).toEqual([DAY_TOUR.slug]);
+    expect(multiDayTours.map((t) => t.slug)).toEqual([MULTI_DAY_TOUR.slug]);
   });
 });
 
 describe("fetchPublishedTours", () => {
-  it("falls back to the static tours when supabase is not configured", async () => {
+  it("throws when supabase is not configured", async () => {
     state.client = null;
-    await expect(fetchPublishedTours()).resolves.toBe(STATIC_TOURS_DATA);
+    await expect(fetchPublishedTours()).rejects.toThrow("Supabase yapılandırılmamış");
   });
 
-  it("falls back to the static tours on a query error", async () => {
+  it("throws on a query error", async () => {
     state.client = makeClient({ data: null, error: { message: "boom" } });
-    await expect(fetchPublishedTours()).resolves.toBe(STATIC_TOURS_DATA);
+    await expect(fetchPublishedTours()).rejects.toThrow("boom");
   });
 
-  it("falls back to the static tours when the table is empty", async () => {
+  it("returns empty lists when the table is empty", async () => {
     state.client = makeClient({ data: [], error: null });
-    await expect(fetchPublishedTours()).resolves.toBe(STATIC_TOURS_DATA);
+    await expect(fetchPublishedTours()).resolves.toEqual({ dayTours: [], multiDayTours: [] });
   });
 
   it("returns mapped DB tours when rows exist", async () => {
     state.client = makeClient({
-      data: [toRow(tourToInput(TOURS[0]))],
+      data: [toRow(tourToInput(DAY_TOUR))],
       error: null,
     });
     const result = await fetchPublishedTours();
     expect(result.dayTours).toHaveLength(1);
-    expect(result.dayTours[0].slug).toBe(TOURS[0].slug);
+    expect(result.dayTours[0].slug).toBe(DAY_TOUR.slug);
     expect(result.multiDayTours).toHaveLength(0);
   });
 });
