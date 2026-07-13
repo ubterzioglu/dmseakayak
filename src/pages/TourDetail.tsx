@@ -17,13 +17,25 @@ export default function TourDetail() {
   const { t, pick, localePath } = useLang();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const { tour, loading } = useTour(slug);
+  const { tour, loading, error } = useTour(slug);
 
   if (!tour) {
     if (loading) {
       return (
         <Section>
           <p className="text-lg text-ink/70">{t("common.loading")}</p>
+        </Section>
+      );
+    }
+    if (error) {
+      return (
+        <Section>
+          <p className="text-lg text-red-600">
+            Tur yüklenemedi, lütfen daha sonra tekrar deneyin.
+          </p>
+          <Button asChild variant="outline" size="sm" className="mt-4">
+            <Link to={localePath(SEG.tours)}>{t("nav.tours")}</Link>
+          </Button>
         </Section>
       );
     }
