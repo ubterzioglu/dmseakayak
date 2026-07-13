@@ -4,6 +4,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { WhatsappFab } from "./WhatsappFab";
 import { ScrollToTop } from "./ScrollToTop";
+import { ScrollToTopOnRouteChange } from "./ScrollToTopOnRouteChange";
 
 /** Shell for all localized pages. Guards the :lang segment. */
 export function SiteLayout() {
@@ -12,6 +13,7 @@ export function SiteLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <ScrollToTopOnRouteChange />
       <Header />
       <main className="flex-1">
         <Outlet />
