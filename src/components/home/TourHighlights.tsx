@@ -8,7 +8,17 @@ import { SEG } from "@/lib/routes";
 
 export function TourHighlights() {
   const { t, localePath } = useLang();
-  const { dayTours, multiDayTours } = useToursData();
+  const { dayTours, multiDayTours, loading, error } = useToursData();
+
+  if (error) {
+    return (
+      <Section>
+        <p className="text-center text-sm text-red-600">
+          Turlar yüklenemedi, lütfen daha sonra tekrar deneyin.
+        </p>
+      </Section>
+    );
+  }
 
   return (
     <>
@@ -18,7 +28,11 @@ export function TourHighlights() {
           title={t("tours.title")}
           subtitle={t("tours.subtitle")}
         />
-        <TourGrid tours={dayTours} />
+        {loading ? (
+          <p className="text-center text-sm text-teal/60">Yükleniyor...</p>
+        ) : (
+          <TourGrid tours={dayTours} />
+        )}
       </Section>
       <Section className="bg-foam/40">
         <SectionHeading
@@ -26,7 +40,11 @@ export function TourHighlights() {
           title={t("tours.multiDayTitle")}
           subtitle={t("tours.multiDaySubtitle")}
         />
-        <TourGrid tours={multiDayTours} />
+        {loading ? (
+          <p className="text-center text-sm text-teal/60">Yükleniyor...</p>
+        ) : (
+          <TourGrid tours={multiDayTours} />
+        )}
         <div className="mt-10 flex justify-center">
           <Button asChild size="lg" variant="primary">
             <Link to={localePath(SEG.tours)}>{t("hero.ctaTours")}</Link>

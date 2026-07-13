@@ -9,7 +9,7 @@ import { SITE } from "@/lib/site";
 
 export default function Tours() {
   const { t, pick, localePath } = useLang();
-  const { dayTours, multiDayTours } = useToursData();
+  const { dayTours, multiDayTours, loading, error } = useToursData();
 
   const allTours = [...dayTours, ...multiDayTours];
   const jsonLd = {
@@ -26,20 +26,38 @@ export default function Tours() {
   return (
     <>
       <Seo title={t("tours.title")} description={t("tours.subtitle")} jsonLd={jsonLd} />
-      <Section>
-        <SectionHeading
-          title={t("tours.title")}
-          subtitle={t("tours.subtitle")}
-        />
-        <TourGrid tours={dayTours} />
-      </Section>
-      <Section className="bg-foam/40">
-        <SectionHeading
-          title={t("tours.multiDayTitle")}
-          subtitle={t("tours.multiDaySubtitle")}
-        />
-        <TourGrid tours={multiDayTours} />
-      </Section>
+      {error ? (
+        <Section>
+          <p className="text-center text-sm text-red-600">
+            Turlar yüklenemedi, lütfen daha sonra tekrar deneyin.
+          </p>
+        </Section>
+      ) : (
+        <>
+          <Section>
+            <SectionHeading
+              title={t("tours.title")}
+              subtitle={t("tours.subtitle")}
+            />
+            {loading ? (
+              <p className="text-center text-sm text-teal/60">Yükleniyor...</p>
+            ) : (
+              <TourGrid tours={dayTours} />
+            )}
+          </Section>
+          <Section className="bg-foam/40">
+            <SectionHeading
+              title={t("tours.multiDayTitle")}
+              subtitle={t("tours.multiDaySubtitle")}
+            />
+            {loading ? (
+              <p className="text-center text-sm text-teal/60">Yükleniyor...</p>
+            ) : (
+              <TourGrid tours={multiDayTours} />
+            )}
+          </Section>
+        </>
+      )}
       <Section>
         <CurrencyConverter />
       </Section>
