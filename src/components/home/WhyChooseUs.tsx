@@ -1,14 +1,16 @@
 import { CheckCircle2 } from "lucide-react";
 import { Section, SectionHeading } from "@/components/ui/section";
-import { TOURS } from "@/content/tours";
 import { useToursData } from "@/hooks/useTours";
 import { useLang } from "@/hooks/useLang";
 
 export function WhyChooseUs() {
   const { t, pick } = useLang();
-  const { dayTours } = useToursData();
-  // First day tour that defines whyChoose; bundled kekova-classic as fallback.
-  const benefits = pick(dayTours.find((tour) => tour.whyChoose)?.whyChoose ?? TOURS[0].whyChoose!);
+  const { dayTours, error } = useToursData();
+  const benefits = pick(
+    dayTours.find((tour) => tour.whyChoose)?.whyChoose ?? { tr: [], en: [], fr: [], ru: [] },
+  );
+
+  if (error || benefits.length === 0) return null;
 
   return (
     <Section className="bg-sand">

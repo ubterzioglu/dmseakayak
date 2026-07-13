@@ -1,17 +1,16 @@
 import { Seo } from "@/components/seo/Seo";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { useLang } from "@/hooks/useLang";
-import { TOURS } from "@/content/tours";
 import { useToursData } from "@/hooks/useTours";
 import { SITE } from "@/lib/site";
 import { ShieldCheck, Users, Award } from "lucide-react";
 
 export default function About() {
   const { t, pick, localePath } = useLang();
-  const { dayTours } = useToursData();
+  const { dayTours, loading, error } = useToursData();
 
-  // First day tour that defines whyChoose; bundled kekova-classic as fallback.
-  const whyChoose = pick(dayTours.find((tour) => tour.whyChoose)?.whyChoose ?? TOURS[0].whyChoose!);
+  // First day tour that defines whyChoose.
+  const whyChoose = pick(dayTours.find((tour) => tour.whyChoose)?.whyChoose ?? { tr: [], en: [], fr: [], ru: [] });
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -88,16 +87,22 @@ export default function About() {
           title={t("whyChoose.title")}
           subtitle={t("whyChoose.subtitle")}
         />
-        <ul className="mt-6 grid gap-4">
-          {whyChoose.map((item, i) => (
-            <li key={i} className="flex items-start gap-3">
-              <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal/10 text-teal">
-                ✓
-              </span>
-              <span className="text-teal/80">{item}</span>
-            </li>
-          ))}
-        </ul>
+        {error && (
+          <p className="mt-6 text-sm text-red-600">Turlar yüklenemedi, lütfen daha sonra tekrar deneyin.</p>
+        )}
+        {!error && !loading && whyChoose.length === 0 && null}
+        {!error && whyChoose.length > 0 && (
+          <ul className="mt-6 grid gap-4">
+            {whyChoose.map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal/10 text-teal">
+                  ✓
+                </span>
+                <span className="text-teal/80">{item}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </Section>
 
       {/* Guides & Safety */}
