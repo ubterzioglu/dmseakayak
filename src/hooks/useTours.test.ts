@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
+import type { Tour } from "@/content/tours";
 import {
   fetchPublishedTours,
   rowToTour,
   splitRows,
   tourToInput,
-  type Tour,
   type TourInput,
   type TourRow,
 } from "./useTours";
