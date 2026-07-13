@@ -3,7 +3,6 @@ import { toast } from "sonner";
 import {
   deleteTour,
   fetchAllTours,
-  importStaticTours,
   saveTour,
   type TourInput,
   type TourRow,
@@ -23,7 +22,6 @@ export default function ToursPanel({ infoSlot }: AdminPanelProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [importing, setImporting] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editRow, setEditRow] = useState<TourRow | null>(null);
 
@@ -86,27 +84,6 @@ export default function ToursPanel({ infoSlot }: AdminPanelProps) {
     }
   };
 
-  const handleImport = async () => {
-    const ok = await confirm({
-      title: "Statik turlar içe aktarılsın mı?",
-      description:
-        "Koddaki hazır turlardan panelde olmayanlar (slug'a göre) eklenir; mevcut kayıtlara dokunulmaz.",
-      confirmLabel: "İçe aktar",
-    });
-    if (!ok) return;
-    setImporting(true);
-    try {
-      const added = await importStaticTours();
-      toast.success(added > 0 ? `${added} tur içe aktarıldı.` : "Tüm turlar zaten panelde.");
-      await load();
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "İçe aktarılamadı");
-      toast.error("Turlar içe aktarılamadı.");
-    } finally {
-      setImporting(false);
-    }
-  };
-
   return (
     <div className="space-y-6">
       {dialog}
@@ -130,23 +107,13 @@ export default function ToursPanel({ infoSlot }: AdminPanelProps) {
       <AdminSurface
         title="Turlar"
         description="Sitede görünen sıra, her bölüm içinde 'Sıra' değerine göredir."
-        actions={
-          <button
-            type="button"
-            onClick={() => void handleImport()}
-            disabled={importing}
-            className="rounded-full border border-orange/30 bg-orange/5 px-4 py-2 text-[13px] font-semibold text-orange transition-colors hover:bg-orange/10 disabled:opacity-50"
-          >
-            {importing ? "Aktarılıyor..." : "Statik turları içe aktar"}
-          </button>
-        }
       >
         {error && <p className="mb-3 text-sm text-red-600">{error}</p>}
         {loading && <p className="text-sm text-teal/50">Yükleniyor...</p>}
         {!loading && rows.length === 0 && (
           <AdminEmptyState
             title="Panelde henüz tur yok"
-            description="Site şu anda koddaki hazır turları gösteriyor. 'Statik turları içe aktar' ile hepsini panele taşıyıp buradan yönetmeye başlayabilirsiniz."
+            description="Yukarıdaki 'Yeni tur' formunu kullanarak ilk turu ekleyebilirsiniz."
           />
         )}
         {rows.length > 0 && (
