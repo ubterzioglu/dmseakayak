@@ -48,6 +48,10 @@
     "comingSoonItinerary": "Ayrıntılı program yakında eklenecek.",
     "draft": "Taslak"
   },
+  "tour": {
+    "loadError": "Tur yüklenemedi, lütfen daha sonra tekrar deneyin.",
+    "notFound": "Tur bulunamadı."
+  },
   "level": {
     "beginner": "Başlangıç dostu",
     "intermediate-advanced": "Orta / İleri seviye"
@@ -57,10 +61,13 @@
     "subtitle": "Türkiye Kano Federasyonu lisanslı rehberler eşliğinde küçük gruplarla, güvenli ve unutulmaz bir deneyim."
   },
   "tours": {
+    "eyebrow": "Deneyimler",
     "title": "Turlar & Maceralar",
     "subtitle": "Sakin koylardan açık deniz rotalarına kadar her seviyeye uygun seçenekler.",
-    "multiDayTitle": "Çok Günlü Ekspedisyonlar",
-    "multiDaySubtitle": "Likya kıyısı boyunca daha uzun yolculuklar — birkaç gün boyunca kürek çek, kamp yap ve keşfet."
+    "multiDayEyebrow": "Ekspedisyonlar",
+    "multiDayTitle": "Çok Günlü Turlar",
+    "multiDaySubtitle": "Likya kıyısı boyunca daha uzun yolculuklar — birkaç gün boyunca kürek çek, kamp yap ve keşfet.",
+    "loadError": "Turlar yüklenemedi, lütfen daha sonra tekrar deneyin."
   },
   "reservation": {
     "title": "Rezervasyon Talebi",

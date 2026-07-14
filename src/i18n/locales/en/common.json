@@ -57,10 +57,13 @@
     "subtitle": "Small groups led by Turkish Canoe Federation licensed guides — a safe and unforgettable experience."
   },
   "tours": {
+    "eyebrow": "Experiences",
     "title": "Tours & Adventures",
     "subtitle": "From calm coves to open-sea routes — options for every level.",
+    "multiDayEyebrow": "Expeditions",
     "multiDayTitle": "Multi-Day Expeditions",
-    "multiDaySubtitle": "Longer journeys along the Lycian coast — paddle, camp and explore over several days."
+    "multiDaySubtitle": "Longer journeys along the Lycian coast — paddle, camp and explore over several days.",
+    "loadError": "Tours could not be loaded, please try again later."
   },
   "reservation": {
     "title": "Reservation Request",

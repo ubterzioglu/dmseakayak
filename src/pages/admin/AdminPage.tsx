@@ -133,6 +133,13 @@ const QUICK_LINKS = [
     icon: Phone,
     accentClassName: "bg-teal/10 text-teal border-teal/15",
   },
+  {
+    title: "Search Console",
+    description: "Arama performansı, indexleme durumu ve sitemap raporları.",
+    href: "https://search.google.com/search-console?resource_id=sc-domain:dragomanseakayak.com",
+    icon: Map,
+    accentClassName: "bg-orange/10 text-orange border-orange/15",
+  },
 ] as const;
 
 interface LoginFormProps {

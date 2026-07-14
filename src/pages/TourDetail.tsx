@@ -30,9 +30,7 @@ export default function TourDetail() {
     if (error) {
       return (
         <Section>
-          <p className="text-lg text-red-600">
-            Tur yüklenemedi, lütfen daha sonra tekrar deneyin.
-          </p>
+          <p className="text-lg text-red-600">{t("tour.loadError")}</p>
           <Button asChild variant="outline" size="sm" className="mt-4">
             <Link to={localePath(SEG.tours)}>{t("nav.tours")}</Link>
           </Button>
@@ -41,7 +39,7 @@ export default function TourDetail() {
     }
     return (
       <Section>
-        <p className="text-lg text-ink/70">Tour not found.</p>
+        <p className="text-lg text-ink/70">{t("tour.notFound")}</p>
         <Button asChild variant="outline" size="sm" className="mt-4">
           <Link to={localePath(SEG.tours)}>{t("nav.tours")}</Link>
         </Button>

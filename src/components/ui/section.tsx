@@ -19,10 +19,12 @@ export function SectionHeading({
   eyebrow,
   title,
   subtitle,
+  subtitleClassName,
 }: {
   eyebrow?: string;
   title: string;
   subtitle?: string;
+  subtitleClassName?: string;
 }) {
   return (
     <div className="mb-10 max-w-2xl">
@@ -30,7 +32,7 @@ export function SectionHeading({
         <div className="text-sm font-bold uppercase tracking-[0.15em] text-orange">{eyebrow}</div>
       )}
       <h2 className="mt-1.5 text-3xl font-extrabold text-teal-deep md:text-4xl">{title}</h2>
-      {subtitle && <p className="mt-2 text-teal">{subtitle}</p>}
+      {subtitle && <p className={cn("mt-2 text-teal", subtitleClassName)}>{subtitle}</p>}
     </div>
   );
 }

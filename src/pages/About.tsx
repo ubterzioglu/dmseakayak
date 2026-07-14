@@ -88,7 +88,7 @@ export default function About() {
           subtitle={t("whyChoose.subtitle")}
         />
         {error && (
-          <p className="mt-6 text-sm text-red-600">Turlar yüklenemedi, lütfen daha sonra tekrar deneyin.</p>
+          <p className="mt-6 text-sm text-red-600">{t("tours.loadError")}</p>
         )}
         {!error && !loading && whyChoose.length === 0 && null}
         {!error && whyChoose.length > 0 && (

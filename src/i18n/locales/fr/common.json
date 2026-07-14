@@ -57,10 +57,13 @@
     "subtitle": "Petits groupes encadrés par des guides licenciés de la Fédération turque de canoë — une expérience sûre et inoubliable."
   },
   "tours": {
+    "eyebrow": "Expériences",
     "title": "Excursions & Aventures",
     "subtitle": "Des criques calmes aux itinéraires en pleine mer — des options pour tous les niveaux.",
+    "multiDayEyebrow": "Expéditions",
     "multiDayTitle": "Expéditions de plusieurs jours",
-    "multiDaySubtitle": "Des voyages plus longs le long de la côte lycienne — pagayer, camper et explorer sur plusieurs jours."
+    "multiDaySubtitle": "Des voyages plus longs le long de la côte lycienne — pagayer, camper et explorer sur plusieurs jours.",
+    "loadError": "Impossible de charger les excursions, veuillez réessayer plus tard."
   },
   "reservation": {
     "title": "Demande de réservation",

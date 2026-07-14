@@ -10,9 +10,7 @@ export function TourHighlights() {
   if (error) {
     return (
       <Section>
-        <p className="text-center text-sm text-red-600">
-          Turlar yüklenemedi, lütfen daha sonra tekrar deneyin.
-        </p>
+        <p className="text-center text-sm text-red-600">{t("tours.loadError")}</p>
       </Section>
     );
   }
@@ -21,24 +19,25 @@ export function TourHighlights() {
     <>
       <Section className="pt-6 md:pt-8">
         <SectionHeading
-          eyebrow="Deneyimler"
+          eyebrow={t("tours.eyebrow")}
           title={t("tours.title")}
           subtitle={t("tours.subtitle")}
         />
         {loading ? (
-          <p className="text-center text-sm text-teal/60">Yükleniyor...</p>
+          <p className="text-center text-sm text-teal/60">{t("common.loading")}</p>
         ) : (
           <TourGrid tours={dayTours} />
         )}
       </Section>
       <Section className="bg-foam/40">
         <SectionHeading
-          eyebrow="Ekspedisyonlar"
+          eyebrow={t("tours.multiDayEyebrow")}
           title={t("tours.multiDayTitle")}
           subtitle={t("tours.multiDaySubtitle")}
+          subtitleClassName="whitespace-nowrap"
         />
         {loading ? (
-          <p className="text-center text-sm text-teal/60">Yükleniyor...</p>
+          <p className="text-center text-sm text-teal/60">{t("common.loading")}</p>
         ) : (
           <TourGrid tours={multiDayTours} />
         )}

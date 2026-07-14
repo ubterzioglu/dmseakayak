@@ -28,9 +28,7 @@ export default function Tours() {
       <Seo title={t("tours.title")} description={t("tours.subtitle")} jsonLd={jsonLd} />
       {error ? (
         <Section>
-          <p className="text-center text-sm text-red-600">
-            Turlar yüklenemedi, lütfen daha sonra tekrar deneyin.
-          </p>
+          <p className="text-center text-sm text-red-600">{t("tours.loadError")}</p>
         </Section>
       ) : (
         <>
@@ -40,7 +38,7 @@ export default function Tours() {
               subtitle={t("tours.subtitle")}
             />
             {loading ? (
-              <p className="text-center text-sm text-teal/60">Yükleniyor...</p>
+              <p className="text-center text-sm text-teal/60">{t("common.loading")}</p>
             ) : (
               <TourGrid tours={dayTours} />
             )}
@@ -51,7 +49,7 @@ export default function Tours() {
               subtitle={t("tours.multiDaySubtitle")}
             />
             {loading ? (
-              <p className="text-center text-sm text-teal/60">Yükleniyor...</p>
+              <p className="text-center text-sm text-teal/60">{t("common.loading")}</p>
             ) : (
               <TourGrid tours={multiDayTours} />
             )}
