@@ -14,7 +14,7 @@ export const SITE = {
   whatsapp: "905332901463",
   email: "info@dragoman-turkey.com",
   address: "Uzunçarşı Cad. No:15, Kaş 07580, Antalya, Türkiye",
-  instagram: "https://instagram.com/dragomanseakayak",
+  instagram: "https://www.instagram.com/dragomandivingandoutdoors/",
   facebook: "https://facebook.com/dragomanseakayak",
   parentBrand: "Dragoman Turkey",
 } as const;
@@ -24,11 +24,10 @@ export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "tr";
 
 /**
- * Path prefix the whole localized site is mounted under. The site is staged at
- * `/mvp` until launch while the root shows a Coming Soon placeholder. To go
- * live, set this to "" and the router + every localePath() link follow.
+ * Path prefix the whole localized site is mounted under. Live at the domain
+ * root; the router and every localePath() link follow this value.
  */
-export const BASE_PATH = "/mvp";
+export const BASE_PATH = "";
 
 export function isLocale(value: string | undefined): value is Locale {
   return !!value && (LOCALES as readonly string[]).includes(value);

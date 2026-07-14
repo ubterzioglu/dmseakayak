@@ -1,9 +1,8 @@
 // Generates public/sitemap.xml for all localized routes + tour detail pages,
 // each with hreflang alternates.
 //
-// NOTE: While the site is staged under BASE_PATH (/mvp) and robots.txt blocks
-// /mvp, this writes the LIVE url set (root-based). Re-run at launch once
-// BASE_PATH is "" so the on-site links and sitemap agree.
+// Tour slugs are pulled live from Supabase (public.tours, published=true) —
+// the public site reads exclusively from the DB, there's no static fallback.
 //
 // Usage:
 //   node scripts/generate-sitemap.mjs
@@ -29,15 +28,34 @@ const SEG = {
   faq: "sss",
 };
 
-/** Pull tour slugs from the content files (slug: "...") excluding ones with externalDetailPath. */
-function tourSlugs() {
-  const files = ["src/content/tours.ts", "src/content/multiDayTours.ts"];
-  const slugs = [];
-  for (const f of files) {
-    const txt = readFileSync(resolve(ROOT, f), "utf8");
-    for (const m of txt.matchAll(/slug:\s*"([^"]+)"/g)) slugs.push(m[1]);
+function loadEnv() {
+  const txt = readFileSync(resolve(ROOT, ".env.local"), "utf8");
+  const env = {};
+  for (const line of txt.split(/\r?\n/)) {
+    if (!line || line.startsWith("#") || !line.includes("=")) continue;
+    const i = line.indexOf("=");
+    const v = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
+    env[line.slice(0, i).trim()] = v;
   }
-  return slugs;
+  return env;
+}
+
+/** Fetch published tour slugs from Supabase (anon key — public, read-only data). */
+async function tourSlugs() {
+  const env = loadEnv();
+  const url = (env.SB_PROJECT_URL || env.VITE_SUPABASE_URL || "").replace(/\/$/, "");
+  const key = env.SB_ANON_KEY || env.VITE_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    throw new Error("Missing SB_PROJECT_URL / SB_ANON_KEY in .env.local");
+  }
+  const res = await fetch(`${url}/rest/v1/tours?select=slug&published=eq.true`, {
+    headers: { apikey: key, Authorization: `Bearer ${key}` },
+  });
+  if (!res.ok) {
+    throw new Error(`Supabase fetch failed: ${res.status} ${await res.text()}`);
+  }
+  const rows = await res.json();
+  return rows.map((r) => r.slug);
 }
 
 // Static page paths (relative to locale root). "" = index.
@@ -59,8 +77,8 @@ ${alts}
   ).join("\n");
 }
 
-function main() {
-  const slugs = tourSlugs();
+async function main() {
+  const slugs = await tourSlugs();
   const paths = [
     ...staticPaths,
     ...slugs.map((s) => `${SEG.tours}/${s}`),
@@ -77,4 +95,7 @@ ${body}
   console.log(`Wrote ${out}: ${paths.length} paths × ${LOCALES.length} locales = ${paths.length * LOCALES.length} URLs`);
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

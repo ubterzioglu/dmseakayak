@@ -1,7 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /admin
-# Site is staged here until launch; keep it out of the index for now.
-Disallow: /mvp
 
 Sitemap: https://dragomanseakayak.com/sitemap.xml
