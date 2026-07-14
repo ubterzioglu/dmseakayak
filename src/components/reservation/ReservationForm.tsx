@@ -35,8 +35,14 @@ export function ReservationForm() {
     const tour = data.tourSlug
       ? dayTours.find((t) => t.slug === data.tourSlug)
       : undefined;
+    const tourTitle =
+      data.tourSlug === "tailor-made"
+        ? t("reservation.tailorMadeTour")
+        : tour
+          ? pick(tour.title)
+          : undefined;
     const waLink = buildWhatsappLink({
-      tourTitle: tour ? pick(tour.title) : undefined,
+      tourTitle,
       date: data.date || undefined,
       partySize: data.partySize,
       name: data.name,
@@ -78,6 +84,7 @@ export function ReservationForm() {
                 {pick(tour.title)}
               </option>
             ))}
+            <option value="tailor-made">{t("reservation.tailorMadeTour")}</option>
           </select>
         </div>
         <div>
