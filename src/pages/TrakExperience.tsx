@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Seo } from "@/components/seo/Seo";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
+import { Lightbox } from "@/components/gallery/Lightbox";
 import { useLang } from "@/hooks/useLang";
 import { SEG } from "@/lib/routes";
 import { SITE } from "@/lib/site";
@@ -20,6 +22,7 @@ import {
 
 export default function TrakExperience() {
   const { t, localePath } = useLang();
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const highlights = [
     { icon: Package, title: t("trak.different1Title"), body: t("trak.different1Body") },
@@ -50,11 +53,16 @@ export default function TrakExperience() {
   ];
 
   const gallery = [
-    { src: "/images/tours/trak/trak-assembly.webp", alt: "TRAK kayak hands-on assembly" },
-    { src: "/images/tours/trak/trak-paddle.webp", alt: "Paddling the TRAK kayak on the Mediterranean" },
-    { src: "/images/tours/trak/trak-coastline.webp", alt: "Lycian coastline near Kekova" },
-    { src: "/images/tours/trak/trak-lunch.webp", alt: "Lunch in Simena castle village" },
+    { src: "/images/tours/trak/trak-assembly.webp", alt: "TRAK kayak hands-on assembly", caption: t("trak.title") },
+    { src: "/images/tours/trak/trak-paddle.webp", alt: "Paddling the TRAK kayak on the Mediterranean", caption: t("trak.title") },
+    { src: "/images/tours/trak/trak-coastline.webp", alt: "Lycian coastline near Kekova", caption: t("trak.title") },
+    { src: "/images/tours/trak/trak-lunch.webp", alt: "Lunch in Simena castle village", caption: t("trak.title") },
   ];
+  const closeLightbox = () => setLightboxIndex(null);
+  const prevImage = () =>
+    setLightboxIndex((i) => (i === null ? null : (i - 1 + gallery.length) % gallery.length));
+  const nextImage = () =>
+    setLightboxIndex((i) => (i === null ? null : (i + 1) % gallery.length));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -68,6 +76,16 @@ export default function TrakExperience() {
   return (
     <>
       <Seo title={t("trak.title")} description={t("trak.subtitle")} jsonLd={jsonLd} />
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={gallery}
+          index={lightboxIndex}
+          onClose={closeLightbox}
+          onPrev={prevImage}
+          onNext={nextImage}
+        />
+      )}
 
       {/* Hero band */}
       <div className="hero-gradient py-20 text-white md:py-28">
@@ -194,7 +212,11 @@ export default function TrakExperience() {
       <Section>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {gallery.map((img, i) => (
-            <div key={i} className="overflow-hidden rounded-xl">
+            <div
+              key={i}
+              className="cursor-pointer overflow-hidden rounded-xl"
+              onClick={() => setLightboxIndex(i)}
+            >
               <img
                 src={img.src}
                 alt={img.alt}
