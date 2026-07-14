@@ -71,24 +71,33 @@ export default function TrakExperience() {
 
       {/* Hero band */}
       <div className="hero-gradient py-20 text-white md:py-28">
-        <div className="container">
-          <div className="text-sm font-bold uppercase tracking-[0.15em] text-orange">
-            {t("trak.eyebrow")}
+        <div className="container grid gap-10 md:grid-cols-2 md:items-center">
+          <div>
+            <div className="text-sm font-bold uppercase tracking-[0.15em] text-orange">
+              {t("trak.eyebrow")}
+            </div>
+            <h1 className="mt-3 max-w-2xl text-4xl font-extrabold leading-tight md:text-5xl">
+              {t("trak.title")}
+            </h1>
+            <p className="mt-2 text-sm font-medium uppercase tracking-wide text-white/60">
+              {t("trak.poweredBy")}
+            </p>
+            <p className="mt-4 max-w-xl text-lg text-white/80">{t("trak.subtitle")}</p>
+            <p className="mt-4 inline-block rounded-full border border-white/30 px-4 py-1.5 text-sm font-semibold text-white/90">
+              {t("trak.notATour")}
+            </p>
+            <div className="mt-8">
+              <Button asChild size="lg" variant="primary">
+                <Link to={localePath(SEG.contact)}>{t("trak.cta")}</Link>
+              </Button>
+            </div>
           </div>
-          <h1 className="mt-3 max-w-2xl text-4xl font-extrabold leading-tight md:text-5xl">
-            {t("trak.title")}
-          </h1>
-          <p className="mt-2 text-sm font-medium uppercase tracking-wide text-white/60">
-            {t("trak.poweredBy")}
-          </p>
-          <p className="mt-4 max-w-xl text-lg text-white/80">{t("trak.subtitle")}</p>
-          <p className="mt-4 inline-block rounded-full border border-white/30 px-4 py-1.5 text-sm font-semibold text-white/90">
-            {t("trak.notATour")}
-          </p>
-          <div className="mt-8">
-            <Button asChild size="lg" variant="primary">
-              <Link to={localePath(SEG.contact)}>{t("trak.cta")}</Link>
-            </Button>
+          <div className="overflow-hidden rounded-2xl shadow-xl">
+            <img
+              src="/images/tours/trak/trakexperience.jpg"
+              alt={t("trak.title")}
+              className="h-72 w-full object-cover md:h-96"
+            />
           </div>
         </div>
       </div>
