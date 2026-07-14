@@ -140,7 +140,8 @@
     "ratingLabel": "Puan",
     "featuredBadge": "Öne Çıkan",
     "filterByRating": "Puana göre filtrele",
-    "empty": "Henüz yorum yok."
+    "empty": "Henüz yorum yok.",
+    "writeReview": "Yorum Yaz / Daha Fazla Yorum"
   },
   "reviewsMarquee": {
     "eyebrow": "GÖRÜŞLER",

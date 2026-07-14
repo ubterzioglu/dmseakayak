@@ -140,7 +140,8 @@
     "ratingLabel": "Rating",
     "featuredBadge": "Featured",
     "filterByRating": "Filter by rating",
-    "empty": "No reviews yet."
+    "empty": "No reviews yet.",
+    "writeReview": "Write a Review / More Reviews"
   },
   "reviewsMarquee": {
     "eyebrow": "TESTIMONIALS",

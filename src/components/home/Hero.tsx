@@ -26,7 +26,7 @@ export function Hero() {
     <div className="relative overflow-hidden">
       {/* Background video — admin-managed via /admin (Hero Video); falls back to
           the bundled /videos/heronew.mp4 if none is configured or it 404s. */}
-      <div className="relative min-h-[52vh] w-full overflow-hidden">
+      <div className="relative min-h-[39vh] w-full overflow-hidden">
         <video
           key={videoSrc}
           src={videoSrc}

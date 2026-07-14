@@ -10,6 +10,22 @@ import {
   type ReviewLang,
 } from "@/hooks/useAdminContent";
 
+// TODO: Kullanıcının Google Haritalar işletme linkini buraya koy (gerçek link bekleniyor).
+const GOOGLE_REVIEW_URL = "https://www.google.com/maps/search/?api=1&query=Dragoman+SeaKayak+Kas";
+
+function WriteReviewButton({ label }: { label: string }) {
+  return (
+    <a
+      href={GOOGLE_REVIEW_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 rounded-full bg-orange px-6 py-3 font-semibold text-white shadow-[0_10px_26px_rgba(241,110,11,0.4)] transition-transform hover:-translate-y-0.5 hover:bg-orange-soft"
+    >
+      {label}
+    </a>
+  );
+}
+
 function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex gap-0.5" aria-label={`${rating} out of 5 stars`}>
@@ -73,11 +89,16 @@ export default function Reviews() {
       <Seo title={t("reviews.title")} description={t("reviews.subtitle")} jsonLd={jsonLd} />
 
       <Section>
-        <SectionHeading
-          eyebrow={t("reviews.eyebrow")}
-          title={t("reviews.title")}
-          subtitle={t("reviews.subtitle")}
-        />
+        <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+          <SectionHeading
+            eyebrow={t("reviews.eyebrow")}
+            title={t("reviews.title")}
+            subtitle={t("reviews.subtitle")}
+          />
+          <div className="shrink-0">
+            <WriteReviewButton label={t("reviews.writeReview")} />
+          </div>
+        </div>
 
         {/* Review cards */}
         {!loading && (
@@ -124,6 +145,10 @@ export default function Reviews() {
         {!loading && reviews.length === 0 && (
           <p className="py-12 text-center text-teal/50">{t("reviews.empty")}</p>
         )}
+
+        <div className="mt-10 text-center">
+          <WriteReviewButton label={t("reviews.writeReview")} />
+        </div>
       </Section>
     </>
   );

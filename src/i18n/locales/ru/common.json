@@ -140,7 +140,8 @@
     "ratingLabel": "Оценка",
     "featuredBadge": "Избранное",
     "filterByRating": "Фильтр по оценке",
-    "empty": "Пока нет отзывов."
+    "empty": "Пока нет отзывов.",
+    "writeReview": "Написать отзыв / Больше отзывов"
   },
   "reviewsMarquee": {
     "eyebrow": "ОТЗЫВЫ",

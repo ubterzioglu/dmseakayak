@@ -140,7 +140,8 @@
     "ratingLabel": "Note",
     "featuredBadge": "En vedette",
     "filterByRating": "Filtrer par note",
-    "empty": "Aucun avis pour le moment."
+    "empty": "Aucun avis pour le moment.",
+    "writeReview": "Écrire un avis / Plus d'avis"
   },
   "reviewsMarquee": {
     "eyebrow": "TÉMOIGNAGES",

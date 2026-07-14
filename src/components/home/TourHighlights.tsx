@@ -22,7 +22,7 @@ export function TourHighlights() {
 
   return (
     <>
-      <Section>
+      <Section className="pt-6 md:pt-8">
         <SectionHeading
           eyebrow="Deneyimler"
           title={t("tours.title")}
