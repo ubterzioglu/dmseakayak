@@ -34,7 +34,7 @@ export function TourHighlights() {
           eyebrow={t("tours.multiDayEyebrow")}
           title={t("tours.multiDayTitle")}
           subtitle={t("tours.multiDaySubtitle")}
-          subtitleClassName="whitespace-nowrap"
+          subtitleClassName="md:whitespace-nowrap"
         />
         {loading ? (
           <p className="text-center text-sm text-teal/60">{t("common.loading")}</p>

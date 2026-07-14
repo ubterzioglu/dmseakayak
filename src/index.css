@@ -22,11 +22,13 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-white font-sans text-ink antialiased;
     line-height: 1.65;
+    overflow-x: hidden;
   }
 }
 
