@@ -43,9 +43,9 @@ export default function Home() {
       />
       <Hero />
       <TourHighlights />
+      <TailorMadeBanner />
       <WhyChooseUs />
       <ReviewsMarquee />
-      <TailorMadeBanner />
     </>
   );
 }
