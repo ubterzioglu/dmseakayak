@@ -3,6 +3,7 @@ import { Hero } from "@/components/home/Hero";
 import { TourHighlights } from "@/components/home/TourHighlights";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { ReviewsMarquee } from "@/components/home/ReviewsMarquee";
+import { TailorMadeBanner } from "@/components/home/TailorMadeBanner";
 import { useLang } from "@/hooks/useLang";
 import { SITE } from "@/lib/site";
 
@@ -44,6 +45,7 @@ export default function Home() {
       <TourHighlights />
       <WhyChooseUs />
       <ReviewsMarquee />
+      <TailorMadeBanner />
     </>
   );
 }

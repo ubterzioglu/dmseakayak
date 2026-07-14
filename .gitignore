@@ -31,8 +31,7 @@ hero.MOV
 hero.mov
 heronew.MP4
 
-# Root-level logo sources (optimized copies live in public/)
-/kenarliklilogo.png
-/maskotbig.png
-/ognew.png
-/transparanlogo.png
+# Logo sources (optimized copies live in public/)
+docs/kenarliklilogo-source.png
+docs/maskotbig-source.png
+docs/ognew-source.png
