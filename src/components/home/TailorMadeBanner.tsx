@@ -10,9 +10,9 @@ export function TailorMadeBanner() {
   return (
     <Section className="pt-0">
       <div className="relative isolate overflow-hidden rounded-3xl bg-teal-deep text-center text-white shadow-lg">
-        {/* Background video — reuses the footer's wave loop so no extra asset ships. */}
+        {/* Background video — dedicated wave loop, downscaled/trimmed to ~2.3MB for web. */}
         <video
-          src="/videos/footer.mp4"
+          src="/videos/tailormade-wave.mp4"
           autoPlay
           muted
           loop
