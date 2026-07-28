@@ -32,25 +32,35 @@ const SEG = {
   faq: "sss",
 };
 
-function loadEnv() {
-  const txt = readFileSync(resolve(ROOT, ".env.local"), "utf8");
-  const env = {};
-  for (const line of txt.split(/\r?\n/)) {
-    if (!line || line.startsWith("#") || !line.includes("=")) continue;
-    const i = line.indexOf("=");
-    const v = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
-    env[line.slice(0, i).trim()] = v;
+// .env.local exists for local dev but is deliberately excluded from the
+// Docker build context (.dockerignore) — in CI/Docker these come from
+// process.env instead (see Dockerfile ARG/ENV).
+function loadEnvFile() {
+  try {
+    const txt = readFileSync(resolve(ROOT, ".env.local"), "utf8");
+    const env = {};
+    for (const line of txt.split(/\r?\n/)) {
+      if (!line || line.startsWith("#") || !line.includes("=")) continue;
+      const i = line.indexOf("=");
+      const v = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
+      env[line.slice(0, i).trim()] = v;
+    }
+    return env;
+  } catch {
+    return {};
   }
-  return env;
 }
 
 /** Fetch published tour slugs from Supabase (anon key — public, read-only data). */
 async function tourSlugs() {
-  const env = loadEnv();
+  const fileEnv = loadEnvFile();
+  const env = { ...fileEnv, ...process.env };
   const url = (env.SB_PROJECT_URL || env.VITE_SUPABASE_URL || "").replace(/\/$/, "");
   const key = env.SB_ANON_KEY || env.VITE_SUPABASE_ANON_KEY;
   if (!url || !key) {
-    throw new Error("Missing SB_PROJECT_URL / SB_ANON_KEY in .env.local");
+    throw new Error(
+      "Missing Supabase URL/anon key: set SB_PROJECT_URL + SB_ANON_KEY (or VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY) in .env.local or the environment.",
+    );
   }
   const res = await fetch(`${url}/rest/v1/tours?select=slug&published=eq.true`, {
     headers: { apikey: key, Authorization: `Bearer ${key}` },
