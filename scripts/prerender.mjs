@@ -105,17 +105,27 @@ async function main() {
           // Let async data (Supabase tour fetch, i18n settle) finish painting.
           await page.waitForTimeout(800);
 
-          // index.html ships static <title>/<meta description>/<link canonical>
-          // for the pre-JS crawl pass. react-helmet-async layers its own
-          // per-route versions on top at runtime but never removes the
-          // static originals, so both are present in the DOM by now — strip
-          // the static leftovers (no data-rh attribute) so crawlers see a
-          // single, correct canonical/description per page.
+          // index.html ships a static <title>/<meta description>/<link
+          // canonical>/<script type=application/ld+json> for the pre-JS
+          // crawl pass. react-helmet-async layers its own per-route versions
+          // on top at runtime but never removes the static originals, so
+          // both are present in the DOM by now — strip the static leftovers
+          // (no data-rh attribute) so crawlers see a single, correct
+          // canonical/description/structured-data set per page. Helmet-owned
+          // JSON-LD blocks (e.g. TourDetail's [tripLd, breadcrumbLd]) each
+          // carry data-rh="true" and are left alone — only the one static,
+          // unmanaged block from index.html gets removed.
           await page.evaluate(() => {
-            const managed = new Set(["title", "meta[name=description]", "link[rel=canonical]"]);
+            const managed = new Set([
+              "title",
+              "meta[name=description]",
+              "link[rel=canonical]",
+              "script[type='application/ld+json']",
+            ]);
             for (const sel of managed) {
               const all = Array.from(document.head.querySelectorAll(sel));
-              if (all.length > 1) all.filter((el) => !el.hasAttribute("data-rh")).forEach((el) => el.remove());
+              const hasHelmetVersion = all.some((el) => el.hasAttribute("data-rh"));
+              if (hasHelmetVersion) all.filter((el) => !el.hasAttribute("data-rh")).forEach((el) => el.remove());
             }
           });
 
