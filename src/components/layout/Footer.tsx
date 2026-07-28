@@ -101,6 +101,9 @@ export function Footer() {
         <span className="mx-2 text-white/25">·</span>
         <a href="https://tekhurdametal.com/hurda-fiyatlari/" rel="dofollow" target="_blank" className="hover:text-orange-soft">Hurda Fiyatları</a>
         {" "}Tek Hurda Metal
+        <span className="mx-2 text-white/25">·</span>
+        <a href="https://lionerotik.com/urunler/fetis-urunleri" rel="dofollow" target="_blank" className="hover:text-orange-soft">Antalya Seks Shop</a>
+        {" "}Lion Erotik
       </div>
     </footer>
   );
