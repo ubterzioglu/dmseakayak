@@ -54,7 +54,19 @@
   },
   "whyChoose": {
     "title": "Why Choose Us?",
-    "subtitle": "Small groups led by Turkish Canoe Federation licensed guides — a safe and unforgettable experience."
+    "subtitle": "With more than 25 years of experience in the region, Dragoman Diving & Outdoors offers a carefully planned sea kayaking experience where safety, professionalism and guest comfort always come first.",
+    "item1Title": "More than 25 years of local experience",
+    "item1Body": "An experienced team that knows the waters, coastline, weather conditions and routes of Kaş and Kekova inside out.",
+    "item2Title": "Licensed, professional guides",
+    "item2Body": "Trained, English-speaking tour leaders licensed by the Turkish Canoe Federation.",
+    "item3Title": "An operation that never compromises on safety",
+    "item3Body": "Routes, weather and sea conditions are assessed before every tour; equipment and procedures are prepared in line with defined standards.",
+    "item4Title": "Small groups, a controlled experience",
+    "item4Body": "We travel in small groups so we can look after every participant closely and protect both safety and tour quality.",
+    "item5Title": "Comfortable, carefully run organisation",
+    "item5Body": "The right equipment, planned breaks and a balanced pace are all designed to keep you comfortable throughout the day.",
+    "item6Title": "An approach that matches your level",
+    "item6Body": "Clear briefings and suitable guidance for everyone, from first-time paddlers to experienced participants."
   },
   "tours": {
     "eyebrow": "Experiences",

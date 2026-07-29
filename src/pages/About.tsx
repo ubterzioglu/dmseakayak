@@ -1,16 +1,12 @@
 import { Seo } from "@/components/seo/Seo";
 import { Section, SectionHeading } from "@/components/ui/section";
+import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { useLang } from "@/hooks/useLang";
-import { useToursData } from "@/hooks/useTours";
 import { SITE } from "@/lib/site";
 import { ShieldCheck, Users, Award } from "lucide-react";
 
 export default function About() {
-  const { t, pick, localePath } = useLang();
-  const { dayTours, loading, error } = useToursData();
-
-  // First day tour that defines whyChoose.
-  const whyChoose = pick(dayTours.find((tour) => tour.whyChoose)?.whyChoose ?? { tr: [], en: [], fr: [], ru: [] });
+  const { t, localePath } = useLang();
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -81,29 +77,7 @@ export default function About() {
       </Section>
 
       {/* Why Choose Us */}
-      <Section className="bg-foam">
-        <SectionHeading
-          eyebrow={t("whyChoose.title")}
-          title={t("whyChoose.title")}
-          subtitle={t("whyChoose.subtitle")}
-        />
-        {error && (
-          <p className="mt-6 text-sm text-red-600">{t("tours.loadError")}</p>
-        )}
-        {!error && !loading && whyChoose.length === 0 && null}
-        {!error && whyChoose.length > 0 && (
-          <ul className="mt-6 grid gap-4">
-            {whyChoose.map((item, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-teal/10 text-teal">
-                  ✓
-                </span>
-                <span className="text-teal/80">{item}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Section>
+      <WhyChooseUs className="bg-foam" />
 
       {/* Guides & Safety */}
       <Section>
@@ -131,8 +105,8 @@ export default function About() {
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-teal/10">
               <Users className="h-6 w-6 text-teal" />
             </div>
-            <h3 className="text-lg font-bold text-teal-deep">{t("whyChoose.title")}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-teal/70">{t("whyChoose.subtitle")}</p>
+            <h3 className="text-lg font-bold text-teal-deep">{t("whyChoose.item4Title")}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-teal/70">{t("whyChoose.item4Body")}</p>
           </div>
         </div>
       </Section>

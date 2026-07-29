@@ -54,7 +54,19 @@
   },
   "whyChoose": {
     "title": "Pourquoi nous choisir ?",
-    "subtitle": "Petits groupes encadrés par des guides licenciés de la Fédération turque de canoë — une expérience sûre et inoubliable."
+    "subtitle": "Forte de plus de 25 ans d'expérience dans la région, Dragoman Diving & Outdoors propose une expérience de kayak de mer soigneusement planifiée, où la sécurité, le professionnalisme et le confort des voyageurs passent toujours en premier.",
+    "item1Title": "Plus de 25 ans d'expérience dans la région",
+    "item1Body": "Une équipe expérimentée qui connaît parfaitement la mer, les côtes, les conditions météorologiques et les itinéraires de Kaş et Kekova.",
+    "item2Title": "Des guides licenciés et professionnels",
+    "item2Body": "Des chefs d'excursion licenciés par la Fédération turque de canoë, formés et anglophones.",
+    "item3Title": "Une organisation sans compromis sur la sécurité",
+    "item3Body": "L'itinéraire ainsi que les conditions météo et maritimes sont évalués avant chaque sortie ; le matériel et les procédures sont préparés selon des standards définis.",
+    "item4Title": "Petits groupes, expérience maîtrisée",
+    "item4Body": "Nous partons en petits groupes afin de nous occuper de près de chaque participant et de préserver la sécurité comme la qualité de l'excursion.",
+    "item5Title": "Une organisation confortable et soignée",
+    "item5Body": "Le choix du bon matériel, des pauses planifiées et un rythme équilibré vous permettent de vous sentir à l'aise tout au long de la journée.",
+    "item6Title": "Une approche adaptée à votre niveau",
+    "item6Body": "Des explications claires et un accompagnement adapté pour tous, des débutants aux pagayeurs expérimentés."
   },
   "tours": {
     "eyebrow": "Expériences",

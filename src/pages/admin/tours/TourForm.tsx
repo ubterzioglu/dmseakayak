@@ -298,7 +298,7 @@ export function TourForm({ editRow, submitting, onSave, onCancelEdit }: TourForm
         <LocalizedField label="Açıklama (uzun tanıtım, ops.)" value={form.description} onChange={(v) => set("description", v)} multiline rows={4} />
         <LocalizedField label="Öne çıkanlar" value={form.highlightsText} onChange={(v) => set("highlightsText", v)} multiline rows={4} hint="Her satır bir madde." />
         <LocalizedField label="Dahil olanlar" value={form.includedText} onChange={(v) => set("includedText", v)} multiline rows={4} hint="Her satır bir madde." />
-        <LocalizedField label="Neden bizi seçmelisiniz (ops.)" value={form.whyChooseText} onChange={(v) => set("whyChooseText", v)} multiline rows={4} hint="Her satır bir madde. Ana sayfadaki 'Neden Bizi Seçmelisiniz?' bölümü ilk dolu turdan beslenir." />
+        <LocalizedField label="Neden bizi seçmelisiniz (ops.)" value={form.whyChooseText} onChange={(v) => set("whyChooseText", v)} multiline rows={4} hint="Her satır bir madde. Not: Ana sayfadaki ve Hakkımızda sayfasındaki 'Neden Bizi Seçmelisiniz?' bölümü artık sabit metinden gelir; bu alan şu an sitede gösterilmiyor." />
         {form.isMultiDay ? (
           <>
             <LocalizedField label="Grup büyüklüğü (ops.)" value={form.groupSize} onChange={(v) => set("groupSize", v)} hint='Örn. "min 6, max 12 kişi".' />

@@ -58,7 +58,19 @@
   },
   "whyChoose": {
     "title": "Neden Bizi Seçmelisiniz?",
-    "subtitle": "Türkiye Kano Federasyonu lisanslı rehberler eşliğinde küçük gruplarla, güvenli ve unutulmaz bir deneyim."
+    "subtitle": "Dragoman Diving & Outdoors bölgede 25 yılı aşan deneyimiyle; güvenliğin, profesyonelliğin ve misafir konforunun her zaman ön planda olduğu, özenle planlanmış bir deniz kayağı deneyimi sunar.",
+    "item1Title": "25 yılı aşan bölge deneyimi",
+    "item1Body": "Kaş ve Kekova'nın denizini, kıyılarını, hava koşullarını ve rotalarını yakından tanıyan deneyimli ekip.",
+    "item2Title": "Lisanslı ve profesyonel rehberler",
+    "item2Body": "Türkiye Kano Federasyonu lisanslı, eğitimli ve İngilizce konuşan tur liderleri.",
+    "item3Title": "Güvenlikten taviz vermeyen operasyon",
+    "item3Body": "Rota, hava ve deniz koşulları her tur öncesinde değerlendirilir; ekipman ve uygulamalar belirlenmiş standartlara uygun şekilde hazırlanır.",
+    "item4Title": "Küçük gruplar, kontrollü deneyim",
+    "item4Body": "Her katılımcıyla yakından ilgilenebilmek, güvenliği ve tur kalitesini korumak için küçük gruplarla hareket ediyoruz.",
+    "item5Title": "Konforlu ve özenli organizasyon",
+    "item5Body": "Doğru ekipman seçimi, planlı molalar ve dengeli tur temposuyla gün boyunca kendinizi rahat hissetmeniz hedeflenir.",
+    "item6Title": "Deneyim seviyenize uygun yaklaşım",
+    "item6Body": "İlk kez kürek çekenlerden deneyimli katılımcılara kadar herkes için anlaşılır bilgilendirme ve uygun yönlendirme."
   },
   "tours": {
     "eyebrow": "Deneyimler",
