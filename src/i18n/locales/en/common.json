@@ -58,13 +58,13 @@
     "item1Title": "More than 25 years of local experience",
     "item1Body": "An experienced team that knows the waters, coastline, weather conditions and routes of Kaş and Kekova inside out.",
     "item2Title": "Licensed, professional guides",
-    "item2Body": "Trained, English-speaking tour leaders licensed by the Turkish Canoe Federation, sharing the history, geography and culture of the region along with entertaining stories.",
+    "item2Body": "Historical, geographical and cultural insights about the region, as well as entertaining stories, from licensed, trained and English-speaking tour leaders affiliated with the Turkish Canoe Federation.",
     "item3Title": "An operation that never compromises on safety",
-    "item3Body": "Routes, weather and sea conditions assessed before every tour; equipment and procedures prepared in line with defined standards.",
+    "item3Body": "Assessment of the route, weather and sea conditions prior to each tour; equipment and procedures prepared in accordance with established standards.",
     "item4Title": "Small groups, a controlled experience",
-    "item4Body": "We travel in small groups and/or with additional safety measures so we can look after every participant closely and protect both safety and tour quality.",
+    "item4Body": "To ensure we can give each participant our full attention and to maintain safety and the quality of the tour, we operate in small groups and/or with additional safety measures.",
     "item5Title": "Comfortable, carefully run organisation",
-    "item5Body": "The right equipment, planned breaks, snacks prepared according to dietary and allergy information, lunch menus with options and a balanced pace keep you comfortable throughout the day.",
+    "item5Body": "Comfort throughout the day, thanks to the right choice of equipment, scheduled breaks, snacks tailored to dietary requirements and allergies, a choice of lunch menus, and a balanced pace for the tour.",
     "item6Title": "An approach that matches your level",
     "item6Body": "Clear briefings and suitable guidance for everyone, from first-time paddlers to experienced participants."
   },
@@ -105,6 +105,7 @@
     "follow": "Follow us"
   },
   "footer": {
+    "tursab": "TÜRSAB-approved Group A Travel Agency (A4615)",
     "tagline": "Guided sea kayaking tours in the Kekova & Kaş region.",
     "rights": "All rights reserved.",
     "quickLinks": "Quick links"

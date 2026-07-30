@@ -45,6 +45,8 @@ export function Footer() {
       <div className="container flex flex-col items-center space-y-4 py-10 text-center [text-shadow:0_1px_3px_rgba(0,0,0,0.55)]">
         <div className="flex flex-col items-center">
           <span className="text-xl font-semibold text-white">{SITE.name}</span>
+          {/* TÜRSAB licence sits between the brand name and the tagline as a trust badge. */}
+          <p className="mt-1 text-xs font-medium tracking-wide text-orange-soft">{t("footer.tursab")}</p>
           <p className="mt-2 md:whitespace-nowrap text-sm opacity-80">{t("footer.tagline")}</p>
         </div>
 
