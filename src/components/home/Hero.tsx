@@ -1,35 +1,20 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/hooks/useLang";
 import { SEG } from "@/lib/routes";
-import { fetchActiveHeroVideoUrl } from "@/hooks/useAdminContent";
 
 const DEFAULT_HERO_VIDEO = "/videos/heronew.mp4";
 
 export function Hero() {
   const { t, localePath } = useLang();
-  const [videoSrc, setVideoSrc] = useState(DEFAULT_HERO_VIDEO);
-
-  useEffect(() => {
-    let cancelled = false;
-    void fetchActiveHeroVideoUrl().then((url) => {
-      if (!cancelled && url) setVideoSrc(url);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   return (
     <div className="relative overflow-hidden">
-      {/* Background video — admin-managed via /admin (Hero Video); falls back to
-          the bundled /videos/heronew.mp4 if none is configured or it 404s. */}
+      {/* Background video is bundled with the site to avoid Supabase Storage egress. */}
       <div className="relative min-h-[39vh] w-full overflow-hidden">
         <video
-          key={videoSrc}
-          src={videoSrc}
+          src={DEFAULT_HERO_VIDEO}
           poster="/seakayakog.jpg"
           autoPlay
           muted

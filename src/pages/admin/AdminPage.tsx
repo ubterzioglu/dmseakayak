@@ -5,7 +5,6 @@ import type { Session, User } from "@supabase/supabase-js";
 import {
   BookOpenText,
   ClipboardList,
-  Clapperboard,
   FolderOpen,
   GalleryVerticalEnd,
   KeyRound,
@@ -26,7 +25,6 @@ import { cn } from "@/lib/utils";
 import BlogPanel from "./BlogPanel";
 import ChangePasswordModal from "./ChangePasswordModal";
 import GuidePanel from "./GuidePanel";
-import HeroVideoPanel from "./HeroVideoPanel";
 import ReservationsPanel from "./ReservationsPanel";
 import ReviewsPanel from "./ReviewsPanel";
 import RevisionsPanel from "./RevisionsPanel";
@@ -56,7 +54,6 @@ type TabKey =
   | "revisions"
   | "blog"
   | "tours"
-  | "heroVideo"
   | "reviews"
   | "updates";
 
@@ -84,12 +81,6 @@ const TABS: AdminNavItem<TabKey>[] = [
     label: "Turlar",
     description: "Turları ekleyin, düzenleyin, sıralayın ve yayınlayın.",
     icon: Map,
-  },
-  {
-    key: "heroVideo",
-    label: "Hero Video",
-    description: "Anasayfa hero arka plan videosunu değiştirin.",
-    icon: Clapperboard,
   },
   {
     key: "reviews",
@@ -336,8 +327,6 @@ function renderPanel(item: AdminNavItem<TabKey>) {
       return <BlogPanel infoSlot={infoSlot} />;
     case "tours":
       return <ToursPanel infoSlot={infoSlot} />;
-    case "heroVideo":
-      return <HeroVideoPanel infoSlot={infoSlot} />;
     case "reviews":
       return <ReviewsPanel infoSlot={infoSlot} />;
     case "updates":
