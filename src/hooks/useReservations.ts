@@ -8,9 +8,10 @@ export interface ReservationRow extends ReservationInput {
 }
 
 /**
- * Inserts a reservation request. Returns { ok } — never throws so the caller
- * can always fall back to WhatsApp. When Supabase is not configured, returns
- * ok:false with a sentinel reason so the UI still proceeds to WhatsApp.
+ * Inserts a reservation request. Returns { ok } — never throws, so the caller
+ * decides how to surface a failure. An insert also fires the DB trigger that
+ * emails the internal alert, so ok:false means the request reached nobody and
+ * the UI must say so rather than thanking the visitor.
  */
 export async function submitReservation(
   input: ReservationInput,

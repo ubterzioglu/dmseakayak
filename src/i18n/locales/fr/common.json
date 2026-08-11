@@ -92,8 +92,9 @@
     "submit": "Envoyer la demande",
     "submitting": "Envoi...",
     "successTitle": "Demande reçue !",
-    "success": "Nous vous contacterons rapidement. Ouverture de WhatsApp...",
-    "error": "Une erreur s'est produite. Veuillez nous contacter sur WhatsApp.",
+    "success": "Nous vous contacterons rapidement.",
+    "errorTitle": "Demande non envoyée",
+    "error": "Nous n'avons pas pu enregistrer votre demande. Veuillez réessayer ou nous contacter directement.",
     "orWhatsapp": "ou écrivez sur WhatsApp"
   },
   "contact": {

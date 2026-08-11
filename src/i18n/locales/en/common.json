@@ -92,8 +92,9 @@
     "submit": "Send request",
     "submitting": "Sending...",
     "successTitle": "Request received!",
-    "success": "We'll contact you shortly. Opening WhatsApp...",
-    "error": "Something went wrong. Please reach us on WhatsApp.",
+    "success": "We'll contact you shortly.",
+    "errorTitle": "Request not sent",
+    "error": "We couldn't save your request. Please try again or contact us directly.",
     "orWhatsapp": "or message on WhatsApp"
   },
   "contact": {

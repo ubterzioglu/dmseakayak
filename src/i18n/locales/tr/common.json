@@ -96,8 +96,9 @@
     "submit": "Talebi gönder",
     "submitting": "Gönderiliyor...",
     "successTitle": "Talebiniz alındı!",
-    "success": "En kısa sürede sizinle iletişime geçeceğiz. WhatsApp penceresi açılıyor...",
-    "error": "Bir sorun oluştu. Lütfen WhatsApp üzerinden bize ulaşın.",
+    "success": "En kısa sürede sizinle iletişime geçeceğiz.",
+    "errorTitle": "Talep gönderilemedi",
+    "error": "Talebiniz kaydedilemedi. Lütfen tekrar deneyin veya bize doğrudan ulaşın.",
     "orWhatsapp": "veya WhatsApp ile yaz"
   },
   "contact": {

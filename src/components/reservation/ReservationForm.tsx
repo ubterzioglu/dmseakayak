@@ -4,7 +4,6 @@ import { toast } from "sonner";
 import { useSearchParams } from "react-router-dom";
 import { reservationSchema, type ReservationInput } from "./schema";
 import { submitReservation } from "@/hooks/useReservations";
-import { buildWhatsappLink } from "@/lib/whatsapp";
 import { useLang } from "@/hooks/useLang";
 import { useToursData } from "@/hooks/useTours";
 import { Button } from "@/components/ui/button";
@@ -32,30 +31,16 @@ export function ReservationForm() {
     if (data.honeypot) return; // bot
     const result = await submitReservation(data, locale);
 
-    const tour = data.tourSlug
-      ? dayTours.find((t) => t.slug === data.tourSlug)
-      : undefined;
-    const tourTitle =
-      data.tourSlug === "tailor-made"
-        ? t("reservation.tailorMadeTour")
-        : tour
-          ? pick(tour.title)
-          : undefined;
-    const waLink = buildWhatsappLink({
-      tourTitle,
-      date: data.date || undefined,
-      partySize: data.partySize,
-      name: data.name,
-    });
-
-    if (result.ok) {
-      toast.success(t("reservation.successTitle"), { description: t("reservation.success") });
-    } else {
-      // Supabase missing/failed — still let the user reach us via WhatsApp.
-      toast.message(t("reservation.successTitle"), { description: t("reservation.error") });
+    if (!result.ok) {
+      // The insert is the only path now that the WhatsApp hand-off is gone, so
+      // a failure must read as a failure — and the form keeps its values so the
+      // visitor can retry without retyping everything.
+      toast.error(t("reservation.errorTitle"), { description: t("reservation.error") });
+      return;
     }
+
+    toast.success(t("reservation.successTitle"), { description: t("reservation.success") });
     reset({ tourSlug: presetTour });
-    window.open(waLink, "_blank", "noopener");
   };
 
   return (
