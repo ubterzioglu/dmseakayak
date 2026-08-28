@@ -13,6 +13,18 @@ interface UpdateGroup {
 
 const ENTRIES: UpdateGroup[] = [
   {
+    date: "28 Ağustos 2026",
+    title: "Site Almanca dil desteği kazandı",
+    items: [
+      "Almanca (DE) beşinci dil olarak eklendi; üst menüdeki dil değiştiriciye DE butonu geldi ve /de adresleri yayında.",
+      "Sitenin tüm arayüz metinleri ve Sık Sorulan Sorular Almancaya çevrildi; turizm terimleri (tur, dahil olan hizmetler, 'ab' fiyat ifadesi) elden geçirildi.",
+      "Bir içeriğin Almancası henüz girilmemişse ziyaretçiye Türkçe yerine İngilizcesi gösteriliyor — aynı iyileştirme Fransızca ve Rusça için de geçerli.",
+      "Otomatik çeviri servisi DeepL'e taşındı: çeviri kalitesi belirgin arttı, aylık kota 1.000.000 karaktere çıktı ve tur formundaki çeviri işlemi çok daha hızlı tamamlanıyor. DeepL erişilemezse eski servise otomatik düşülüyor.",
+      "Yorum çevirileri de Almancayı kapsıyor; elle düzeltilmiş çeviriler makine çevirisiyle ezilmemeye devam ediyor.",
+      "Site haritası (sitemap) ve arama motoru etiketleri Almancayı içerecek şekilde güncellendi.",
+    ],
+  },
+  {
     date: "11 Temmuz 2026",
     title: "Yorumlar temizlendi, hero/admin panel küçük düzeltmeler ve dosya düzeni",
     items: [

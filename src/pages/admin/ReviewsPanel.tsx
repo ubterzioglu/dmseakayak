@@ -49,6 +49,7 @@ const LANG_LABEL: Record<ReviewLang, string> = {
   en: "English",
   fr: "Français",
   ru: "Русский",
+  de: "Deutsch",
 };
 
 // ─── Per-review translation editor ─────────────────────────────────────────────
@@ -565,7 +566,9 @@ export default function ReviewsPanel({ infoSlot }: AdminPanelProps) {
                     >
                       {r.status === "published" ? "Yayında" : "Arşiv"}
                     </span>
-                    <span>{trs.length}/4 dil</span>
+                    <span>
+                      {trs.length}/{REVIEW_LANGS.length} dil
+                    </span>
                     <span>sıra: {r.sort_order}</span>
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">

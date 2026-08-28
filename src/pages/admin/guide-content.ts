@@ -83,16 +83,16 @@ export const GUIDE_SECTIONS: GuideSection[] = [
   {
     tab: "Turlar",
     summary:
-      "Sitedeki tüm turları yönetirsiniz — tur ekler, düzenler, sıralar, yayına alır, kaldırır ve tek tuşla 4 dile çevirirsiniz.",
+      "Sitedeki tüm turları yönetirsiniz — tur ekler, düzenler, sıralar, yayına alır, kaldırır ve tek tuşla diğer dillere çevirirsiniz.",
     steps: [
       "Yeni tur için formu boş doldurun ya da listedeki bir turda 'Düzenle'ye basın.",
       "'Çok günlü tur' kutusu, turun sitede hangi bölümde görüneceğini belirler: günübirlik turlar mı, Çok Günlü Ekspedisyonlar mı.",
       "Fiyat, mesafe, kalkış/dönüş saati gibi sayısal/pratik bilgileri üstteki alanlara girin (çok günlü turda gün sayısı, gece sayısı ve kişi başı fiyat çıkar).",
       "Kapak görselini ve galeri görsellerini bilgisayarınızdan yükleyin ya da hazır bir görsel adresi (URL) yapıştırın.",
-      "4 dilli içerik bölümüne gelin: Başlığı, sloganı ve açıklamayı en azından Türkçe (TR) olarak doldurun.",
+      "Çok dilli içerik bölümüne gelin: Başlığı, sloganı ve açıklamayı en azından Türkçe (TR) olarak doldurun.",
       "Sağ üstteki turuncu 'Türkçeden Tümünü Çevir' butonuna basın — Türkçe yazdığınız her şey tek tuşla İngilizce, Fransızca ve Rusça'ya otomatik çevrilir.",
       "İsterseniz her alanın kendi başlığının yanındaki küçük 'TR'den çevir' butonuyla sadece o tek alanı da çevirebilirsiniz.",
-      "Otomatik çeviri sonrası EN/FR/RU kutularını gözden geçirin; gerekirse elle düzeltin — çeviri motoru mükemmel değildir, kontrol iyi bir alışkanlıktır.",
+      "Otomatik çeviri sonrası EN/FR/RU/DE kutularını gözden geçirin; gerekirse elle düzeltin — çeviri motoru mükemmel değildir, kontrol iyi bir alışkanlıktır.",
       "Liste alanlarında (öne çıkanlar, dahil olanlar vb.) her satır ayrı bir madde olur; çeviri de satır satır, aynı sırada yapılır.",
       "Tur programı / gün gün program gibi alanlarda 'ikon | başlık | açıklama' biçimi kullanılır — otomatik çeviri sadece başlık ve açıklamayı çevirir, ikonu/gün numarasını değiştirmez.",
       "'Sıra' turun kendi bölümündeki yerini belirler (küçük sayı önce gelir).",
@@ -109,13 +109,13 @@ export const GUIDE_SECTIONS: GuideSection[] = [
   {
     tab: "Yorumlar",
     summary:
-      "Sitede gösterilen müşteri yorumlarını yönetirsiniz — tek tek veya toplu ekleyebilir, otomatik çeviriyle 4 dile ulaştırabilirsiniz.",
+      "Sitede gösterilen müşteri yorumlarını yönetirsiniz — tek tek veya toplu ekleyebilir, otomatik çeviriyle tüm dillere ulaştırabilirsiniz.",
     steps: [
       "Tek yorum için: 'Yeni Yorum' formunda Yazar, Puan (1-5), Yorum metni (orijinal dilinde), Orijinal dil ve isteğe bağlı Kaynak (Google, TripAdvisor) girin, 'Kaydet'e basın.",
       "Çok sayıda yorum için 'Toplu Ekle' kutusunu kullanın.",
       "Satır biçimi: ilk satıra 'Ad | 5', alt satıra yorum metni; her yorumu üç çizgi (---) ile ayırın. JSON dizisi formatı da desteklenir.",
       "'Yorumları Ekle'ye basın; kaç tanesinin eklendiği size bildirilir — çeviri arka planda otomatik başlar.",
-      "Bir yorum kartında 'Çeviriler'e basarak TR/EN/FR/RU sekmelerini görebilir, her dili elle düzenleyip kaydedebilirsiniz.",
+      "Bir yorum kartında 'Çeviriler'e basarak TR/EN/FR/RU/DE sekmelerini görebilir, her dili elle düzenleyip kaydedebilirsiniz.",
       "Elle kaydettiğiniz bir çeviri bir daha otomatik çeviri tarafından üzerine yazılmaz (kalem ✎ işaretiyle gösterilir).",
       "Otomatik çeviri eksik kaldıysa veya sonradan düzelttiyseniz kart üzerindeki 'Yeniden Çevir'e basın.",
       "Üstteki 'Otomatik çeviri' bölümünden 'Tümünü Çevir'e basarak tüm yorumlardaki eksik dilleri toplu tamamlayabilirsiniz.",

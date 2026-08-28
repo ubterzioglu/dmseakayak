@@ -26,7 +26,7 @@ Output: `scripts/output/reviews.json`.
 1. Open `/admin` → **Yorumlar** tab → **Toplu Ekle**.
 2. Paste the contents of `reviews.json`.
 3. Click **Yorumları Ekle**. Reviews are published immediately (auto-publish).
-4. The insert trigger auto-translates each review into TR/EN/FR/RU. If the free
+4. The insert trigger auto-translates each review into TR/EN/FR/RU/DE. If the free
    MyMemory quota throttles a big first batch, click **Tümünü Çevir** later to
    fill in the missing languages (already-translated rows are skipped).
 

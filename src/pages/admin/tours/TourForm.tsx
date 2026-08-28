@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { LocalizedField, translateFromTurkish } from "./LocalizedFields";
+import { TRANSLATION_TARGETS_LABEL } from "@/lib/localized";
 import {
   emptyForm,
   formToInput,
@@ -53,8 +54,10 @@ export function TourForm({ editRow, submitting, onSave, onCancelEdit }: TourForm
   const set = <K extends keyof TourFormState>(key: K, value: TourFormState[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
 
-  /** Fills every localized field's EN/FR/RU from its Turkish text, skipping
-   * fields left empty in Turkish. Overwrites any existing translations. */
+  /** Fills every localized field's non-Turkish languages from its Turkish
+   * text, skipping fields left empty in Turkish. Overwrites any existing
+   * translations. The target set follows LOCALES — see TARGET_LOCALES in
+   * LocalizedFields.tsx. */
   const handleTranslateAll = async () => {
     if (translatingAll) return;
     setTranslatingAll(true);
@@ -75,8 +78,8 @@ export function TourForm({ editRow, submitting, onSave, onCancelEdit }: TourForm
       setForm(updated);
       if (failures > 0) {
         setError(
-          `${failures} alan çevrilemedi. Diğerleri güncellendi. Bu genelde günlük ücretsiz çeviri ` +
-            `kotası dolduğunda olur — bize bildirin, servisin başka bir hesapla yenilenmesi gerekebilir.`,
+          `${failures} alan çevrilemedi. Diğerleri güncellendi. Biraz sonra tekrar deneyin; ` +
+            `sorun sürerse bize bildirin — çeviri servisinin aylık kotası dolmuş olabilir.`,
         );
       }
     } finally {
@@ -273,15 +276,15 @@ export function TourForm({ editRow, submitting, onSave, onCancelEdit }: TourForm
         </div>
       </div>
 
-      {/* 4 dilli içerik */}
+      {/* Çok dilli içerik — dil listesi LOCALES'ten gelir */}
       <div className="space-y-5 border-t border-teal/10 pt-5">
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-orange/20 bg-orange/5 px-4 py-3">
           <div>
             <div className="text-sm font-semibold text-teal-deep">Otomatik çeviri</div>
             <p className="text-xs leading-5 text-teal/60">
-              Türkçe alanları tek tuşla EN/FR/RU'ya çevirir (mevcut çevirilerin üzerine yazar). Hata
-              alırsanız genelde günlük ücretsiz çeviri kotası dolmuştur — bize bildirin, servisin
-              başka bir hesapla yenilenmesi gerekebilir.
+              Türkçe alanları tek tuşla {TRANSLATION_TARGETS_LABEL}'ye çevirir (mevcut çevirilerin üzerine
+              yazar). Hata alırsanız biraz sonra tekrar deneyin; sorun sürerse bize bildirin —
+              çeviri servisinin aylık kotası dolmuş olabilir.
             </p>
           </div>
           <button
@@ -303,7 +306,7 @@ export function TourForm({ editRow, submitting, onSave, onCancelEdit }: TourForm
           <>
             <LocalizedField label="Grup büyüklüğü (ops.)" value={form.groupSize} onChange={(v) => set("groupSize", v)} hint='Örn. "min 6, max 12 kişi".' />
             <LocalizedField label="Dahil olmayanlar (ops.)" value={form.notIncludedText} onChange={(v) => set("notIncludedText", v)} multiline rows={4} hint="Her satır bir madde." />
-            <LocalizedField label="Gün gün program (ops.)" value={form.dayByDayText} onChange={(v) => set("dayByDayText", v)} multiline rows={6} hint='Her satır bir gün: "gün | başlık | açıklama | mesafe". Mesafe isteğe bağlıdır.' pipeSegments={[1, 2]} />
+            <LocalizedField label="Gün gün program (ops.)" value={form.dayByDayText} onChange={(v) => set("dayByDayText", v)} multiline rows={6} hint='Her satır bir gün: "gün | başlık | açıklama | mesafe". Mesafe isteğe bağlıdır.' pipeSegments={[1, 2, 3]} />
           </>
         ) : (
           <LocalizedField label="Tur programı (ops.)" value={form.itineraryText} onChange={(v) => set("itineraryText", v)} multiline rows={6} hint='Her satır bir adım: "ikon | başlık | açıklama". İkon için emoji kullanın (örn. 🛶).' pipeSegments={[1, 2]} />

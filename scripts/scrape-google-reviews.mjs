@@ -33,17 +33,18 @@ function parseRating(label) {
 }
 
 /**
- * Crude language guess for source_lang. Only tr/en/fr/ru are valid DB values,
- * so non-supported languages (e.g. German) fall back to "en" — the translator
- * will still render the body into all 4 target languages from there. Admin can
- * fix source_lang in the panel if needed.
+ * Crude language guess for source_lang. Valid DB values are tr/en/fr/ru/de
+ * (see the check constraint in 0014_add_german.sql); anything else falls back
+ * to "en" and the translator renders the body into the remaining languages
+ * from there. Admin can fix source_lang in the panel if needed.
  */
 function guessLang(text) {
   const t = (text || "").toLowerCase();
   if (/[ğş]|ı\b/.test(t) || /\b(çok|harika|tekne|rehber|deneyim|teşekkür|gezi)\b/.test(t)) return "tr";
   if (/[а-яё]/.test(t)) return "ru";
   if (/\b(très|était|nous avons|magnifique|expérience|génial|merci)\b/.test(t)) return "fr";
-  return "en"; // English + any unsupported language (de, it, es, ...) → en
+  if (/\b(sehr|wir haben|ausflug|empfehlenswert|toll|danke|schön)\b/.test(t)) return "de";
+  return "en"; // English + any unsupported language (it, es, ...) → en
 }
 
 async function clickReviewsTab(page) {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Localized } from "@/content/tours";
 import { LOCALES } from "@/lib/site";
+import { TRANSLATION_TARGETS } from "@/lib/localized";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { translateTexts, type TourLang } from "@/hooks/useTours";
@@ -19,9 +20,9 @@ interface LocalizedFieldProps {
   pipeSegments?: number[];
 }
 
-const TARGET_LOCALES = LOCALES.filter((l) => l !== "tr") as TourLang[];
+const TARGET_LOCALES = TRANSLATION_TARGETS as TourLang[];
 
-/** Translates Turkish text into the other three languages. Multiline values
+/** Translates Turkish text into every other site language. Multiline values
  * are split into lines so list-style fields (one item per line) keep their
  * line structure after translation. When `pipeSegments` is given, each line
  * is treated as "a | b | c" and only the listed segment indices are sent for
@@ -66,7 +67,7 @@ export async function translateFromTurkish(
   }
 }
 
-/** One field edited in all four languages; empty languages fall back to
+/** One field edited in every site language; empty languages fall back to
  * Turkish when the form is saved (see tour-form-state.ts). */
 export function LocalizedField({
   label,
@@ -110,12 +111,12 @@ export function LocalizedField({
       {hint && <p className="mt-0.5 text-xs leading-5 text-teal/55">{hint}</p>}
       {failed && (
         <p className="mt-0.5 text-xs leading-5 text-red-600">
-          Çeviri başarısız oldu. Genelde günlük ücretsiz çeviri kotası dolduğunda olur — biraz sonra
-          tekrar deneyin. Sorun devam ederse bunu bildirin, çeviri servisinin başka bir hesapla
-          yenilenmesi gerekebilir.
+          Çeviri başarısız oldu. Biraz sonra tekrar deneyin. Sorun devam ederse bunu bildirin —
+          çeviri servisinin aylık kotası dolmuş veya servis geçici olarak erişilemez durumda
+          olabilir.
         </p>
       )}
-      <div className="mt-1.5 grid gap-2 sm:grid-cols-2">
+      <div className="mt-1.5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {LOCALES.map((locale) => (
           <div key={locale}>
             <div className="mb-0.5 text-[10px] font-bold uppercase tracking-[0.18em] text-teal/40">
