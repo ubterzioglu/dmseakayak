@@ -1,9 +1,10 @@
 // Edge Function: translate-review
 //
-// Fills public.review_translations for one or many reviews using the free
-// MyMemory API (no API key required). For each review it:
+// Fills public.review_translations for one or many reviews. For each review it:
 //   1. stores the original-language body as a translation row (is_machine=false),
-//   2. machine-translates into the 3 remaining languages of {tr,en,fr,ru}.
+//   2. machine-translates into every other language of {tr,en,fr,ru,de}.
+//
+// Translation goes through _shared/translate.ts (DeepL, MyMemory fallback).
 //
 // It NEVER overwrites a row with is_machine=false (admin edits / originals),
 // so it is safe to re-run ("translate all", "re-translate") idempotently.
@@ -15,13 +16,11 @@
 // Secrets (supabase secrets set ...):
 //   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY  (auto-injected by Supabase)
 //   EDGE_SHARED_SECRET                        (must match Vault edge_shared_secret)
-//   MYMEMORY_EMAIL (optional)                 (raises the free daily quota)
+//   DEEPL_API_KEY, MYMEMORY_EMAIL             (see _shared/translate.ts)
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders } from "../_shared/cors.ts";
-
-type Lang = "tr" | "en" | "fr" | "ru";
-const LANGS: Lang[] = ["tr", "en", "fr", "ru"];
+import { LANGS, sleep, translateText, type Lang } from "../_shared/translate.ts";
 
 interface ReviewRow {
   id: string;
@@ -38,7 +37,6 @@ interface TranslationRow {
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 const SHARED_SECRET = Deno.env.get("EDGE_SHARED_SECRET") ?? "";
-const MYMEMORY_EMAIL = Deno.env.get("MYMEMORY_EMAIL") ?? "";
 
 const admin = createClient(SUPABASE_URL, SERVICE_KEY, {
   auth: { persistSession: false },
@@ -49,61 +47,6 @@ function json(body: unknown, status = 200): Response {
     status,
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
-}
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-/** Translate one chunk via MyMemory. Returns null on failure (caller skips). */
-async function translateChunk(text: string, from: Lang, to: Lang): Promise<string | null> {
-  const url = new URL("https://api.mymemory.translated.net/get");
-  url.searchParams.set("q", text);
-  url.searchParams.set("langpair", `${from}|${to}`);
-  if (MYMEMORY_EMAIL) url.searchParams.set("de", MYMEMORY_EMAIL);
-
-  try {
-    const res = await fetch(url.toString(), { headers: { "User-Agent": "dmseakayak/1.0" } });
-    if (!res.ok) return null;
-    const data = await res.json();
-    const translated: string | undefined = data?.responseData?.translatedText;
-    // MyMemory returns quota/error text in responseData when throttled.
-    if (!translated || /MYMEMORY WARNING|QUERY LENGTH LIMIT|INVALID/i.test(translated)) {
-      return null;
-    }
-    return translated;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * MyMemory caps each query at 500 bytes. Split long bodies on sentence
- * boundaries, translate each piece, and rejoin.
- */
-async function translateText(text: string, from: Lang, to: Lang): Promise<string | null> {
-  const MAX = 480;
-  if (text.length <= MAX) return translateChunk(text, from, to);
-
-  const sentences = text.match(/[^.!?]+[.!?]*\s*/g) ?? [text];
-  const chunks: string[] = [];
-  let buf = "";
-  for (const s of sentences) {
-    if ((buf + s).length > MAX && buf) {
-      chunks.push(buf);
-      buf = s;
-    } else {
-      buf += s;
-    }
-  }
-  if (buf) chunks.push(buf);
-
-  const out: string[] = [];
-  for (const c of chunks) {
-    const piece = await translateChunk(c.trim(), from, to);
-    if (piece === null) return null; // bail; partial translation is worse than none
-    out.push(piece);
-    await sleep(250); // be gentle with the free endpoint
-  }
-  return out.join(" ");
 }
 
 /** Translate a single review into all missing target languages. */
