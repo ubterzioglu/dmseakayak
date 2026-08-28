@@ -2,8 +2,9 @@
  * Parses bulk-pasted reviews from the admin panel into structured rows.
  * Supports two input formats and never throws — returns { rows, errors }.
  */
+import { isLocale, type Locale } from "@/lib/site";
 
-export type ParsedReviewLang = "tr" | "en" | "fr" | "ru";
+export type ParsedReviewLang = Locale;
 
 export interface ParsedReview {
   author: string;
@@ -16,11 +17,9 @@ export interface ParsedReview {
   external_id?: string | null;
 }
 
-const VALID_LANGS: readonly ParsedReviewLang[] = ["tr", "en", "fr", "ru"];
-
 function normalizeLang(value: unknown): ParsedReviewLang | undefined {
   const v = String(value ?? "").trim().toLowerCase();
-  return (VALID_LANGS as readonly string[]).includes(v) ? (v as ParsedReviewLang) : undefined;
+  return isLocale(v) ? v : undefined;
 }
 
 function clampRating(n: number): number {

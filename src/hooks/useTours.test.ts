@@ -53,17 +53,18 @@ const DAY_TOUR: Tour = {
   routeStops: ["Üçağız", "Kekova Island"],
   heroImage: "/images/tours/kekova-classic/tomb1.jpg",
   gallery: [],
-  title: { tr: "Kekova Klasik", en: "Kekova Classic", fr: "Kekova Classic", ru: "Кекова Классик" },
-  tagline: { tr: "Etiket", en: "Tagline", fr: "Slogan", ru: "Слоган" },
-  highlights: { tr: ["a"], en: ["a"], fr: ["a"], ru: ["a"] },
-  included: { tr: ["b"], en: ["b"], fr: ["b"], ru: ["b"] },
+  title: { tr: "Kekova Klasik", en: "Kekova Classic", fr: "Kekova Classic", ru: "Кекова Классик", de: "Kekova Klassik" },
+  tagline: { tr: "Etiket", en: "Tagline", fr: "Slogan", ru: "Слоган", de: "Slogan" },
+  highlights: { tr: ["a"], en: ["a"], fr: ["a"], ru: ["a"], de: ["a"] },
+  included: { tr: ["b"], en: ["b"], fr: ["b"], ru: ["b"], de: ["b"] },
   itinerary: {
     tr: [{ icon: "🚣", title: "Başlangıç", body: "Açıklama" }],
     en: [{ icon: "🚣", title: "Start", body: "Body" }],
     fr: [{ icon: "🚣", title: "Départ", body: "Texte" }],
     ru: [{ icon: "🚣", title: "Старт", body: "Текст" }],
+    de: [{ icon: "🚣", title: "Start", body: "Text" }],
   },
-  whyChoose: { tr: ["c"], en: ["c"], fr: ["c"], ru: ["c"] },
+  whyChoose: { tr: ["c"], en: ["c"], fr: ["c"], ru: ["c"], de: ["c"] },
 };
 
 const MULTI_DAY_TOUR: Tour = {
@@ -71,10 +72,10 @@ const MULTI_DAY_TOUR: Tour = {
   level: "intermediate-advanced",
   heroImage: "/images/tours/lycian-comfort-escape.jpg",
   gallery: [],
-  title: { tr: "Likya Kaçamağı", en: "Lycian Escape", fr: "Escapade Lycienne", ru: "Ликийский эскейп" },
-  tagline: { tr: "Etiket", en: "Tagline", fr: "Slogan", ru: "Слоган" },
-  description: { tr: "Açıklama", en: "Description", fr: "Description", ru: "Описание" },
-  highlights: { tr: ["a"], en: ["a"], fr: ["a"], ru: ["a"] },
+  title: { tr: "Likya Kaçamağı", en: "Lycian Escape", fr: "Escapade Lycienne", ru: "Ликийский эскейп", de: "Lykische Auszeit" },
+  tagline: { tr: "Etiket", en: "Tagline", fr: "Slogan", ru: "Слоган", de: "Slogan" },
+  description: { tr: "Açıklama", en: "Description", fr: "Description", ru: "Описание", de: "Beschreibung" },
+  highlights: { tr: ["a"], en: ["a"], fr: ["a"], ru: ["a"], de: ["a"] },
   multiDay: { durationDays: 7, nights: 6, status: "final" },
 };
 

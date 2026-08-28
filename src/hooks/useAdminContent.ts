@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import type { ParsedReview } from "@/lib/parseReviews";
+import { LOCALES, type Locale } from "@/lib/site";
 
 /**
  * Admin content data layer for /admin: revision requests, blog posts, reviews,
@@ -198,8 +199,8 @@ export async function deleteBlogPost(id: string): Promise<void> {
 // ─── Reviews ──────────────────────────────────────────────────────────────────
 
 export type ReviewStatus = "published" | "archived";
-export type ReviewLang = "tr" | "en" | "fr" | "ru";
-export const REVIEW_LANGS: readonly ReviewLang[] = ["tr", "en", "fr", "ru"] as const;
+export type ReviewLang = Locale;
+export const REVIEW_LANGS: readonly ReviewLang[] = LOCALES;
 
 export interface ReviewRow {
   id: string;

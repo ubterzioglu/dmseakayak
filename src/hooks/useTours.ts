@@ -6,6 +6,8 @@ import {
   type ItineraryStep,
   type MultiDayMeta,
 } from "@/content/tours";
+import { emptyLocalizedList } from "@/lib/localized";
+import type { Locale } from "@/lib/site";
 
 // ---------------------------------------------------------------------------
 // Admin-managed tours (public.tours, see supabase/migrations/0011_tours.sql).
@@ -48,7 +50,7 @@ export interface ToursData {
   multiDayTours: Tour[];
 }
 
-const EMPTY_LISTS: Localized<string[]> = { tr: [], en: [], fr: [], ru: [] };
+const EMPTY_LISTS: Localized<string[]> = emptyLocalizedList<string>();
 
 export function rowToTour(row: TourRow): Tour {
   return {
@@ -239,7 +241,8 @@ export async function uploadTourImage(file: File): Promise<string> {
 
 // ─── Admin: form-field machine translation ─────────────────────────────────────
 
-export type TourLang = "tr" | "en" | "fr" | "ru";
+/** Alias kept for call-site readability; the set of languages lives in site.ts. */
+export type TourLang = Locale;
 
 interface TranslateTextItem {
   text: string;

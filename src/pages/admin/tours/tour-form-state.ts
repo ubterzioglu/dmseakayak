@@ -1,5 +1,12 @@
 import { z } from "zod";
 import { LOCALES } from "@/lib/site";
+import {
+  emptyLocalizedList,
+  emptyLocalizedText,
+  fillLocalizedList,
+  fillLocalizedText,
+  mapLocalized,
+} from "@/lib/localized";
 import type {
   DayPlan,
   ItineraryStep,
@@ -53,7 +60,7 @@ export interface TourFormState {
   dayByDayText: Localized<string>;
 }
 
-const emptyLocalized = (): Localized<string> => ({ tr: "", en: "", fr: "", ru: "" });
+const emptyLocalized = emptyLocalizedText;
 
 export function emptyForm(): TourFormState {
   return {
@@ -102,13 +109,6 @@ const textToList = (text: string): string[] =>
 
 const listToText = (list: string[] | undefined): string => (list ?? []).join("\n");
 
-const mapLocalized = <A, B>(value: Localized<A>, fn: (item: A) => B): Localized<B> => ({
-  tr: fn(value.tr),
-  en: fn(value.en),
-  fr: fn(value.fr),
-  ru: fn(value.ru),
-});
-
 const hasAnyText = (value: Localized<string>): boolean =>
   LOCALES.some((locale) => value[locale].trim() !== "");
 
@@ -122,27 +122,14 @@ const textToNumber = (value: string): number | null => {
   return Number.isFinite(parsed) ? parsed : null;
 };
 
-/** Empty non-Turkish fields fall back to the Turkish value so pick() never
- * renders a blank string on the public site. */
-const withTrFallback = (value: Localized<string>): Localized<string> => {
-  const tr = value.tr.trim();
-  return {
-    tr,
-    en: value.en.trim() || tr,
-    fr: value.fr.trim() || tr,
-    ru: value.ru.trim() || tr,
-  };
-};
+/** Empty languages are resolved through FALLBACK_CHAIN (en, then tr) on save,
+ * so a row always carries text for every language. The public site falls back
+ * at render time too — this keeps the stored JSONB self-contained. */
+const withTrFallback = fillLocalizedText;
 
 const localizedLists = (value: Localized<string>): Localized<string[]> | null => {
   if (!hasAnyText(value)) return null;
-  const lists = mapLocalized(value, textToList);
-  return {
-    tr: lists.tr,
-    en: lists.en.length > 0 ? lists.en : lists.tr,
-    fr: lists.fr.length > 0 ? lists.fr : lists.tr,
-    ru: lists.ru.length > 0 ? lists.ru : lists.tr,
-  };
+  return fillLocalizedList(mapLocalized(value, textToList));
 };
 
 const itineraryToText = (steps: ItineraryStep[] | undefined): string =>
@@ -200,9 +187,9 @@ export function rowToForm(row: TourRow): TourFormState {
     title: { ...emptyLocalized(), ...row.title },
     tagline: { ...emptyLocalized(), ...row.tagline },
     description: { ...emptyLocalized(), ...(row.description ?? {}) },
-    highlightsText: mapLocalized({ ...({ tr: [], en: [], fr: [], ru: [] }), ...(row.highlights ?? {}) }, listToText),
-    includedText: mapLocalized({ ...({ tr: [], en: [], fr: [], ru: [] }), ...(row.included ?? {}) }, listToText),
-    whyChooseText: mapLocalized({ ...({ tr: [], en: [], fr: [], ru: [] }), ...(row.why_choose ?? {}) }, listToText),
+    highlightsText: mapLocalized({ ...emptyLocalizedList<string>(), ...(row.highlights ?? {}) }, listToText),
+    includedText: mapLocalized({ ...emptyLocalizedList<string>(), ...(row.included ?? {}) }, listToText),
+    whyChooseText: mapLocalized({ ...emptyLocalizedList<string>(), ...(row.why_choose ?? {}) }, listToText),
     itineraryText: row.itinerary
       ? mapLocalized(row.itinerary, itineraryToText)
       : emptyLocalized(),

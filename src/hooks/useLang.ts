@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useLayoutEffect, useRef, useState } from "react";
 import { BASE_PATH, DEFAULT_LOCALE, isLocale, type Locale } from "@/lib/site";
+import { resolveLocalized } from "@/lib/localized";
 
 /**
  * Derives the active locale from the :lang route param, keeps i18next and
@@ -42,8 +43,28 @@ export function useLang() {
     return () => i18n.off("languageChanged", handleLanguageChanged);
   }, [locale, i18n]);
 
-  /** Pick the right string/array from a Localized<T> content object. */
-  const pick = <T,>(value: Record<Locale, T>): T => value[locale];
+  /**
+   * Pick the right string/array from a Localized<T> content object, falling
+   * back through FALLBACK_CHAIN when the active locale has nothing.
+   *
+   * This must tolerate a *missing key*, not just an empty one: rows written to
+   * public.tours before a language existed carry no key for it at all, so a
+   * plain `value[locale]` would return undefined and crash every `.map()` on
+   * the detail pages. Empty strings and empty arrays count as missing too —
+   * an admin who leaves a field blank should get the fallback, not a gap.
+   */
+  const pick = <T,>(value: Partial<Record<Locale, T>> | null | undefined): T => {
+    const isEmpty = (v: T) =>
+      (typeof v === "string" && !v.trim()) || (Array.isArray(v) && v.length === 0);
+    const found = resolveLocalized(value, locale, isEmpty);
+    if (found !== undefined) return found;
+
+    // Every language is empty (or the whole object is missing). Return a value
+    // of the shape callers expect so list rendering degrades to "nothing to
+    // show" instead of throwing.
+    const anyValue = value ? Object.values(value).find((v) => v != null) : undefined;
+    return (Array.isArray(anyValue) ? [] : "") as T;
+  };
 
   /** Build a path under the current locale, e.g. localePath("turlar") -> /mvp/tr/turlar */
   const localePath = (path = "") => `${BASE_PATH}/${locale}${path ? `/${path}` : ""}`;

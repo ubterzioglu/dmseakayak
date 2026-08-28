@@ -19,9 +19,30 @@ export const SITE = {
   parentBrand: "Dragoman Turkey",
 } as const;
 
-export const LOCALES = ["tr", "en", "fr", "ru"] as const;
+export const LOCALES = ["tr", "en", "fr", "ru", "de"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "tr";
+
+/**
+ * Order to try when a locale has no content for a field. English comes first:
+ * showing a German (or French/Russian) visitor Turkish text is worse than
+ * showing them English. Turkish is the last resort because every record is
+ * guaranteed to have it — it is the language the admin panel authors in.
+ */
+export const FALLBACK_CHAIN: readonly Locale[] = ["en", "tr"];
+
+/**
+ * Open Graph wants a `language_TERRITORY` locale, not the bare language code
+ * that hreflang and <html lang> use. Facebook/LinkedIn ignore `og:locale`
+ * values they cannot parse, so this mapping is what makes the tag count.
+ */
+export const OG_LOCALE: Record<Locale, string> = {
+  tr: "tr_TR",
+  en: "en_GB",
+  fr: "fr_FR",
+  ru: "ru_RU",
+  de: "de_DE",
+};
 
 /**
  * Path prefix the whole localized site is mounted under. Live at the domain

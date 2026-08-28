@@ -25,12 +25,22 @@ describe("parseBulkReviews", () => {
   });
 
   it("normalizes invalid source_lang to undefined and missing external_id to null", () => {
+    // "es" is deliberately a language the site does not serve — this asserted
+    // on "de" until German was added, which made the fixture a valid locale.
     const json = JSON.stringify([
-      { author: "A", rating: 4, body: "Nice", source_lang: "de" },
+      { author: "A", rating: 4, body: "Nice", source_lang: "es" },
     ]);
     const { rows } = parseBulkReviews(json);
     expect(rows[0].source_lang).toBeUndefined();
     expect(rows[0].external_id).toBeNull();
+  });
+
+  it("accepts German as a source language", () => {
+    const json = JSON.stringify([
+      { author: "B", rating: 5, body: "Sehr schön", source_lang: "de" },
+    ]);
+    const { rows } = parseBulkReviews(json);
+    expect(rows[0].source_lang).toBe("de");
   });
 
   it("accepts text/JSON without lang fields (back-compat line format)", () => {
