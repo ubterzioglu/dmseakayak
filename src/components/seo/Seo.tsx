@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
-import { SITE, LOCALES } from "@/lib/site";
+import { SITE, LOCALES, OG_LOCALE } from "@/lib/site";
 import { useLang } from "@/hooks/useLang";
 
 interface SeoProps {
@@ -51,7 +51,10 @@ export function Seo({ title, description, image = SITE.ogImage, jsonLd, noindex 
 
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={SITE.name} />
-      <meta property="og:locale" content={locale} />
+      <meta property="og:locale" content={OG_LOCALE[locale]} />
+      {LOCALES.filter((l) => l !== locale).map((l) => (
+        <meta key={l} property="og:locale:alternate" content={OG_LOCALE[l]} />
+      ))}
       <meta property="og:url" content={canonical} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />

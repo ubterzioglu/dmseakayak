@@ -15,7 +15,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 
 const DOMAIN = "https://dragomanseakayak.com";
-const LOCALES = ["tr", "en", "fr", "ru"];
+// Keep in sync with LOCALES in src/lib/site.ts — this script is plain ESM and
+// cannot import the TypeScript module.
+const LOCALES = ["tr", "en", "fr", "ru", "de"];
 
 // Path segments (keep in sync with src/lib/routes.ts SEG).
 const SEG = {

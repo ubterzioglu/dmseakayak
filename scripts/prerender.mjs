@@ -19,7 +19,9 @@ import { preview } from "vite";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 
-const LOCALES = ["tr", "en", "fr", "ru"];
+// Keep in sync with LOCALES in src/lib/site.ts (see the note in
+// generate-sitemap.mjs — plain ESM cannot import the TS module).
+const LOCALES = ["tr", "en", "fr", "ru", "de"];
 
 // Path segments (keep in sync with src/lib/routes.ts SEG).
 const SEG = {

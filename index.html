@@ -39,10 +39,9 @@
     <meta property="og:image" content="https://dragomanseakayak.com/ensonlogo.png" />
     <meta property="og:image:width" content="1536" />
     <meta property="og:image:height" content="1024" />
-    <meta property="og:locale" content="tr_TR" />
-    <meta property="og:locale:alternate" content="en_US" />
-    <meta property="og:locale:alternate" content="fr_FR" />
-    <meta property="og:locale:alternate" content="ru_RU" />
+    <!-- og:locale and its alternates are emitted per route by components/seo/Seo.tsx,
+         which knows the active locale. A static pair here would win on scrapers
+         that read the first matching tag, mislabelling every non-Turkish page. -->
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
