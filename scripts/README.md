@@ -181,3 +181,42 @@ Vault `edge_shared_secret` disagree. `500` with a `missing` array names the
 unset secrets. `502` means Zoho rejected the send — usually a wrong data
 center, an unverified `ZOHO_FROM_EMAIL`, or a refresh token issued without the
 `ZohoMail.messages.CREATE` scope.
+
+---
+
+## optimize-supabase-images.mjs
+
+Re-encodes every Supabase-hosted site image as WebP (max 1600 px, quality 80)
+and repoints `tours.hero_image`, `tours.gallery` and `gallery_images.image_url`
+at the new objects.
+
+The tour photos were uploaded straight off a camera — one was 8130x3864 at
+10 MB — and they are served from a *public* bucket, so each one was re-paid as
+egress on every pageview. A single tour page cost ~19 MB; it now costs ~1.9 MB.
+That matters because the Free plan allows 5 GB of egress per month.
+
+### Run
+
+```bash
+node scripts/optimize-supabase-images.mjs           # dry run, prints savings
+node scripts/optimize-supabase-images.mjs --apply   # convert, upload, rewrite
+```
+
+`--apply` writes the originals to `../dmsk-image-backup/` (override with
+`IMAGE_BACKUP_DIR`) and a manifest to `scripts/output/`. Originals stay in the
+bucket, so the change is reversible:
+
+```bash
+node scripts/optimize-supabase-images.mjs --rollback          # restore old URLs
+node scripts/optimize-supabase-images.mjs --delete-originals  # reclaim the space
+```
+
+Run `--delete-originals` only after the site has been eyeballed — it is the one
+step that cannot be undone from the manifest.
+
+Images whose WebP comes out no smaller are left alone, so re-running is cheap
+and idempotent. Tours pointing at `/images/tours/...` are static files served by
+nginx from `public/` and cost no egress; the script skips them.
+
+New uploads no longer need this: `compressImage()` in `src/lib/image.ts` shrinks
+files in the browser before `uploadTourImage()` / `uploadBlogImage()` send them.
