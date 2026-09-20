@@ -7,6 +7,7 @@ import {
   type MultiDayMeta,
 } from "@/content/tours";
 import { emptyLocalizedList } from "@/lib/localized";
+import { compressImage } from "@/lib/image";
 import type { Locale } from "@/lib/site";
 
 // ---------------------------------------------------------------------------
@@ -229,12 +230,17 @@ export async function deleteTour(id: string): Promise<void> {
   if (error) throw new Error(error.message);
 }
 
-/** Uploads an image to the tour-images bucket and returns its public URL. */
+/**
+ * Downscales an image and uploads it to the tour-images bucket, returning its
+ * public URL. The compression matters: these images are served straight from a
+ * public bucket, so an unresized camera photo costs egress on every pageview.
+ */
 export async function uploadTourImage(file: File): Promise<string> {
   if (!supabase) throw new Error("Supabase yapılandırılmamış");
-  const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+  const image = await compressImage(file);
+  const ext = (image.name.split(".").pop() || "jpg").toLowerCase();
   const path = `tours/${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from("tour-images").upload(path, file, { upsert: false });
+  const { error } = await supabase.storage.from("tour-images").upload(path, image, { upsert: false });
   if (error) throw new Error(error.message);
   return supabase.storage.from("tour-images").getPublicUrl(path).data.publicUrl;
 }

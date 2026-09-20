@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import type { ParsedReview } from "@/lib/parseReviews";
+import { compressImage } from "@/lib/image";
 import { LOCALES, type Locale } from "@/lib/site";
 
 /**
@@ -408,12 +409,13 @@ export async function fetchPublishedReviews(): Promise<ReviewRow[]> {
 
 // ─── Image upload (blog-images bucket) ──────────────────────────────────────────
 
-/** Uploads an image to the blog-images bucket and returns its public URL. */
+/** Downscales an image, uploads it to the blog-images bucket, returns its URL. */
 export async function uploadBlogImage(file: File): Promise<string> {
   if (!supabase) throw new Error("Supabase yapılandırılmamış");
-  const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+  const image = await compressImage(file);
+  const ext = (image.name.split(".").pop() || "jpg").toLowerCase();
   const path = `posts/${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from("blog-images").upload(path, file, { upsert: false });
+  const { error } = await supabase.storage.from("blog-images").upload(path, image, { upsert: false });
   if (error) throw new Error(error.message);
   return supabase.storage.from("blog-images").getPublicUrl(path).data.publicUrl;
 }
