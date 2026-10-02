@@ -42,6 +42,7 @@ const ADMIN_EMAILS = [
   "kelifterzioglu@gmail.com",
   "ubterzioglu@gmail.com",
   "oguzhandurmus@msn.com",
+  "gokced@gmail.com",
 ];
 
 function isAdminEmail(email: string | null | undefined): boolean {
