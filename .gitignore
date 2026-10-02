@@ -4,6 +4,9 @@
 *.log
 node_modules/
 
+# Supabase CLI temp cache — auto-generated, machine-specific, never commit
+supabase/.temp/
+
 # Build çıktısı
 dist/
 *.tsbuildinfo
