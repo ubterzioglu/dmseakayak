@@ -1,0 +1,22 @@
+{
+  "provider": "Dragoman SeaKayak",
+  "services": [
+    {
+      "name": "Kekova sea kayaking day tours",
+      "description": "Guided paddling tours over the Sunken City of Kekova, Simena Castle and Lycian rock tombs. Beginner-friendly Classic route plus intermediate/advanced West and East routes.",
+      "url": "https://dragomanseakayak.com/en/turlar"
+    },
+    {
+      "name": "Custom and private tours",
+      "description": "Tailor-made private sea kayak tours on request.",
+      "url": "https://dragomanseakayak.com/en/ozel-turlar"
+    },
+    {
+      "name": "TRAK experience",
+      "description": "Multi-day expedition format combining kayaking, camping and local culture.",
+      "url": "https://dragomanseakayak.com/en/trak-experience"
+    }
+  ],
+  "included": ["Licensed guide", "Kayak and full equipment", "Return transfers from Kaş", "Lunch"],
+  "booking": "https://dragomanseakayak.com/en/iletisim"
+}

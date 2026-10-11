@@ -10,7 +10,7 @@
 // Usage:
 //   node scripts/prerender.mjs   (run after `vite build`, before deploy)
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
@@ -158,8 +158,25 @@ async function main() {
   const defaultIndex = join(ROOT, "dist", LOCALES[0], "index.html");
   const rootIndex = join(ROOT, "dist", "index.html");
   if (existsSync(defaultIndex)) {
-    copyFileSync(defaultIndex, rootIndex);
-    console.log(`Copied /${LOCALES[0]}/index.html over dist/index.html — root is prerendered.`);
+    // `/` is its own URL (nginx never redirects it), so it must be
+    // self-canonical: a canonical pointing at /<default> made Google-style
+    // audits flag "canonical points elsewhere" on the domain root. Repoint
+    // canonical, og:url and the x-default alternate at the root.
+    const origin = (readFileSync(defaultIndex, "utf8").match(
+      /<link[^>]*rel="canonical"[^>]*href="(https?:\/\/[^/"]+)/,
+    ) || [])[1];
+    const rootUrl = origin ? `${origin}/` : null;
+    let html = readFileSync(defaultIndex, "utf8");
+    if (rootUrl) {
+      const repoint = (tagRe, attr) => {
+        html = html.replace(tagRe, (tag) => tag.replace(new RegExp(`${attr}="[^"]*"`), `${attr}="${rootUrl}"`));
+      };
+      repoint(/<link[^>]*rel="canonical"[^>]*>/g, "href");
+      repoint(/<meta[^>]*property="og:url"[^>]*>/g, "content");
+      repoint(/<link[^>]*hreflang="x-default"[^>]*>/gi, "href");
+    }
+    writeFileSync(rootIndex, html, "utf8");
+    console.log(`Wrote prerendered /${LOCALES[0]}/ to dist/index.html${rootUrl ? ` (canonical ${rootUrl})` : ""}.`);
   } else {
     failed++;
     console.error(`  FAILED /: dist/${LOCALES[0]}/index.html missing, root left as SPA shell.`);

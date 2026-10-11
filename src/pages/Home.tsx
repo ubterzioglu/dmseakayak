@@ -4,11 +4,13 @@ import { TourHighlights } from "@/components/home/TourHighlights";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { ReviewsMarquee } from "@/components/home/ReviewsMarquee";
 import { TailorMadeBanner } from "@/components/home/TailorMadeBanner";
+import { HomeFaq } from "@/components/home/HomeFaq";
+import { FAQS, HOME_FAQ_COUNT } from "@/content/faqs";
 import { useLang } from "@/hooks/useLang";
 import { LOCALES, SITE } from "@/lib/site";
 
 export default function Home() {
-  const { t } = useLang();
+  const { t, pick } = useLang();
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -72,6 +74,15 @@ export default function Home() {
         inLanguage: LOCALES as readonly string[],
         publisher: { "@id": `${SITE.domain}/#organization` },
       },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE.domain}/#faq`,
+        mainEntity: FAQS.slice(0, HOME_FAQ_COUNT).map((item) => ({
+          "@type": "Question",
+          name: pick(item.q),
+          acceptedAnswer: { "@type": "Answer", text: pick(item.a) },
+        })),
+      },
     ],
   };
 
@@ -87,6 +98,7 @@ export default function Home() {
       <TailorMadeBanner />
       <WhyChooseUs />
       <ReviewsMarquee />
+      <HomeFaq />
     </>
   );
 }

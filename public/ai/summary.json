@@ -1,0 +1,22 @@
+{
+  "name": "Dragoman SeaKayak",
+  "url": "https://dragomanseakayak.com/",
+  "description": "Guided sea kayaking tours in Kekova and Kaş on Turkey's Lycian coast, run by Dragoman Turkey with licensed guides, full equipment, lunch and transfers from Kaş included.",
+  "type": "SportsActivityLocation",
+  "location": {
+    "address": "Uzunçarşı Cad. No:15, Kaş 07580, Antalya, Türkiye",
+    "areaServed": ["Kekova", "Kaş", "Kalkan", "Antalya"]
+  },
+  "languages": ["tr", "en", "fr", "ru", "de"],
+  "contact": {
+    "email": "info@dragoman-turkey.com",
+    "phone": "+90 242 836 3614",
+    "whatsapp": "+90 533 290 1463"
+  },
+  "pages": {
+    "tours": "https://dragomanseakayak.com/en/turlar",
+    "about": "https://dragomanseakayak.com/en/hakkimizda",
+    "faq": "https://dragomanseakayak.com/en/sss",
+    "contact": "https://dragomanseakayak.com/en/iletisim"
+  }
+}
