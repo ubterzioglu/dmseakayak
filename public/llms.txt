@@ -1,0 +1,42 @@
+# Dragoman SeaKayak
+
+> Dragoman SeaKayak is a guided sea kayaking operator based in Kaş, Antalya, Türkiye.
+> We run day tours and multi-day expeditions along the Lycian coast — Kekova's
+> Sunken City, Simena Castle, hidden coves and sea caves — with certified guides,
+> all equipment and meals included. The site is available in Turkish, English,
+> French, Russian and German.
+
+## Tours
+
+- [Kekova & Kaş sea kayak day tours (TR)](https://dragomanseakayak.com/tr/turlar): Published day tours with routes, durations and prices.
+- [Kekova & Kaş sea kayak day tours (EN)](https://dragomanseakayak.com/en/turlar): Published day tours with routes, durations and prices.
+- [Kekova & Kaş sea kayak day tours (FR)](https://dragomanseakayak.com/fr/turlar): Published day tours with routes, durations and prices.
+- [Kekova & Kaş sea kayak day tours (RU)](https://dragomanseakayak.com/ru/turlar): Published day tours with routes, durations and prices.
+- [Kekova & Kaş sea kayak day tours (DE)](https://dragomanseakayak.com/de/turlar): Published day tours with routes, durations and prices.
+- [Custom & private tours (TR)](https://dragomanseakayak.com/tr/ozel-turlar): Tailor-made private kayak tours on request.
+- [Custom & private tours (EN)](https://dragomanseakayak.com/en/ozel-turlar): Tailor-made private kayak tours on request.
+- [TRAK experience (TR)](https://dragomanseakayak.com/tr/trak-experience): Multi-day expedition format combining kayaking, camping and local culture.
+- [TRAK experience (EN)](https://dragomanseakayak.com/en/trak-experience): Multi-day expedition format combining kayaking, camping and local culture.
+
+## About
+
+- [About us (TR)](https://dragomanseakayak.com/tr/hakkimizda): History, guides and safety approach of Dragoman SeaKayak / Dragoman Turkey.
+- [About us (EN)](https://dragomanseakayak.com/en/hakkimizda): History, guides and safety approach of Dragoman SeaKayak / Dragoman Turkey.
+- [Reviews (TR)](https://dragomanseakayak.com/tr/yorumlar): Guest reviews collected from Google.
+- [Reviews (EN)](https://dragomanseakayak.com/en/yorumlar): Guest reviews collected from Google.
+
+## Contact
+
+- [Contact & booking (TR)](https://dragomanseakayak.com/tr/iletisim): Address, phone, WhatsApp and reservation form. Uzunçarşı Cad. No:15, Kaş 07580, Antalya, Türkiye.
+- [Contact & booking (EN)](https://dragomanseakayak.com/en/iletisim): Address, phone, WhatsApp and reservation form.
+- [Contact & booking (FR)](https://dragomanseakayak.com/fr/iletisim): Address, phone, WhatsApp and reservation form.
+- [Contact & booking (RU)](https://dragomanseakayak.com/ru/iletisim): Address, phone, WhatsApp and reservation form.
+- [Contact & booking (DE)](https://dragomanseakayak.com/de/iletisim): Address, phone, WhatsApp and reservation form.
+
+## FAQ
+
+- [Frequently asked questions (TR)](https://dragomanseakayak.com/tr/sss): Experience required, season, weather policy, what to bring.
+- [Frequently asked questions (EN)](https://dragomanseakayak.com/en/sss): Experience required, season, weather policy, what to bring.
+- [Frequently asked questions (FR)](https://dragomanseakayak.com/fr/sss): Experience required, season, weather policy, what to bring.
+- [Frequently asked questions (RU)](https://dragomanseakayak.com/ru/sss): Experience required, season, weather policy, what to bring.
+- [Frequently asked questions (DE)](https://dragomanseakayak.com/de/sss): Experience required, season, weather policy, what to bring.

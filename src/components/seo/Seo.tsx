@@ -64,6 +64,8 @@ export function Seo({ title, description, image = SITE.ogImage, jsonLd, noindex 
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
 
+      {!noindex && <meta property="article:modified_time" content={__BUILD_DATE__} />}
+
       {ldArray.map((ld, i) => (
         <script key={i} type="application/ld+json">
           {JSON.stringify(ld)}

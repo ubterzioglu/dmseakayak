@@ -10,7 +10,7 @@
 // Usage:
 //   node scripts/prerender.mjs   (run after `vite build`, before deploy)
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from "node:fs";
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
@@ -147,6 +147,22 @@ async function main() {
   } finally {
     await browser.close();
     await server.close();
+  }
+
+  // The bare domain root must serve real content too: crawlers and GEO audits
+  // hit `/` first, and until now it returned the empty SPA shell. Overwrite the
+  // shell with the prerendered default-locale index. That copy's canonical and
+  // hreflang already point at /<default>/ (Seo.tsx emits x-default there), so
+  // serving it at `/` adds content without creating a duplicate-content clash.
+  // Done last so `vite preview` kept serving the original shell during the loop.
+  const defaultIndex = join(ROOT, "dist", LOCALES[0], "index.html");
+  const rootIndex = join(ROOT, "dist", "index.html");
+  if (existsSync(defaultIndex)) {
+    copyFileSync(defaultIndex, rootIndex);
+    console.log(`Copied /${LOCALES[0]}/index.html over dist/index.html — root is prerendered.`);
+  } else {
+    failed++;
+    console.error(`  FAILED /: dist/${LOCALES[0]}/index.html missing, root left as SPA shell.`);
   }
 
   console.log(`Prerendered ${done} pages (${failed} failed).`);

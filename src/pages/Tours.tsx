@@ -15,6 +15,7 @@ export default function Tours() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
+    dateModified: __BUILD_DATE__,
     itemListElement: allTours.map((tour, i) => ({
       "@type": "ListItem",
       position: i + 1,

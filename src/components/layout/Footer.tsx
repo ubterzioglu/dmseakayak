@@ -90,17 +90,8 @@ export function Footer() {
         </nav>
       </div>
 
-      <div className="border-t border-white/10 py-5 text-center text-[6px] leading-relaxed opacity-70">
+      <div className="border-t border-white/10 py-5 text-center text-sm leading-relaxed opacity-70">
         © {year} {SITE.name} — {t("footer.rights")}
-        {" · "}
-        <a href="https://ufuksoynakliyat.com.tr/esya-depolama" rel="dofollow" target="_blank" className="hover:text-orange-soft">Eşya Depolama</a>
-        {" "}Firması Ufuksoy Nakliyat A.Ş
-        <span className="mx-2 text-white/25">·</span>
-        <a href="https://tekhurdametal.com/hurda-demir-fiyatlari/" rel="dofollow" className="hover:text-orange-soft">Demir Hurda Fiyatları</a>
-        {" "}Tek Hurda Metal
-        <span className="mx-2 text-white/25">·</span>
-        <a href="https://lionerotik.com/urunler/fetis-urunleri" rel="dofollow" target="_blank" className="hover:text-orange-soft">Antalya Seks Shop</a>
-        {" "}Lion Erotik
       </div>
     </footer>
   );

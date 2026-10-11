@@ -18,6 +18,9 @@ ARG VITE_SUPABASE_URL
 ARG VITE_SUPABASE_ANON_KEY
 ENV VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
 ENV VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
+# Regenerate sitemap.xml on every build so <lastmod> never goes stale;
+# vite build then copies it from public/ into dist/.
+RUN node scripts/generate-sitemap.mjs
 RUN npx vite build
 
 # ---- Prerender stage ----

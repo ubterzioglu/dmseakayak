@@ -30,16 +30,23 @@ const SEG = {
   faq: "sss",
 };
 
+// .env.local exists for local dev but is deliberately excluded from the
+// Docker build context (.dockerignore) — in CI/Docker these come from
+// process.env instead (see Dockerfile ARG/ENV), same as prerender.mjs.
 function loadEnv() {
-  const txt = readFileSync(resolve(ROOT, ".env.local"), "utf8");
   const env = {};
-  for (const line of txt.split(/\r?\n/)) {
-    if (!line || line.startsWith("#") || !line.includes("=")) continue;
-    const i = line.indexOf("=");
-    const v = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
-    env[line.slice(0, i).trim()] = v;
+  try {
+    const txt = readFileSync(resolve(ROOT, ".env.local"), "utf8");
+    for (const line of txt.split(/\r?\n/)) {
+      if (!line || line.startsWith("#") || !line.includes("=")) continue;
+      const i = line.indexOf("=");
+      const v = line.slice(i + 1).trim().replace(/^["']|["']$/g, "");
+      env[line.slice(0, i).trim()] = v;
+    }
+  } catch {
+    // No .env.local (CI/Docker) — process.env below supplies the values.
   }
-  return env;
+  return { ...env, ...process.env };
 }
 
 /** Fetch published tours (slug + freshest timestamp) from Supabase (anon key — public, read-only data). */

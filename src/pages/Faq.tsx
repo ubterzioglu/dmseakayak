@@ -219,6 +219,7 @@ export default function Faq() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    dateModified: __BUILD_DATE__,
     mainEntity: FAQS.map((item) => ({
       "@type": "Question",
       name: pick(item.q),
