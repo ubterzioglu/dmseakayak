@@ -1,5 +1,11 @@
 {
-  "provider": "Dragoman SeaKayak",
+  "name": "Dragoman SeaKayak",
+  "capabilities": [
+    "Guided sea kayaking day tours in Kekova and Kaş",
+    "Custom and private kayak tours",
+    "Multi-day kayak and camping expeditions (TRAK)",
+    "Tours in Turkish, English, French, Russian and German"
+  ],
   "services": [
     {
       "name": "Kekova sea kayaking day tours",
